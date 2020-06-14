@@ -1,4 +1,6 @@
-export const lightTheme = {
+import { DefaultTheme } from 'styled-components';
+
+export const lightTheme: DefaultTheme = {
   primary: '#E23638',
   yellow: '#E3E04D',
   brown: '#961517',
@@ -7,4 +9,19 @@ export const lightTheme = {
   text: '#fff',
   bg1: '#eee',
   bg2: '#ccc',
+
+  zIndex: {
+    top: 100,
+    hg: 80,
+    md: 50,
+    lw: 1,
+  },
+
+  breakpoints: {
+    xl: '120em',
+    lg: '80em',
+    md: '60em',
+    sm: '37.5em',
+    xs: '0',
+  },
 };
