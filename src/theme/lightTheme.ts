@@ -10,6 +10,7 @@ export const lightTheme: DefaultTheme = {
   bg1: '#eee',
   bg2: '#ccc',
   black: '#000',
+  white: '#fff',
 
   zIndex: {
     top: 100,

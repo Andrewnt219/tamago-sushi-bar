@@ -1,11 +1,14 @@
+import React from 'react';
 import styled from 'styled-components/macro';
 import LogoImg from '../../asset/logo.png';
 
-import React from 'react';
 interface LogoStyledProps {}
 
 interface LogoProps {}
 
+/**
+ * @return a LogoIcon with brand name - Tamago
+ */
 export const Logo: React.FC<LogoProps> = () => {
   return (
     <Container>
