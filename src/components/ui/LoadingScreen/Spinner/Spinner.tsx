@@ -3,10 +3,9 @@ import styled, { keyframes } from 'styled-components/macro';
 import './Spinner.css';
 
 interface SpinnerProps {
-  style?: {
-    readonly size?: string;
-    readonly color?: string;
-  };
+  readonly size?: string;
+  readonly color?: string;
+  readonly className?: string;
 }
 
 interface ContainerProps {
@@ -18,13 +17,15 @@ interface DotProps {
 }
 
 /**
- * @param style custom css for spinner
+ * @param size width and height of the spinner
+ * @param color the color of the spinner dot
  * @return a Spinner
  */
-function Spinner({ style }: SpinnerProps): ReactElement {
+function Spinner({ size, color, className }: SpinnerProps): ReactElement {
   return (
-    /* https://tobiasahlin.com/spinkit/ */
-    <Container size={style?.size}>{createDots(6, style?.color)}</Container>
+    <Container className={className} size={size}>
+      {createDots(6, color)}
+    </Container>
   );
 }
 

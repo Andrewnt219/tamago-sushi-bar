@@ -12,6 +12,7 @@ declare module 'styled-components' {
     text: string;
     bg1: string;
     bg2: string;
+    black: string;
 
     zIndex: {
       top: number;

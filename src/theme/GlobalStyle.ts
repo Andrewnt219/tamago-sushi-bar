@@ -18,6 +18,7 @@ export const GlobalStyle = createGlobalStyle`
 
   html, body {
     min-height: 100vh;
+    position: relative;
   }
 
 `;

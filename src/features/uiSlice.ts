@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../app/store';
 
 interface uiState {
   isLoading: boolean;
@@ -31,3 +32,4 @@ export const uiSlice = createSlice({
 
 export default uiSlice.reducer;
 export const { actionFailed, actionRequest, actionSuccess } = uiSlice.actions;
+export const isLoadingSelector = (state: RootState) => state.ui.isLoading;
