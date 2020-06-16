@@ -14,6 +14,8 @@ declare module 'styled-components' {
     bg2: string;
     black: string;
     white: string;
+    subtleBackground: string;
+    strongBackground: string;
 
     zIndex: {
       top: number;

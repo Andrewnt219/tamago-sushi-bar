@@ -1,12 +1,12 @@
 import React from 'react';
 import styled, { css } from 'styled-components/macro';
 import { PopupMenu } from './PopupMenu';
-import { useOpen } from '../../../hook';
+import { useToggle } from '../../../hook';
 import { Button } from '../../ui/Button';
 
 interface HamburgerProps {}
 export const Hamburger: React.FC<HamburgerProps> = () => {
-  const [menuIsOpen, toggleMenu] = useOpen();
+  const [menuIsOpen, toggleMenu] = useToggle();
 
   return (
     <Container>

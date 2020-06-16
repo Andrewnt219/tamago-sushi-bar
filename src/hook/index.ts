@@ -1,2 +1,2 @@
 export * from './useLoadingState';
-export * from './useOpen';
+export * from './useToggle';
