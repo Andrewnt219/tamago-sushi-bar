@@ -21,8 +21,8 @@ export const Hamburger: React.FC<HamburgerProps> = () => {
 interface ContainerProps {}
 const Container = styled.div<ContainerProps>`
   position: fixed;
-  bottom: 2rem;
-  right: 1rem;
+  bottom: 1rem;
+  right: 1.5rem;
   z-index: ${(p) => p.theme.zIndex.hg};
 `;
 

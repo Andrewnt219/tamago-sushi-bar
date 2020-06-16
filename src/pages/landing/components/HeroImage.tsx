@@ -24,7 +24,7 @@ export const HeroImage: React.FC<HeroImageProps> = ({ children }) => {
 
 interface BackdropProps {}
 const Backdrop = styled.article<BackdropProps>`
-  width: 100vw;
+  max-width: 100vw;
   height: 100vh;
   background-image: linear-gradient(
       ${(p) => rgba(p.theme.black, 0.6)},

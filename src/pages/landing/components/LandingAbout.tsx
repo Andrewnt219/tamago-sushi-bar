@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
-interface LandingMenuProps {}
-export const LandingMenu: React.FC<LandingMenuProps> = () => {
-  return <Container>Landing Menu</Container>;
+interface LandingAboutProps {}
+export const LandingAbout: React.FC<LandingAboutProps> = () => {
+  return <Container>Landing About</Container>;
 };
 
 interface ContainerProps {}
