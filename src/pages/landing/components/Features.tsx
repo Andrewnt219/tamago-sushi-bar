@@ -7,6 +7,4 @@ export const Features: React.FC<FeaturesProps> = () => {
 };
 
 interface ContainerProps {}
-const Container = styled.article<ContainerProps>`
-  height: 100vh;
-`;
+const Container = styled.article<ContainerProps>``;

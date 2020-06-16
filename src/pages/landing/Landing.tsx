@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import {
+  HeroImage,
+  Features,
+  LandingMenu,
+  LandingAbout,
+  Testimonial,
+} from './components';
 
-import { HeroImage } from './components/HeroImage';
-import { Features } from './components/Features';
-import { LandingMenu } from './components/LandingMenu';
-import { Testimonial } from './components/Testimonial';
-import { LandingAbout } from './components/LandingAbout';
 interface LandingProps {}
 
 interface SectionLandingProps {}
@@ -16,6 +18,7 @@ const SectionLanding = styled.section<SectionLandingProps>`
   scroll-snap-type: y proximity;
 
   & > * {
+    height: 100vh;
     scroll-snap-align: center;
   }
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components/macro';
 import { PopupMenu } from './PopupMenu';
-import { useOpen } from '../../../hook/useOpen';
+import { useOpen } from '../../../hook';
 import { Button } from '../../ui/Button';
 
 interface HamburgerProps {}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLoadingState } from '../hook/useLoadingState';
+import { useLoadingState } from '../hook';
 import { LoadingScreen } from '../components/ui/LoadingScreen/LoadingScreen';
 
 interface useLoadingScreen {}
