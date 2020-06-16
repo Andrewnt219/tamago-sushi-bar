@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import backgroundImg from '../../../asset/bg-2.jpg';
 import { rgba } from 'polished';
+import { Button } from '../../../components/ui/Button';
 
 interface HeroImageProps {}
 /**
@@ -15,13 +16,14 @@ export const HeroImage: React.FC<HeroImageProps> = ({ children }) => {
         <Heading>
           For a world of<span>authentic Japan</span>
         </Heading>
+        <Button primary>FIND OUT MORE</Button>
       </Content>
     </Backdrop>
   );
 };
 
 interface BackdropProps {}
-const Backdrop = styled.div<BackdropProps>`
+const Backdrop = styled.article<BackdropProps>`
   width: 100vw;
   height: 100vh;
   background-image: linear-gradient(

@@ -29,5 +29,17 @@ declare module 'styled-components' {
       sm: string;
       xs: string;
     };
+
+    shadow: {
+      button: string;
+      section: string;
+      paragraph: string;
+    };
+
+    transitionSpeed: {
+      quick: string;
+      subtle: string;
+      slow: string;
+    };
   }
 }

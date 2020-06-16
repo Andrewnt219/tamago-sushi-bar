@@ -1,35 +1,39 @@
 import React from 'react';
 import styled, { css } from 'styled-components/macro';
 import { PopupMenu } from './PopupMenu';
-import { rgba } from 'polished';
 import { useOpen } from '../../../hook/useOpen';
+import { Button } from '../../ui/Button';
 
 interface HamburgerProps {}
 export const Hamburger: React.FC<HamburgerProps> = () => {
   const [menuIsOpen, toggleMenu] = useOpen();
 
   return (
-    <Container onClick={toggleMenu}>
+    <Container>
       {menuIsOpen && <PopupMenu />}
-      <Line active={menuIsOpen} />
+      <HamburgerIcon primary onClick={toggleMenu}>
+        <Line active={menuIsOpen} />
+      </HamburgerIcon>
     </Container>
   );
 };
 
 interface ContainerProps {}
-const Container = styled.button<ContainerProps>`
+const Container = styled.div<ContainerProps>`
   position: fixed;
   bottom: 2rem;
   right: 1rem;
   z-index: ${(p) => p.theme.zIndex.hg};
-  transition: background 300ms ease;
+`;
 
-  background-color: ${(p) => p.theme.primary};
+interface HamburgerIconProps {}
+const HamburgerIcon = styled(Button)<HamburgerIconProps>`
   width: 6rem;
   height: 6rem;
   border-radius: 50%;
-  box-shadow: 0 2px 5px #000;
-  border: 0;
+  padding: 0;
+  /* box-shadow: 0 2px 5px #000; */
+  /* border: 0; */
 
   display: flex;
   justify-content: center;
@@ -52,7 +56,7 @@ const Line = styled.div<LineProps>`
     height: 0.3rem;
     border-radius: 100px;
 
-    transition: all 300ms ease;
+    transition: all 200ms ease;
   }
 
   ::before {

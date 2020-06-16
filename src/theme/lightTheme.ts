@@ -31,4 +31,16 @@ export const lightTheme: DefaultTheme = {
     // 0em = 0px
     xs: '0',
   },
+
+  shadow: {
+    button: '0 2px 4px rgba(0,0,0, .5)',
+    paragraph: '0 10px 25px rgba(0,0,0, .5)',
+    section: '0 20px 40px rgba(0,0,0, .5)',
+  },
+
+  transitionSpeed: {
+    quick: '200ms',
+    subtle: '350ms',
+    slow: '500ms',
+  },
 };
