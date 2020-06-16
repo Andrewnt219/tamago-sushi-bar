@@ -4,15 +4,11 @@ import { NavLink as RRNavLink, NavLinkProps } from 'react-router-dom';
 
 const NavLink: React.FC<NavLinkProps> = ({ children, ...props }) => {
   return (
-    <StyledLi>
-      <RRNavLink activeClassName="active" {...props}>
-        {children}
-      </RRNavLink>
-    </StyledLi>
+    <RRNavLink activeClassName="active" {...props}>
+      {children}
+    </RRNavLink>
   );
 };
-
-const StyledLi = styled.li``;
 
 /**
  * @param children the text of NavLink

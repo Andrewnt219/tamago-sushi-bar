@@ -1,8 +1,8 @@
 import React from 'react';
-import { AppBar } from '../components/navigation/AppBar';
+import { AppBar } from '../components/navigation/desktop/AppBar';
 import styled from 'styled-components';
 import { CssContext } from '../context/CssContext';
-import { Hamburger } from '../components/navigation/Hamburger';
+import { Hamburger } from '../components/navigation/mobile/Hamburger';
 
 interface LayoutProps {}
 

@@ -1,14 +1,14 @@
 import styled, { useTheme } from 'styled-components/macro';
 import React from 'react';
-import { StyledNavLink } from './StyledNavLink';
+import { StyledNavLink } from '../StyledNavLink';
 import { NavLinkProps as RRNavLinkProps } from 'react-router-dom';
 import { IconType } from 'react-icons';
 
-interface NavLinkProps {
+export interface NavigationItemProps extends RRNavLinkProps {
   Icon: IconType;
 }
 
-export const NavigationItem: React.FC<RRNavLinkProps & NavLinkProps> = ({
+export const NavigationItem: React.FC<NavigationItemProps> = ({
   Icon,
   children,
   ...props
