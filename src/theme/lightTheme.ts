@@ -20,10 +20,15 @@ export const lightTheme: DefaultTheme = {
   },
 
   breakpoints: {
+    // 120em = 1920px
     xl: '120em',
+    // 80em = 1280px
     lg: '80em',
+    // 60em = 960px
     md: '60em',
+    // 37.5em = 600px
     sm: '37.5em',
+    // 0em = 0px
     xs: '0',
   },
 };

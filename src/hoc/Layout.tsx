@@ -2,6 +2,7 @@ import React from 'react';
 import { AppBar } from '../components/navigation/AppBar';
 import styled from 'styled-components';
 import { CssContext } from '../context/CssContext';
+import { Hamburger } from '../components/navigation/Hamburger';
 
 interface LayoutProps {}
 
@@ -13,7 +14,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <CssContext.Provider value={{ appbarHeight: APPBAR_HEIGHT }}>
       <AppBar height={APPBAR_HEIGHT} />
-
+      <Hamburger />
       <Main>{children}</Main>
     </CssContext.Provider>
   );

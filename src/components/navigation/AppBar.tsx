@@ -45,15 +45,19 @@ export const AppBar: React.FC<AppBarProps> = ({ height }) => {
 };
 
 const FixedBar = styled.nav<FixedBarProps>`
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 0 10vw;
+  display: none;
 
-  width: 100vw;
-  height: ${(p) => p.height};
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.sm}) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 0 10vw;
 
-  font-size: calc(${(p) => p.height} / 8);
+    width: 100vw;
+    height: ${(p) => p.height};
 
-  display: flex;
+    font-size: calc(${(p) => p.height} / 8);
+
+    display: flex;
+  }
 `;
