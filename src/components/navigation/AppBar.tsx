@@ -3,13 +3,20 @@ import styled from 'styled-components/macro';
 import { Logo } from '../ui/Logo';
 import { NavigationItems } from './NavigationItems';
 import { NavigationItem } from './NavigationItem';
+import {
+  MdHome,
+  MdRestaurantMenu,
+  MdBook,
+  MdPhone,
+  MdInfo,
+} from 'react-icons/md';
 
 interface AppBarProps {
-  height: string;
+  height?: string;
 }
 
 interface FixedBarProps {
-  height: string;
+  height?: string;
 }
 
 export const AppBar: React.FC<AppBarProps> = ({ height }) => {
@@ -17,13 +24,21 @@ export const AppBar: React.FC<AppBarProps> = ({ height }) => {
     <FixedBar height={height} id="AppBar">
       <Logo />
       <NavigationItems>
-        <NavigationItem to="/" exact>
+        <NavigationItem to="/" exact Icon={MdHome}>
           Home
         </NavigationItem>
-        <NavigationItem to="/about">About</NavigationItem>
-        <NavigationItem to="/contact">Contact</NavigationItem>
-        <NavigationItem to="/menu">Menu</NavigationItem>
-        <NavigationItem to="/reservation">Reservation</NavigationItem>
+        <NavigationItem to="/menu" Icon={MdRestaurantMenu}>
+          Menu
+        </NavigationItem>
+        <NavigationItem to="/reservation" Icon={MdBook}>
+          Reservation
+        </NavigationItem>
+        <NavigationItem to="/contact" Icon={MdPhone}>
+          Contact
+        </NavigationItem>
+        <NavigationItem to="/about" Icon={MdInfo}>
+          About
+        </NavigationItem>
       </NavigationItems>
     </FixedBar>
   );
@@ -33,6 +48,8 @@ const FixedBar = styled.nav<FixedBarProps>`
   position: fixed;
   top: 0;
   left: 0;
+  padding: 0 10vw;
+
   width: 100vw;
   height: ${(p) => p.height};
 

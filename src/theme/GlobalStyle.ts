@@ -1,14 +1,19 @@
 import { createGlobalStyle } from 'styled-components/macro';
-import { normalize } from 'styled-normalize';
+// import { normalize } from 'styled-normalize';
 
 export const GlobalStyle = createGlobalStyle`
-  ${normalize}
+
   
   :root {
     font-size: 62.5%;
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
   }
+
+  h1,h2,h3,h4,h5,h6 {
+    font-family: 'Quicksand', sans-serif;
+  }
+
 
   * {
     margin: 0;
@@ -18,7 +23,7 @@ export const GlobalStyle = createGlobalStyle`
     list-style: none;
   }
 
-  html, body {
+  #root {
     min-height: 100vh;
     position: relative;
   }

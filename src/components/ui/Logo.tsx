@@ -4,14 +4,16 @@ import LogoImg from '../../asset/logo.png';
 
 interface LogoStyledProps {}
 
-interface LogoProps {}
+interface LogoProps {
+  className?: string;
+}
 
 /**
  * @return a LogoIcon with brand name - Tamago
  */
-export const Logo: React.FC<LogoProps> = () => {
+export const Logo: React.FC<LogoProps> = ({ className }) => {
   return (
-    <Container>
+    <Container className={className}>
       <LogoIcon />
       <BrandName>Tamago</BrandName>
     </Container>
@@ -20,11 +22,11 @@ export const Logo: React.FC<LogoProps> = () => {
 
 const Container = styled.div`
   height: 100%;
-  width: min-content;
+  width: max-content;
+  display: inline-block;
 
   display: flex;
   flex-direction: column;
-
   align-items: center;
 `;
 
