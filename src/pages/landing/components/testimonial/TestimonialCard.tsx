@@ -98,7 +98,8 @@ const Avatar = styled.figure<AvatarProps>`
   @media screen and (min-width: ${(p) => p.theme.breakpoints.sm}) {
     display: inline-block;
     float: left;
-    margin-right: 2rem;
+    shape-margin: 2rem;
+    margin: unset;
 
     width: 10rem;
   }

@@ -1,10 +1,6 @@
 import React, { forwardRef } from 'react';
 import styled from 'styled-components/macro';
-import { Link as RRLink } from 'react-router-dom';
-
-interface LinkProps {
-  to: string;
-}
+import { Link as RRLink, LinkProps } from 'react-router-dom';
 
 type LinkRef = HTMLAnchorElement;
 
@@ -24,6 +20,6 @@ const Link = forwardRef<LinkRef, LinkProps>(({ children, ...props }, ref) => {
 export const StyledLink = styled(Link)`
   &:link,
   &:visited {
-    color: ${(p) => p.theme.white};
+    color: currentColor;
   }
 `;

@@ -9,7 +9,7 @@ interface BaseButtonProps {
   shadowed?: boolean;
 }
 export const BaseButton = styled.button<BaseButtonProps>`
-  font-size: ${(p) => p.fontSize ?? '1.6rem'};
+  font-size: ${(p) => p.fontSize ?? 'inherit'};
   padding: 0.75rem 1.5rem;
   border: 1px solid transparent;
   border-radius: 10rem;
