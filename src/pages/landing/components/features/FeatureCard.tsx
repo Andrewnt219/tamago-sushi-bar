@@ -1,27 +1,25 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled, { useTheme, ThemeProvider } from 'styled-components/macro';
 import { useToggle } from '../../../../hook';
 import { FlippingCard } from '../../../../components/ui/FlippingCard';
+import { Front } from './Front';
+import { Back } from './Back';
 
-interface FeatureCardProps {}
+interface FeatureCardProps {
+  frontColor: string;
+  backColor: string;
+}
 export const FeatureCard: React.FC<FeatureCardProps> = () => {
   const [isFlipped, setIsFlipped] = useToggle();
+  const defaultTheme = useTheme();
 
   return (
-    <FlippingCard isFlipped={isFlipped}>
-      <Front onClick={setIsFlipped} />
-      <Back onClick={setIsFlipped} />
-    </FlippingCard>
+    <ThemeProvider theme={{ ...defaultTheme, primary: '#ff4500' }}>
+      <FlippingCard isFlipped={isFlipped}>
+        <Front onClick={setIsFlipped} />
+
+        <Back onClick={setIsFlipped} />
+      </FlippingCard>
+    </ThemeProvider>
   );
 };
-
-interface FrontProps {}
-const Front = styled.div<FrontProps>`
-  background: blue;
-`;
-
-interface BackProps {}
-const Back = styled.div<BackProps>`
-  background: red;
-  transform: rotateY(180deg);
-`;

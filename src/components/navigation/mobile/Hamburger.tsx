@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components/macro';
 import { PopupMenu } from './PopupMenu';
 import { useToggle } from '../../../hook';
-import { Button } from '../../ui/Button';
+import { BaseButton } from '../../ui/BaseButton';
 
 interface HamburgerProps {}
 export const Hamburger: React.FC<HamburgerProps> = () => {
@@ -11,7 +11,7 @@ export const Hamburger: React.FC<HamburgerProps> = () => {
   return (
     <Container>
       {menuIsOpen && <PopupMenu />}
-      <HamburgerIcon primary onClick={toggleMenu}>
+      <HamburgerIcon contained onClick={toggleMenu}>
         <Line active={menuIsOpen} />
       </HamburgerIcon>
     </Container>
@@ -27,7 +27,7 @@ const Container = styled.div<ContainerProps>`
 `;
 
 interface HamburgerIconProps {}
-const HamburgerIcon = styled(Button)<HamburgerIconProps>`
+const HamburgerIcon = styled(BaseButton)<HamburgerIconProps>`
   width: 6rem;
   height: 6rem;
   border-radius: 50%;

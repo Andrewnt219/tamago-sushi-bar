@@ -5,6 +5,7 @@ export const GlobalStyle = createGlobalStyle`
 
   
   :root {
+    --test: blue;
     font-size: 62.5%;
     font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;

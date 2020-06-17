@@ -6,7 +6,7 @@ interface FeaturesProps {}
 export const Features: React.FC<FeaturesProps> = () => {
   return (
     <Container>
-      <FeatureCard />
+      <FeatureCard frontColor="#ff4500" backColor="#ff4500" />
     </Container>
   );
 };

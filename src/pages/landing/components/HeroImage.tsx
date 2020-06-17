@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import backgroundImg from '../../../asset/bg-2.jpg';
 import { rgba } from 'polished';
-import { Button } from '../../../components/ui/Button';
+import { BaseButton } from '../../../components/ui/BaseButton';
 
 interface HeroImageProps {}
 /**
@@ -16,7 +16,7 @@ export const HeroImage: React.FC<HeroImageProps> = ({ children }) => {
         <Heading>
           For a world of<span>authentic Japan</span>
         </Heading>
-        <Button primary>FIND OUT MORE</Button>
+        <BaseButton contained>FIND OUT MORE</BaseButton>
       </Content>
     </Backdrop>
   );
