@@ -47,7 +47,7 @@ const Container = styled.article<ContainerProps>`
   padding: 0 10%;
 
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(24rem, 35rem));
+  grid-template-columns: repeat(auto-fill, minmax(22rem, 25rem));
   gap: 5rem;
   justify-content: center;
 `;

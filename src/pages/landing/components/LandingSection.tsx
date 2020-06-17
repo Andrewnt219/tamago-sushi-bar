@@ -31,7 +31,7 @@ const Container = styled.div<ContainerProps>`
 interface SectionHeaderProps {}
 const SectionHeader = styled.h2<SectionHeaderProps>`
   font-weight: 400;
-  font-size: xx-large;
+  font-size: 3.2rem;
   text-align: center;
   text-transform: uppercase;
 

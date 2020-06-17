@@ -8,6 +8,24 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 62.5%;
     font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
+
+    @media screen and (min-width: ${(p) => p.theme.breakpoints.sm}) {
+      font-size: 75%;
+    }
+
+    @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
+      font-size: 80%;
+    }
+
+    @media screen and (min-width: ${(p) => p.theme.breakpoints.lg}) {
+      font-size: 85%;
+    }
+
+    @media screen and (min-width: ${(p) => p.theme.breakpoints.xl}) {
+      font-size: 90%;
+    }
+
+
   }
 
   h1,h2,h3,h4,h5,h6 {
@@ -24,7 +42,6 @@ export const GlobalStyle = createGlobalStyle`
 
   h3 {
     font-size: 2rem;
-    
   }
 
   p {
