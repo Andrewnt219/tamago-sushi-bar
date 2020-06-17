@@ -1,24 +1,40 @@
 import React from 'react';
-import styled, { useTheme, ThemeProvider } from 'styled-components/macro';
+import { useTheme, ThemeProvider } from 'styled-components/macro';
 import { useToggle } from '../../../../hook';
 import { FlippingCard } from '../../../../components/ui/FlippingCard';
 import { Front } from './Front';
 import { Back } from './Back';
 
 interface FeatureCardProps {
-  frontColor: string;
-  backColor: string;
+  cardIcon: string;
+  cardThemeColor: string;
+  cardContent: {
+    heading: string;
+    subHeading: string;
+    footer: string;
+  };
 }
-export const FeatureCard: React.FC<FeatureCardProps> = () => {
+export const FeatureCard: React.FC<FeatureCardProps> = ({
+  cardThemeColor,
+  cardContent,
+  cardIcon,
+  children,
+}) => {
   const [isFlipped, setIsFlipped] = useToggle();
   const defaultTheme = useTheme();
 
   return (
-    <ThemeProvider theme={{ ...defaultTheme, primary: '#ff4500' }}>
+    <ThemeProvider theme={{ ...defaultTheme, primary: cardThemeColor }}>
       <FlippingCard isFlipped={isFlipped}>
-        <Front onClick={setIsFlipped} />
+        <Front
+          cardContent={cardContent}
+          iconSrc={cardIcon}
+          onClick={setIsFlipped}
+        />
 
-        <Back onClick={setIsFlipped} />
+        <Back footer={cardContent.footer} onClick={setIsFlipped}>
+          {children}
+        </Back>
       </FlippingCard>
     </ThemeProvider>
   );

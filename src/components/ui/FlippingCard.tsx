@@ -28,6 +28,8 @@ const Container = styled.div<ContainerProps>`
 
   & > * {
     border-radius: 7px;
+    overflow: hidden;
+
     position: absolute;
     top: 0;
     left: 0;
@@ -35,7 +37,7 @@ const Container = styled.div<ContainerProps>`
     height: 100%;
     backface-visibility: hidden;
     transition: all ${(p) => p.theme.transitionSpeed.slow} ease;
-    box-shadow: ${(p) => p.theme.shadow.paragraph};
+    box-shadow: ${(p) => p.theme.shadow.button};
   }
 
   & > *:last-child {
@@ -45,12 +47,12 @@ const Container = styled.div<ContainerProps>`
   ${(p) =>
     p.isFlipped &&
     css`
-      *:first-child {
+      & > *:first-child {
         transform: rotateY(-180deg);
         background: red;
       }
 
-      *:last-child {
+      & > *:last-child {
         transform: rotateY(0);
       }
     `}

@@ -28,6 +28,7 @@ const FixedBar = styled.nav<FixedBarProps>`
     top: 0;
     left: 0;
     padding: 0 10vw;
+    z-index: ${(p) => p.theme.zIndex.top};
 
     width: 100vw;
     height: ${(p) => p.height};

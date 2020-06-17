@@ -36,7 +36,7 @@ export const lightTheme: DefaultTheme = {
 
   shadow: {
     button: '0 2px 4px rgba(0,0,0, .5)',
-    paragraph: '0 10px 25px rgba(0,0,0, .5)',
+    paragraph: '0 1.5rem 4rem rgba(0,0,0, .5)',
     section: '0 20px 40px rgba(0,0,0, .5)',
   },
 

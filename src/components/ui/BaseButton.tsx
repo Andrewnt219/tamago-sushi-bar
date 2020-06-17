@@ -1,13 +1,13 @@
 import styled, { css } from 'styled-components/macro';
 
-interface BaseButtonStyledProps {
+interface BaseButtonProps {
   contained?: boolean;
   outlined?: boolean;
   text?: boolean;
   color?: string;
   fontSize?: string;
 }
-export const BaseButton = styled.button<BaseButtonStyledProps>`
+export const BaseButton = styled.button<BaseButtonProps>`
   font-size: ${(p) => p.fontSize ?? '1.6rem'};
   padding: 0.75rem 1.5rem;
   border: 1px solid transparent;
@@ -21,7 +21,7 @@ export const BaseButton = styled.button<BaseButtonStyledProps>`
     filter: brightness(0.9);
   }
 
-  :hover {
+  :hover, :focus {
     transform: translateY(-2px);
   }
 
@@ -53,7 +53,8 @@ export const BaseButton = styled.button<BaseButtonStyledProps>`
         padding: 0.25rem 0.5rem;
         color: ${p.color ?? p.theme.primary};
 
-        :hover {
+        :hover,
+        :focus {
           filter: none;
           background: ${p.color ?? p.theme.primary};
           color: ${p.theme.text};

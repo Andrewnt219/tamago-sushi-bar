@@ -12,16 +12,7 @@ interface LandingProps {}
 
 interface SectionLandingProps {}
 
-const SectionLanding = styled.section<SectionLandingProps>`
-  overflow-y: auto;
-  height: 100vh;
-  scroll-snap-type: y proximity;
-
-  & > * {
-    height: 100vh;
-    scroll-snap-align: center;
-  }
-`;
+const SectionLanding = styled.section<SectionLandingProps>``;
 
 export const Landing: React.FC<LandingProps> = () => {
   return (
