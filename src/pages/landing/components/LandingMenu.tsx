@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import { LandingSection } from './LandingSection';
 
 interface LandingMenuProps {}
 export const LandingMenu: React.FC<LandingMenuProps> = () => {
-  return <Container>Landing Menu</Container>;
+  return (
+    <LandingSection sectionName="culture of the far east">
+      Landing Menu
+    </LandingSection>
+  );
 };
 
 interface ContainerProps {}
-const Container = styled.article<ContainerProps>`
-  height: 100vh;
-`;

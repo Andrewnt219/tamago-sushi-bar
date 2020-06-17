@@ -4,32 +4,35 @@ import backgroundImg from '../../../../asset/testimonial.jpg';
 import { rgba } from 'polished';
 import { TestimonialCard, CustomerDetail } from './TestimonialCard';
 import faker from 'faker';
+import { LandingSection } from '../LandingSection';
 
 interface TestimonialProps {}
 export const Testimonial: React.FC<TestimonialProps> = () => {
   return (
-    <Container>
-      <TestimonialCard
-        customer={CUSTOMER_1}
-        heading="I had the best birthday ever with my family"
-      >
-        The sushi rolls that they serve here are just amazing and taste just
-        like the ones served at the best Japanese restaurants in Tokyo! Believe
-        me, I’ve lived there for more than 30 years!
-      </TestimonialCard>
+    <LandingSection sectionName="words from our customers">
+      <Container>
+        <TestimonialCard
+          customer={CUSTOMER_1}
+          heading="I had the best birthday ever with my family"
+        >
+          The sushi rolls that they serve here are just amazing and taste just
+          like the ones served at the best Japanese restaurants in Tokyo!
+          Believe me, I’ve lived there for more than 30 years!
+        </TestimonialCard>
 
-      <TestimonialCard customer={CUSTOMER_2} heading="I love tofu">
-        Their tofu is just outstanding! I’ve been to many Japanese places in my
-        life, but this one is the ultimate best! Also, the very range of their
-        traditional dishes is wider than at other US restaurants!
-      </TestimonialCard>
+        <TestimonialCard customer={CUSTOMER_2} heading="I love tofu">
+          Their tofu is just outstanding! I’ve been to many Japanese places in
+          my life, but this one is the ultimate best! Also, the very range of
+          their traditional dishes is wider than at other US restaurants!
+        </TestimonialCard>
 
-      <TestimonialCard customer={CUSTOMER_3} heading="A taste of hometown">
-        When I moved from Kyoto to this city, parting ways with my favorite
-        family restaurant venue was hard… Luckily here I’ve found an even better
-        quality both for the menu and everything else
-      </TestimonialCard>
-    </Container>
+        <TestimonialCard customer={CUSTOMER_3} heading="A taste of hometown">
+          When I moved from Kyoto to this city, parting ways with my favorite
+          family restaurant venue was hard… Luckily here I’ve found an even
+          better quality both for the menu and everything else
+        </TestimonialCard>
+      </Container>
+    </LandingSection>
   );
 };
 

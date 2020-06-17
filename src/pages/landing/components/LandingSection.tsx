@@ -23,7 +23,6 @@ interface ContainerProps {
   backgroundIsStrong?: boolean;
 }
 const Container = styled.div<ContainerProps>`
-  margin: 5rem 0;
   min-height: 100vh;
   background-color: ${(p) =>
     p.backgroundIsStrong ? p.theme.strongBackground : p.theme.subtleBackground};
@@ -36,7 +35,7 @@ const SectionHeader = styled.h2<SectionHeaderProps>`
   text-align: center;
   text-transform: uppercase;
 
-  padding-bottom: 2rem;
+  padding: 5rem 0 4rem 0;
   margin: 0 auto;
 
   &:after {

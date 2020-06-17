@@ -53,11 +53,13 @@ interface AvatarProps {}
 const Avatar = styled.figure<AvatarProps>`
   width: 10rem;
   height: 10rem;
-  margin-right: 2rem;
 
   clip-path: circle(50% at 50% 50%);
   shape-outside: circle(50% at 50% 50%);
-  float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 
   position: relative;
   overflow: hidden;
@@ -72,6 +74,14 @@ const Avatar = styled.figure<AvatarProps>`
       opacity: 1;
       transform: translate(-50%, -50%);
     }
+  }
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.sm}) {
+    display: inline-block;
+    float: left;
+    margin-right: 2rem;
+
+    width: unset;
   }
 `;
 
@@ -97,8 +107,8 @@ const CustomerName = styled.figcaption<CustomerNameProps>`
 
 interface PictureProps {}
 const Picture = styled.img<PictureProps>`
-  max-width: 100%;
-  max-height: 100%;
+  max-height: 80%;
+  border-radius: 50%;
 
   transform: scale(1.1);
   transition: all ${(p) => p.theme.transitionSpeed.quick} ease;

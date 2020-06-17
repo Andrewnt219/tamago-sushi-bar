@@ -9,7 +9,7 @@ import { LandingSection } from '../LandingSection';
 interface FeaturesProps {}
 export const Features: React.FC<FeaturesProps> = () => {
   return (
-    <LandingSection sectionName="Why Tamago?">
+    <LandingSection backgroundIsStrong sectionName="Why Tamago?">
       <Container>
         <FeatureCard
           cardThemeColor="#ff4500"
