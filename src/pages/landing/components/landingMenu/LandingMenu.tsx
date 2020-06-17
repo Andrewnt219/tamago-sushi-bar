@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { LandingSection } from './LandingSection';
+import { LandingSection } from '../LandingSection';
 
 interface LandingMenuProps {}
 export const LandingMenu: React.FC<LandingMenuProps> = () => {

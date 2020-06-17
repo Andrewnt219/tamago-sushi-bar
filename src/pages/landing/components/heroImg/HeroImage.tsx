@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import backgroundImg from '../../../asset/bg-2.jpg';
+import backgroundImg from '../../../../asset/bg-2.jpg';
 import { rgba } from 'polished';
-import { BaseButton } from '../../../components/ui/BaseButton';
+import { BaseButton } from '../../../../components/ui/BaseButton';
 
 interface HeroImageProps {}
 /**

@@ -26,6 +26,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
       <Content>
         <Heading>{heading}</Heading>
         <Review>{children}</Review>
+        <Footer>{customer.name}</Footer>
       </Content>
     </Container>
   );
@@ -36,6 +37,11 @@ const Container = styled.div<ContainerProps>`
   background-color: ${(p) => rgba(p.theme.white, 0.8)};
   padding: 10%;
   border-radius: 4px;
+  transition: background-color ${(p) => p.theme.transitionSpeed.quick} ease;
+
+  &:hover {
+    background-color: ${(p) => rgba(p.theme.white, 1)};
+  }
 `;
 
 interface ContentProps {}
@@ -48,18 +54,31 @@ const Heading = styled.h3`
 `;
 
 const Review = styled.p``;
+const Footer = styled.p`
+  font-style: italic;
+  text-align: center;
+  margin-top: 1rem;
+
+  &:before {
+    content: '- ';
+  }
+
+  &:after {
+    content: ' -';
+  }
+`;
 
 interface AvatarProps {}
 const Avatar = styled.figure<AvatarProps>`
-  width: 10rem;
-  height: 10rem;
-
   clip-path: circle(50% at 50% 50%);
   shape-outside: circle(50% at 50% 50%);
+  width: 100%;
+  height: 10rem;
+  margin-bottom: 1rem;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
 
   position: relative;
   overflow: hidden;
@@ -81,7 +100,7 @@ const Avatar = styled.figure<AvatarProps>`
     float: left;
     margin-right: 2rem;
 
-    width: unset;
+    width: 10rem;
   }
 `;
 
@@ -112,4 +131,8 @@ const Picture = styled.img<PictureProps>`
 
   transform: scale(1.1);
   transition: all ${(p) => p.theme.transitionSpeed.quick} ease;
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.sm}) {
+    max-height: 100%;
+  }
 `;
