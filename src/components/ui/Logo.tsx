@@ -15,14 +15,14 @@ export const Logo: React.FC<LogoProps> = ({ className }) => {
   return (
     <Container className={className}>
       <LogoIcon />
-      <BrandName>Tamago</BrandName>
+      <BrandName>tamago</BrandName>
     </Container>
   );
 };
 
 const Container = styled.div`
   height: 100%;
-  width: max-content;
+
   display: inline-block;
 
   display: flex;
@@ -35,9 +35,7 @@ const LogoIcon = styled.img.attrs({ src: LogoImg })<LogoStyledProps>`
 `;
 
 const BrandName = styled.p`
-  transform: translateX(-20%);
-
-  font-weight: 700;
+  font-weight: 500;
   text-align: center;
   color: ${(p) => p.theme.primary};
 `;
