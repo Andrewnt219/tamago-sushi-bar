@@ -1,12 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import {
-  HeroImage,
-  Features,
-  LandingMenu,
-  LandingAbout,
-  Testimonial,
-} from './components';
+import { HeroImage, Features, LandingMenu, Testimonial } from './components';
 
 interface LandingProps {}
 
@@ -19,7 +13,6 @@ export const Landing: React.FC<LandingProps> = () => {
     <SectionLanding>
       <HeroImage />
       <Features />
-      <LandingAbout />
       <Testimonial />
       <LandingMenu />
     </SectionLanding>

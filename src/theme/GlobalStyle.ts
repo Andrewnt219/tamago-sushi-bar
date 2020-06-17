@@ -14,6 +14,19 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Quicksand', sans-serif;
   }
 
+  h1 {
+    font-size: 3.2rem;
+  }
+
+  h2 {
+    font-size: 2.4rem;
+  }
+
+  h3 {
+    font-size: 2rem;
+    
+  }
+
   p {
     font-size: 1.6rem;
     line-height: 1.6;
