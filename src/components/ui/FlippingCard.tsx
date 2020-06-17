@@ -49,7 +49,6 @@ const Container = styled.div<ContainerProps>`
     css`
       & > *:first-child {
         transform: rotateY(-180deg);
-        background: red;
       }
 
       & > *:last-child {

@@ -16,7 +16,9 @@ export const HeroImage: React.FC<HeroImageProps> = ({ children }) => {
         <Heading>
           For a world of<span>authentic Japan</span>
         </Heading>
-        <BaseButton contained>FIND OUT MORE</BaseButton>
+        <BaseButton shadowed contained>
+          FIND OUT MORE
+        </BaseButton>
       </Content>
     </Backdrop>
   );
@@ -33,6 +35,7 @@ const Backdrop = styled.article<BackdropProps>`
     url(${backgroundImg});
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
 `;
 
 interface ContentProps {}

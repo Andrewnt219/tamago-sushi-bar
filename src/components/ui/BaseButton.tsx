@@ -6,6 +6,7 @@ interface BaseButtonProps {
   text?: boolean;
   color?: string;
   fontSize?: string;
+  shadowed?: boolean;
 }
 export const BaseButton = styled.button<BaseButtonProps>`
   font-size: ${(p) => p.fontSize ?? '1.6rem'};
@@ -13,7 +14,7 @@ export const BaseButton = styled.button<BaseButtonProps>`
   border: 1px solid transparent;
   border-radius: 10rem;
   cursor: pointer;
-  box-shadow: ${(p) => p.theme.shadow.button};
+  box-shadow: ${(p) => p.shadowed && p.theme.shadow.button};
   transition: all ${(p) => p.theme.transitionSpeed.quick} ease-in;
 
   :active,
@@ -48,7 +49,6 @@ export const BaseButton = styled.button<BaseButtonProps>`
       css`
         border-bottom: 1px solid ${p.color ?? p.theme.primary};
         border-radius: 0;
-        box-shadow: none;
         background: transparent;
         padding: 0.25rem 0.5rem;
         color: ${p.color ?? p.theme.primary};
@@ -58,7 +58,6 @@ export const BaseButton = styled.button<BaseButtonProps>`
           filter: none;
           background: ${p.color ?? p.theme.primary};
           color: ${p.theme.text};
-          box-shadow: ${p.theme.shadow.button};
         }
       `}
 `;

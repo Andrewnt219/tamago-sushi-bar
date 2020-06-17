@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import { LandingSection } from './LandingSection';
 
 interface LandingAboutProps {}
 export const LandingAbout: React.FC<LandingAboutProps> = () => {
-  return <Container>Landing About</Container>;
+  return (
+    <LandingSection
+      backgroundIsStrong
+      sectionName="Landing About"
+    ></LandingSection>
+  );
 };
-
-interface ContainerProps {}
-const Container = styled.article<ContainerProps>`
-  height: 100vh;
-`;

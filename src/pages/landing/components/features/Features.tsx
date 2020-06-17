@@ -4,45 +4,47 @@ import { FeatureCard } from './FeatureCard';
 import freshIcon from '../../../../asset/fresh.svg';
 import betterIcon from '../../../../asset/better.svg';
 import familyIcon from '../../../../asset/family.svg';
+import { LandingSection } from '../LandingSection';
 
 interface FeaturesProps {}
 export const Features: React.FC<FeaturesProps> = () => {
   return (
-    <Container>
-      <FeatureCard
-        cardThemeColor="#ff4500"
-        cardContent={CARD_CONTENT_1}
-        cardIcon={freshIcon}
-      >
-        Freshly caught and traditionally steammed. A place where everything is
-        freshly made.
-      </FeatureCard>
+    <LandingSection sectionName="Why Tamago?">
+      <Container>
+        <FeatureCard
+          cardThemeColor="#ff4500"
+          cardContent={CARD_CONTENT_1}
+          cardIcon={freshIcon}
+        >
+          Freshly caught and traditionally steammed. A place where everything is
+          freshly made.
+        </FeatureCard>
 
-      <FeatureCard
-        cardThemeColor="#f94144"
-        cardContent={CARD_CONTENT_2}
-        cardIcon={familyIcon}
-      >
-        Something for everybody. A place every of your loved one can enjoy nice
-        food for themselve.
-      </FeatureCard>
+        <FeatureCard
+          cardThemeColor="#f94144"
+          cardContent={CARD_CONTENT_2}
+          cardIcon={familyIcon}
+        >
+          Something for everybody. A place every of your loved one can enjoy
+          nice food for themselve.
+        </FeatureCard>
 
-      <FeatureCard
-        cardThemeColor="#fdbf00"
-        cardContent={CARD_CONTENT_3}
-        cardIcon={betterIcon}
-      >
-        Surprise yourself with chef's weekly special, upload fancy dishes for
-        your Instagram&reg;, and give your tummy delicious food.
-      </FeatureCard>
-    </Container>
+        <FeatureCard
+          cardThemeColor="#fdbf00"
+          cardContent={CARD_CONTENT_3}
+          cardIcon={betterIcon}
+        >
+          Surprise yourself with chef's weekly special, upload fancy dishes for
+          your Instagram&reg;, and give your tummy delicious food.
+        </FeatureCard>
+      </Container>
+    </LandingSection>
   );
 };
 
 interface ContainerProps {}
 const Container = styled.article<ContainerProps>`
-  background-color: ${(p) => p.theme.subtleBackground};
-  padding: 20% 10%;
+  padding: 0 10%;
 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(24rem, 35rem));
