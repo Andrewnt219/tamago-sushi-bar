@@ -23,7 +23,7 @@ export const BaseButton = styled.button<BaseButtonProps>`
   } */
 
   :hover {
-    transform: translateY(-2px);
+    transform: translateY(-.2rem);
     box-shadow: 0 1rem 2rem rgba(0,0,0, .2);
   }
 

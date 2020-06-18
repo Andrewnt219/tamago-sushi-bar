@@ -12,11 +12,15 @@ export const HeroImage: React.FC<HeroImageProps> = ({ children }) => {
   return (
     <Backdrop>
       <Content>
-        <SubHeading>BRACE YOURSELF</SubHeading>
+        <SubHeading>come and enjoy</SubHeading>
         <Heading>
-          For a world of <span>authentic Japan</span>
+          Tokyo&apos;s finest <span> sushi bar</span>
         </Heading>
-        <BaseButton shadowed contained>
+        <BaseButton
+          style={{ marginTop: '4rem', fontSize: '2rem' }}
+          shadowed
+          contained
+        >
           FIND OUT MORE
         </BaseButton>
       </Content>
@@ -55,7 +59,7 @@ const Content = styled.div<ContentProps>`
 interface HeadingProps {}
 const Heading = styled.h1<HeadingProps>`
   text-align: center;
-
+  font-size: 5rem;
   span {
     display: inline-block;
     color: ${(p) => p.theme.h1};
@@ -65,4 +69,5 @@ const Heading = styled.h1<HeadingProps>`
 interface SubHeadingProps {}
 const SubHeading = styled.h2<SubHeadingProps>`
   font-weight: 400;
+  font-size: 3.2rem;
 `;
