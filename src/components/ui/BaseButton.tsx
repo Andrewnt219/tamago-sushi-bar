@@ -39,7 +39,8 @@ export const BaseButton = styled.button<BaseButtonProps>`
       color: ${p.theme.text};
 
       :hover,
-      :focus {
+      :focus,
+      :active {
         filter: brightness(0.9);
       }
     `}
@@ -69,7 +70,8 @@ export const BaseButton = styled.button<BaseButtonProps>`
         color: ${p.color ?? p.theme.primary};
 
         :hover,
-        :focus {
+        :focus,
+        :active {
           filter: none;
           background: ${p.color ?? p.theme.primary};
           color: ${p.theme.text};

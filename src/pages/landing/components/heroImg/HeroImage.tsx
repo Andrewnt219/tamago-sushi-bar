@@ -14,7 +14,7 @@ export const HeroImage: React.FC<HeroImageProps> = ({ children }) => {
       <Content>
         <SubHeading>BRACE YOURSELF</SubHeading>
         <Heading>
-          For a world of<span>authentic Japan</span>
+          For a world of <span>authentic Japan</span>
         </Heading>
         <BaseButton shadowed contained>
           FIND OUT MORE

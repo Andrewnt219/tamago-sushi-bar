@@ -22,4 +22,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   );
 };
 
-const Main = styled.main<MainProps>``;
+const Main = styled.main<MainProps>`
+  min-height: 100vh;
+`;

@@ -57,7 +57,8 @@ const Description = styled.p`
 `;
 
 const Button = styled(BaseButton).attrs((p) => ({ color: p.theme.white }))`
-  &:hover {
+  &:hover,
+  &:active {
     background-color: ${(p) => p.theme.primary};
     border-color: ${(p) => p.theme.primary};
   }
