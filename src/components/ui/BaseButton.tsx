@@ -17,17 +17,19 @@ export const BaseButton = styled.button<BaseButtonProps>`
   box-shadow: ${(p) => p.shadowed && p.theme.shadow.button};
   transition: all ${(p) => p.theme.transitionSpeed.quick} ease-in;
 
-  :active,
+  /* :active,
   :hover {
     filter: brightness(0.9);
-  }
+  } */
 
-  :hover, :focus {
+  :hover {
     transform: translateY(-2px);
+    box-shadow: 0 1rem 2rem rgba(0,0,0, .2);
   }
 
   :active {
     transform: translateY(0);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0, .2);
   }
 
   ${(p) =>
@@ -35,13 +37,26 @@ export const BaseButton = styled.button<BaseButtonProps>`
     css`
       background-color: ${p.color ?? p.theme.primary};
       color: ${p.theme.text};
+
+      :hover,
+      :focus {
+        filter: brightness(0.9);
+      }
     `}
 
   ${(p) =>
     p.outlined &&
     css`
+      background: transparent;
       border-color: ${p.color ?? p.theme.primary};
       color: ${p.color ?? p.theme.primary};
+
+      :hover,
+      :focus,
+      :active {
+        background-color: ${p.color ?? p.theme.primary};
+        color: ${p.theme.text};
+      }
     `}
 
     ${(p) =>

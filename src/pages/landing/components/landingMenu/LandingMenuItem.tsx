@@ -15,9 +15,7 @@ export const LandingMenuItem: React.FC<
       <MenuName>{header}</MenuName>
       <Description>{children}</Description>
       <StyledLink to="/menu">
-        <Button shadowed contained>
-          VIEW MORE
-        </Button>
+        <Button outlined>VIEW MORE</Button>
       </StyledLink>
     </Container>
   );
@@ -58,4 +56,9 @@ const Description = styled.p`
   font-size: 1.1rem;
 `;
 
-const Button = styled(BaseButton)``;
+const Button = styled(BaseButton).attrs((p) => ({ color: p.theme.white }))`
+  &:hover {
+    background-color: ${(p) => p.theme.primary};
+    border-color: ${(p) => p.theme.primary};
+  }
+`;
