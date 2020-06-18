@@ -16,6 +16,7 @@ declare module 'styled-components' {
     white: string;
     subtleBackground: string;
     strongBackground: string;
+    blackBackground: string;
 
     zIndex: {
       top: number;

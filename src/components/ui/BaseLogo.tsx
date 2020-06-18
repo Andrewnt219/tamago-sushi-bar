@@ -1,21 +1,22 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import LogoImg from '../../asset/logo.png';
+import LogoImg from '../../asset/logo.svg';
 
 interface LogoStyledProps {}
 
 interface LogoProps {
   className?: string;
+  showName?: boolean;
 }
 
 /**
  * @return a LogoIcon with brand name - Tamago
  */
-export const Logo: React.FC<LogoProps> = ({ className }) => {
+export const BaseLogo: React.FC<LogoProps> = ({ className, showName }) => {
   return (
     <Container className={className}>
       <LogoIcon />
-      <BrandName>tamago</BrandName>
+      {showName && <BrandName>tamago</BrandName>}
     </Container>
   );
 };
@@ -30,8 +31,8 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const LogoIcon = styled.img.attrs({ src: LogoImg })<LogoStyledProps>`
-  height: 100%;
+export const LogoIcon = styled.img.attrs({ src: LogoImg })<LogoStyledProps>`
+  transform: translateX(10%);
 `;
 
 const BrandName = styled.p`

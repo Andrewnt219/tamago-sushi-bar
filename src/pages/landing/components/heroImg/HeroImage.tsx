@@ -54,7 +54,6 @@ const Content = styled.div<ContentProps>`
 
 interface HeadingProps {}
 const Heading = styled.h1<HeadingProps>`
-  font-size: x-large;
   text-align: center;
 
   span {
@@ -65,6 +64,5 @@ const Heading = styled.h1<HeadingProps>`
 
 interface SubHeadingProps {}
 const SubHeading = styled.h2<SubHeadingProps>`
-  font-size: large;
   font-weight: 400;
 `;

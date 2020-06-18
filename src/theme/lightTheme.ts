@@ -13,6 +13,7 @@ export const lightTheme: DefaultTheme = {
   white: '#fff',
   subtleBackground: '#f7f7f7',
   strongBackground: '#f4f4f4',
+  blackBackground: '#1b1f28',
 
   zIndex: {
     top: 100,

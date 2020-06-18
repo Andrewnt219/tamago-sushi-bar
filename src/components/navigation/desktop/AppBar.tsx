@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { Logo } from '../../ui/Logo';
+import { BaseLogo } from '../../ui/BaseLogo';
 import { DesktopNavigationItems } from './DesktopNavigationItems';
 
 interface AppBarProps {
@@ -14,7 +14,7 @@ interface FixedBarProps {
 export const AppBar: React.FC<AppBarProps> = ({ height }) => {
   return (
     <FixedBar height={height} id="AppBar">
-      <Logo />
+      <BaseLogo />
       <DesktopNavigationItems />
     </FixedBar>
   );
