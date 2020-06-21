@@ -3,6 +3,7 @@ import { AppBar } from '../components/navigation/desktop/AppBar';
 import styled from 'styled-components';
 import { CssContext } from '../context/CssContext';
 import { Hamburger } from '../components/navigation/mobile/Hamburger';
+import { Footer } from '../components/navigation/footer/Footer';
 
 interface LayoutProps {}
 
@@ -16,6 +17,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       <AppBar height={APPBAR_HEIGHT} />
       <Hamburger />
       <Main>{children}</Main>
+      <Footer />
     </CssContext.Provider>
   );
 };
