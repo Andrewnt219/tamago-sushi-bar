@@ -15,12 +15,13 @@ const NavLink: React.FC<NavLinkProps> = ({ children, ...props }) => {
  * @param props props of NavLink from React Router
  */
 export const StyledNavLink = styled(NavLink)`
-  &.active {
-    font-weight: bolder;
-  }
+  transition: all ${(p) => p.theme.transitionSpeed.quick};
+
+  /* &.active {
+  } */
 
   &:visited,
   &:link {
-    color: ${(p) => p.theme.primary};
+    color: inherit;
   }
 `;

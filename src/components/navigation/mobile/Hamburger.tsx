@@ -24,6 +24,10 @@ const Container = styled.div<ContainerProps>`
   bottom: 1rem;
   right: 1.5rem;
   z-index: ${(p) => p.theme.zIndex.hg};
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.sm}) {
+    display: none;
+  }
 `;
 
 interface HamburgerIconProps {}

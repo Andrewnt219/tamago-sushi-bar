@@ -1,33 +1,29 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { NavigationItem } from './DesktopNavigationItem';
-import {
-  MdHome,
-  MdRestaurantMenu,
-  MdBook,
-  MdPhone,
-  MdInfo,
-} from 'react-icons/md';
+import { DesktopNavigationItem } from './DesktopNavigationItem';
+import { BaseLogo } from '../../ui/BaseLogo';
+import { appBarIsFixedSelector } from '../../../features/uiSlice';
+import { useSelector } from 'react-redux';
 
 interface DesktopNavigationItemsProps {}
 export const DesktopNavigationItems: React.FC<DesktopNavigationItemsProps> = () => {
+  const appbarIsFixed = useSelector(appBarIsFixedSelector);
+
   return (
     <StyledNavigationItems>
-      <NavigationItem to="/" exact Icon={MdHome}>
+      {!appbarIsFixed && <BaseLogo />}
+
+      <DesktopNavigationItem to="/" exact>
         Home
-      </NavigationItem>
-      <NavigationItem to="/menu" Icon={MdRestaurantMenu}>
-        Menu
-      </NavigationItem>
-      <NavigationItem to="/reservation" Icon={MdBook}>
+      </DesktopNavigationItem>
+
+      <DesktopNavigationItem to="/menu">Menu</DesktopNavigationItem>
+
+      <DesktopNavigationItem to="/reservation">
         Reservation
-      </NavigationItem>
-      <NavigationItem to="/contact" Icon={MdPhone}>
-        Contact
-      </NavigationItem>
-      <NavigationItem to="/about" Icon={MdInfo}>
-        About
-      </NavigationItem>
+      </DesktopNavigationItem>
+
+      <DesktopNavigationItem to="/order">Order</DesktopNavigationItem>
     </StyledNavigationItems>
   );
 };
@@ -35,8 +31,9 @@ export const DesktopNavigationItems: React.FC<DesktopNavigationItemsProps> = () 
 interface StyledNavigationItemsProps {}
 const StyledNavigationItems = styled.ul<StyledNavigationItemsProps>`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 
   width: 100%;
+  height: 100%;
 `;

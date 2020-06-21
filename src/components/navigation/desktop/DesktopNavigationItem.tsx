@@ -1,27 +1,56 @@
-import styled, { useTheme } from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 import React from 'react';
 import { StyledNavLink } from '../StyledNavLink';
 import { NavLinkProps as RRNavLinkProps } from 'react-router-dom';
-import { IconType } from 'react-icons';
+import { appBarIsFixedSelector } from '../../../features/uiSlice';
+import { useSelector } from 'react-redux';
 
-export interface NavigationItemProps extends RRNavLinkProps {
-  Icon: IconType;
-}
+export interface DesktopNavigationItemProps extends RRNavLinkProps {}
 
-export const NavigationItem: React.FC<NavigationItemProps> = ({
-  Icon,
+export const DesktopNavigationItem: React.FC<DesktopNavigationItemProps> = ({
   children,
   ...props
 }) => {
-  const theme = useTheme();
+  const appbarIsFixed = useSelector(appBarIsFixedSelector);
+
   return (
-    <StyledLi>
-      <Icon fill={theme.primary} size="3rem" />
+    <StyledLi appbarIsFixed={appbarIsFixed}>
       <StyledNavLink {...props}>{children}</StyledNavLink>
     </StyledLi>
   );
 };
 
-const StyledLi = styled.li`
-  display: block;
+interface StyledLiProps {
+  appbarIsFixed: boolean;
+}
+const StyledLi = styled.li<StyledLiProps>`
+  display: flex;
+  align-items: flex-end;
+
+  height: 100%;
+  padding: 0 1rem 1rem 1rem;
+  color: inherit;
+  font-weight: 300;
+  font-size: 2rem;
+  border-bottom: 0.1rem solid transparent;
+
+  :hover {
+    border-bottom: 0.1rem solid ${(p) => p.theme.primary};
+  }
+
+  .active {
+    color: ${(p) => p.theme.primary};
+  }
+
+  ${(p) =>
+    p.appbarIsFixed &&
+    css`
+      padding: unset;
+      border: unset;
+
+      :hover {
+        border: unset;
+        color: ${(p) => p.theme.primary};
+      }
+    `}
 `;

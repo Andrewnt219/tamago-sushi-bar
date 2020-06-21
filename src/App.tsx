@@ -4,7 +4,6 @@ import { lightTheme } from './theme/lightTheme';
 import { GlobalStyle } from './theme/GlobalStyle';
 import { Switch, Route } from 'react-router-dom';
 import { Landing } from './pages/landing/Landing';
-import { About } from './pages/about/About';
 import { Order } from './pages/order/Order';
 import { Reservation } from './pages/reservation/Reservation';
 import { Menu } from './pages/menu/Menu';
@@ -17,7 +16,6 @@ function App() {
       <GlobalStyle />
       <Layout>
         <Switch>
-          <Route path="/about" component={About} />
           <Route path="/order" component={Order} />
           <Route path="/reservation" component={Reservation} />
           <Route path="/menu" component={Menu} />

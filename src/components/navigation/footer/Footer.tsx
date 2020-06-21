@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { SocialMediaIcons } from './SocialMediaIcons';
-import { LogoIcon } from '../../ui/BaseLogo';
+import { BaseLogo } from '../../ui/BaseLogo';
 
 interface FooterProps {}
 export const Footer: React.FC<FooterProps> = () => {
@@ -39,7 +39,7 @@ const Text = styled.p`
   align-items: center;
 `;
 
-const Logo = styled(LogoIcon)`
+const Logo = styled(BaseLogo)`
   transform: none;
   grid-row: 1/3;
 
