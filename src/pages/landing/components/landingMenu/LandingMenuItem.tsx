@@ -3,18 +3,20 @@ import styled from 'styled-components/macro';
 import { BaseButton } from '../../../../components/ui/BaseButton';
 import { rgba } from 'polished';
 import { StyledLink } from '../../../../components/navigation/StyledLink';
+import { menuIds } from '../../../../data/menu';
 
 interface LandingMenuItemProps {
   header: string;
+  menuId: menuIds;
 }
 export const LandingMenuItem: React.FC<
   LandingMenuItemProps & ContainerProps
-> = ({ imgSrc, children, header }) => {
+> = ({ imgSrc, children, header, menuId }) => {
   return (
     <Container imgSrc={imgSrc}>
       <MenuName>{header}</MenuName>
       <Description>{children}</Description>
-      <StyledLink to="/menu">
+      <StyledLink to={`/menu#${menuId}`}>
         <Button outlined>VIEW MORE</Button>
       </StyledLink>
     </Container>

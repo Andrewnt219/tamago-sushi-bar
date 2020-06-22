@@ -38,7 +38,7 @@ function createDots(numberOfDots: number, color?: string): ReactElement[] {
   let dots: ReactElement[] = [];
 
   for (let index = 0; index < numberOfDots; index++) {
-    dots.push(<Dot color={color} />);
+    dots.push(<Dot key={index} color={color} />);
   }
 
   return dots;

@@ -6,6 +6,7 @@ interface CategorySaladProps {}
 export const CategorySalad: React.FC<CategorySaladProps> = () => {
   return (
     <MenuCategory
+      menuId="appetizersAndSalads"
       categoryName="Appetizers &amp; Salad"
       menuItems={menus.salads.concat(menus.appetizers)}
     />

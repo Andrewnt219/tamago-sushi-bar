@@ -267,3 +267,9 @@ export const menus: Menus = {
     },
   ],
 };
+
+export type menuIds =
+  | 'appetizersAndSalads'
+  | 'riceAndNoodles'
+  | 'sushiAndSashimi'
+  | 'dessertsAndDrinks';

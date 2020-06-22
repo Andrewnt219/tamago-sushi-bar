@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components/macro';
 import { DesktopNavigationItems } from './DesktopNavigationItems';
 import { useInView } from 'react-intersection-observer';
 import { useRouteMatch } from 'react-router-dom';
+import { BaseLogo } from '../../ui/BaseLogo';
 
 interface AppBarProps {
   height?: string;
@@ -23,6 +24,7 @@ export const AppBar: React.FC<AppBarProps> = ({ height }) => {
         ref={ref}
         isOnLandingPage={Boolean(matchLandingPage)}
       >
+        <BaseLogo />
         <DesktopNavigationItems />
       </StaticAppBar>
 
@@ -44,9 +46,9 @@ const StaticAppBar = styled.nav<StaticAppBarProps>`
 
   /* Intentionally move these outside of media for style inheritance */
   padding: 1rem 10vw;
-  z-index: ${(p) => p.theme.zIndex.top};
 
-  width: 100vw;
+  max-width: 100vw;
+  
   height: ${(p) => p.height};
 
   color: ${(p) => p.theme.black};
@@ -72,7 +74,9 @@ const FixedAppBar = styled(StaticAppBar)`
   left: 0;
   background: ${(p) => p.theme.subtleBackground};
   box-shadow: ${(p) => p.theme.shadow.button};
+  z-index: ${(p) => p.theme.zIndex.top};
 
+  width: 100vw;
   color: ${(p) => p.theme.black};
   height: 5rem;
 `;

@@ -12,23 +12,39 @@ export const LandingMenu: React.FC<LandingMenuProps> = () => {
   return (
     <LandingSection sectionName="culture of the far east">
       <LandingMenuItems>
-        <LandingMenuItem header="sushi" imgSrc={menuSushi}>
+        <LandingMenuItem
+          menuId="sushiAndSashimi"
+          header="sushi"
+          imgSrc={menuSushi}
+        >
           Originating in Japan, consisting of cooked vinegared rice combined
           with other ingredients such as raw seafood and vegetables
         </LandingMenuItem>
 
-        <LandingMenuItem header="APPETIZER &amp; SALADS" imgSrc={menuSalad}>
+        <LandingMenuItem
+          menuId="appetizersAndSalads"
+          header="APPETIZER &amp; SALADS"
+          imgSrc={menuSalad}
+        >
           We have an extensive range of traditional Japanese appetizer and
           salads, which includes all the traditional food
         </LandingMenuItem>
 
-        <LandingMenuItem header="RICE &amp; NOODLES" imgSrc={menuRice}>
+        <LandingMenuItem
+          menuId="riceAndNoodles"
+          header="RICE &amp; NOODLES"
+          imgSrc={menuRice}
+        >
           It is impossible to get bored with out variety from Japanese udon
           noodles to buckwheat noodles to Japanese ramen and other forms of
           Japanese noodle soup.
         </LandingMenuItem>
 
-        <LandingMenuItem header="DESSERTS &amp; DRINKS" imgSrc={menuDrink}>
+        <LandingMenuItem
+          menuId="dessertsAndDrinks"
+          header="DESSERTS &amp; DRINKS"
+          imgSrc={menuDrink}
+        >
           We have an extensive range of traditional Japanese desserts and
           drinks, which includes all the traditional food items this country
         </LandingMenuItem>

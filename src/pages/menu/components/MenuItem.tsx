@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { BaseButton } from '../../../components/ui/BaseButton';
-import { Loading } from '../../../hoc/Loading';
 import Spinner from '../../../components/ui/LoadingScreen/Spinner/Spinner';
 
 export interface MenuItemProps {
@@ -26,7 +25,11 @@ export const MenuItem: React.FC<MenuItemProps> = ({
             <ImgSpinner />
           </SpinnerContainer>
         )}
-        <ItemImg src={imgSrc} onLoad={() => setIsLoading(false)} />
+        <ItemImg
+          loading="lazy"
+          src={imgSrc}
+          onLoad={() => setIsLoading(false)}
+        />
       </ImgContainer>
       <ItemName>{name}</ItemName>
       <ItemPrice>{price.toFixed(2)}</ItemPrice>

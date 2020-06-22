@@ -1,18 +1,21 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { MenuItem, MenuItemProps } from './MenuItem';
+import { menuIds } from '../../../data/menu';
 
 interface MenuCategoryProps {
   categoryName: string;
   children?: never;
   menuItems: MenuItemProps[];
+  menuId: menuIds;
 }
 export const MenuCategory: React.FC<MenuCategoryProps> = ({
   categoryName,
   menuItems,
+  menuId,
 }) => {
   return (
-    <Container>
+    <Container id={menuId}>
       <Header>{categoryName}</Header>
 
       <MenuItems>

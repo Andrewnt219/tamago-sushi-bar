@@ -10,10 +10,10 @@ interface MenuProps {}
 export const Menu: React.FC<MenuProps> = () => {
   return (
     <>
-      <CategoryDrink />
+      <CategorySalad />
       <CategorySushi />
       <CategoryRice />
-      <CategorySalad />
+      <CategoryDrink />
     </>
   );
 };

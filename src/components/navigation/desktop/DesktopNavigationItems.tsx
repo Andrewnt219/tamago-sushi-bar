@@ -1,14 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { DesktopNavigationItem } from './DesktopNavigationItem';
-import { BaseLogo } from '../../ui/BaseLogo';
 
 interface DesktopNavigationItemsProps {}
 export const DesktopNavigationItems: React.FC<DesktopNavigationItemsProps> = () => {
   return (
     <StyledNavigationItems>
-      <BaseLogo />
-
       <DesktopNavigationItem to="/" exact>
         Home
       </DesktopNavigationItem>
