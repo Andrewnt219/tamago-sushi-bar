@@ -22,4 +22,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   );
 };
 
-const Main = styled.main<MainProps>``;
+const Main = styled.main<MainProps>`
+  /* Compatible with Footer height */
+  min-height: 60vh;
+`;

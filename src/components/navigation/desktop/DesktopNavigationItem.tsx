@@ -1,9 +1,7 @@
-import styled, { css } from 'styled-components/macro';
+import styled from 'styled-components/macro';
 import React from 'react';
 import { StyledNavLink } from '../StyledNavLink';
 import { NavLinkProps as RRNavLinkProps } from 'react-router-dom';
-import { appBarIsFixedSelector } from '../../../features/uiSlice';
-import { useSelector } from 'react-redux';
 
 export interface DesktopNavigationItemProps extends RRNavLinkProps {}
 
@@ -11,18 +9,14 @@ export const DesktopNavigationItem: React.FC<DesktopNavigationItemProps> = ({
   children,
   ...props
 }) => {
-  const appbarIsFixed = useSelector(appBarIsFixedSelector);
-
   return (
-    <StyledLi appbarIsFixed={appbarIsFixed}>
+    <StyledLi>
       <StyledNavLink {...props}>{children}</StyledNavLink>
     </StyledLi>
   );
 };
 
-interface StyledLiProps {
-  appbarIsFixed: boolean;
-}
+interface StyledLiProps {}
 const StyledLi = styled.li<StyledLiProps>`
   display: flex;
   align-items: flex-end;
@@ -41,16 +35,4 @@ const StyledLi = styled.li<StyledLiProps>`
   .active {
     color: ${(p) => p.theme.primary};
   }
-
-  ${(p) =>
-    p.appbarIsFixed &&
-    css`
-      padding: unset;
-      border: unset;
-
-      :hover {
-        border: unset;
-        color: ${(p) => p.theme.primary};
-      }
-    `}
 `;

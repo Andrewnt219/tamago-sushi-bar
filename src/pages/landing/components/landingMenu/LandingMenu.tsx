@@ -17,17 +17,18 @@ export const LandingMenu: React.FC<LandingMenuProps> = () => {
           with other ingredients such as raw seafood and vegetables
         </LandingMenuItem>
 
-        <LandingMenuItem header="APPETIZER & SALADS" imgSrc={menuSalad}>
+        <LandingMenuItem header="APPETIZER &amp; SALADS" imgSrc={menuSalad}>
           We have an extensive range of traditional Japanese appetizer and
           salads, which includes all the traditional food
         </LandingMenuItem>
 
-        <LandingMenuItem header="RICE & NOODLES" imgSrc={menuRice}>
-          The modern French press consists of a narrow cylindrical beaker,
-          equipped with lid and plunger that fits tightly in the cylinder.
+        <LandingMenuItem header="RICE &amp; NOODLES" imgSrc={menuRice}>
+          It is impossible to get bored with out variety from Japanese udon
+          noodles to buckwheat noodles to Japanese ramen and other forms of
+          Japanese noodle soup.
         </LandingMenuItem>
 
-        <LandingMenuItem header="DESSERTS & DRINKS" imgSrc={menuDrink}>
+        <LandingMenuItem header="DESSERTS &amp; DRINKS" imgSrc={menuDrink}>
           We have an extensive range of traditional Japanese desserts and
           drinks, which includes all the traditional food items this country
         </LandingMenuItem>

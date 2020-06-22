@@ -1,26 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components/macro';
 import backgroundImg from '../../../../asset/bg-2.jpg';
 import { rgba } from 'polished';
 import { BaseButton } from '../../../../components/ui/BaseButton';
-import { useInView } from 'react-intersection-observer';
-import { useDispatch } from 'react-redux';
-import { changeAppbarState } from '../../../../features/uiSlice';
 
 interface HeroImageProps {}
 /**
  * @param children the content displaying on the hero img
  */
 export const HeroImage: React.FC<HeroImageProps> = ({ children }) => {
-  const [ref, isInView] = useInView();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(changeAppbarState(!isInView));
-  });
-
   return (
-    <Backdrop ref={ref}>
+    <Backdrop>
       <Content>
         <SubHeading>come and enjoy</SubHeading>
         <Heading>

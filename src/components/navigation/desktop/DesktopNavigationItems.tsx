@@ -2,16 +2,12 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { DesktopNavigationItem } from './DesktopNavigationItem';
 import { BaseLogo } from '../../ui/BaseLogo';
-import { appBarIsFixedSelector } from '../../../features/uiSlice';
-import { useSelector } from 'react-redux';
 
 interface DesktopNavigationItemsProps {}
 export const DesktopNavigationItems: React.FC<DesktopNavigationItemsProps> = () => {
-  const appbarIsFixed = useSelector(appBarIsFixedSelector);
-
   return (
     <StyledNavigationItems>
-      {!appbarIsFixed && <BaseLogo />}
+      <BaseLogo />
 
       <DesktopNavigationItem to="/" exact>
         Home
