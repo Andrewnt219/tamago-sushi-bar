@@ -17,6 +17,8 @@ export const DesktopNavigationItems: React.FC<DesktopNavigationItemsProps> = () 
       </DesktopNavigationItem>
 
       <DesktopNavigationItem to="/order">Order</DesktopNavigationItem>
+
+      <DesktopNavigationItem to="/about">About</DesktopNavigationItem>
     </StyledNavigationItems>
   );
 };
@@ -27,6 +29,6 @@ const StyledNavigationItems = styled.ul<StyledNavigationItemsProps>`
   justify-content: space-around;
   align-items: center;
 
-  width: 100%;
+  width: 60%;
   height: 100%;
 `;

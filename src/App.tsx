@@ -3,12 +3,9 @@ import { ThemeProvider } from 'styled-components';
 import { lightTheme } from './theme/lightTheme';
 import { GlobalStyle } from './theme/GlobalStyle';
 import { Switch, Route } from 'react-router-dom';
-import { Landing } from './pages/landing/Landing';
-import { Order } from './pages/order/Order';
-import { Reservation } from './pages/reservation/Reservation';
-import { Menu } from './pages/menu/Menu';
+
 import { Layout } from './hoc/Layout';
-import { Empty } from './pages/empty/Empty';
+import { Landing, Order, Reservation, About, Empty, Menu } from './pages';
 
 function App() {
   return (
@@ -16,6 +13,7 @@ function App() {
       <GlobalStyle />
       <Layout>
         <Switch>
+          <Route path="/about" component={About} />
           <Route path="/order" component={Order} />
           <Route path="/reservation" component={Reservation} />
           <Route path="/menu" component={Menu} />

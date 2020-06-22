@@ -34,13 +34,6 @@ const Container = styled.li`
 `;
 
 const IconWrapper = styled.span`
-  display: flex;
-  padding: 0.2rem;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  border: 1px solid #000;
-
   margin-right: 0.5rem;
 
   svg {

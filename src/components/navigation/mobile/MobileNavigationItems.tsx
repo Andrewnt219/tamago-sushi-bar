@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { MobileNavigationItem } from './MobileNavigationItem';
-import { MdHome, MdRestaurantMenu, MdBook, MdPhone } from 'react-icons/md';
+import {
+  MdHome,
+  MdRestaurantMenu,
+  MdBook,
+  MdPhone,
+  MdInfoOutline,
+} from 'react-icons/md';
 
 interface MobileNavigationItemsProps {}
 export const MobileNavigationItems: React.FC<MobileNavigationItemsProps> = () => {
@@ -21,6 +27,10 @@ export const MobileNavigationItems: React.FC<MobileNavigationItemsProps> = () =>
 
       <MobileNavigationItem to="/order" Icon={MdPhone}>
         Order
+      </MobileNavigationItem>
+
+      <MobileNavigationItem to="/about" Icon={MdInfoOutline}>
+        About
       </MobileNavigationItem>
     </StyledMobileNavigationItems>
   );

@@ -28,6 +28,8 @@ const StyledLi = styled.li<StyledLiProps>`
   font-size: 2rem;
   border-bottom: 0.1rem solid transparent;
 
+  transition: all ${(p) => p.theme.transitionSpeed.subtle} ease;
+
   :hover {
     border-bottom: 0.1rem solid ${(p) => p.theme.primary};
   }

@@ -45,9 +45,9 @@ const StaticAppBar = styled.nav<StaticAppBarProps>`
   display: none;
 
   /* Intentionally move these outside of media for style inheritance */
-  padding: 1rem 10vw;
+  padding: 1rem 5vw;
 
-  max-width: 100vw;
+  width: 100%;
   
   height: ${(p) => p.height};
 
@@ -65,6 +65,7 @@ const StaticAppBar = styled.nav<StaticAppBarProps>`
 
   @media screen and (min-width: ${(p) => p.theme.breakpoints.sm}) {
     display: flex;
+    justify-content: space-between;
   }
 `;
 
@@ -76,7 +77,16 @@ const FixedAppBar = styled(StaticAppBar)`
   box-shadow: ${(p) => p.theme.shadow.button};
   z-index: ${(p) => p.theme.zIndex.top};
 
-  width: 100vw;
   color: ${(p) => p.theme.black};
   height: 5rem;
+
+  ul {
+    width: 100%;
+
+    li {
+      padding-top: initial;
+      padding-bottom: initial;
+      align-items: center;
+    }
+  }
 `;
