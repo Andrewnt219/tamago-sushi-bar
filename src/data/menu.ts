@@ -53,25 +53,25 @@ export const menus: Menus = {
       name: 'Japanese Ice Cream',
       price: 4.5,
       imgSrc: iceCream,
-      description: 'Vanila/Chocolate/Matcha/Red Bean',
+      description: 'Vanila / Chocolate / Matcha / Red Bean',
     },
     {
       name: 'Pudding',
       price: 4.5,
       imgSrc: pudding,
-      description: 'Mango/Berries/Cacao/Vanila',
+      description: 'Mango / Berries / Cacao / Vanila',
     },
     {
       name: 'Tiramisu',
       price: 4.5,
       imgSrc: tiramisu,
-      description: 'Vanila/Chocolate/Matcha/Red Bean',
+      description: 'Vanila / Chocolate / Matcha / Red Bean',
     },
     {
       name: 'Mochi',
       price: 4.5,
       imgSrc: mochi,
-      description: 'Matcha/Chocolate/Vanila/Red Bean',
+      description: 'Matcha / Chocolate / Vanila / Red Bean',
     },
   ],
   drinks: [
@@ -79,7 +79,7 @@ export const menus: Menus = {
       name: 'Juice',
       price: 3.5,
       imgSrc: juice,
-      description: 'Orange/Lemon/Strawberries',
+      description: 'Orange / Lemon / Strawberries',
     },
     {
       name: 'Matcha Tea',
@@ -90,7 +90,7 @@ export const menus: Menus = {
       name: 'Soft Drinks',
       price: 3.5,
       imgSrc: soft,
-      description: 'Coca/Pepsi/Sprite',
+      description: 'Coca / Pepsi / Sprite',
     },
   ],
   appetizers: [

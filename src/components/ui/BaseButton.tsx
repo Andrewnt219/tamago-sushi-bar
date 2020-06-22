@@ -24,12 +24,12 @@ export const BaseButton = styled.button<BaseButtonProps>`
 
   :hover {
     transform: translateY(-.2rem);
-    box-shadow: 0 1rem 2rem rgba(0,0,0, .2);
+    box-shadow: 0 1rem 2rem rgba(0,0,0, .15);
   }
 
   :active {
     transform: translateY(0);
-    box-shadow: 0 .5rem 1rem rgba(0,0,0, .2);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0, .15);
   }
 
   ${(p) =>
@@ -39,7 +39,6 @@ export const BaseButton = styled.button<BaseButtonProps>`
       color: ${p.theme.text};
 
       :hover,
-      :focus,
       :active {
         filter: brightness(0.9);
       }
@@ -53,7 +52,6 @@ export const BaseButton = styled.button<BaseButtonProps>`
       color: ${p.color ?? p.theme.primary};
 
       :hover,
-      :focus,
       :active {
         background-color: ${p.color ?? p.theme.primary};
         color: ${p.theme.text};
@@ -70,7 +68,6 @@ export const BaseButton = styled.button<BaseButtonProps>`
         color: ${p.color ?? p.theme.primary};
 
         :hover,
-        :focus,
         :active {
           filter: none;
           background: ${p.color ?? p.theme.primary};

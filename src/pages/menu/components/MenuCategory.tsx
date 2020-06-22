@@ -25,10 +25,21 @@ export const MenuCategory: React.FC<MenuCategoryProps> = ({
 };
 
 interface ContainerProps {}
-const Container = styled.div<ContainerProps>``;
+const Container = styled.div<ContainerProps>`
+  width: 80%;
+  margin: 3rem auto;
+`;
 
 const Header = styled.h2`
   text-transform: uppercase;
+  text-align: center;
+  font-size: 4rem;
+  margin-bottom: 2rem;
+
   color: ${(p) => p.theme.primary};
 `;
-const MenuItems = styled.ul``;
+const MenuItems = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 5rem;
+`;
