@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components/macro';
-import backgroundImg from '../../../../asset/bg-2.jpg';
+import backgroundImgUrl from '../../../../asset/bg-2.jpg';
 import { rgba } from 'polished';
 import { BaseButton } from '../../../../components/ui/BaseButton';
 
-interface HeroImageProps {}
+interface HeroImageProps {
+  onLoad: () => void;
+}
 /**
  * @description the first section upon visiting the app, with fullscreen img
- *
+ * @param onLoad triggers a callback when background is loaded
  */
-export const HeroImage: React.FC<HeroImageProps> = () => {
+export const HeroImage: React.FC<HeroImageProps> = ({ onLoad }) => {
+  useEffect(() => {
+    const img = new Image();
+    img.src = backgroundImgUrl;
+    img.onload = function () {
+      onLoad();
+    };
+  }, [onLoad]);
+
   return (
     <Backdrop>
       <Content>
@@ -37,7 +47,7 @@ const Backdrop = styled.article<BackdropProps>`
       ${(p) => rgba(p.theme.black, 0.6)},
       ${(p) => rgba(p.theme.black, 0.6)}
     ),
-    url(${backgroundImg});
+    url(${backgroundImgUrl});
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
