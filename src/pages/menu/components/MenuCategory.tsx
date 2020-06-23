@@ -22,8 +22,8 @@ export const MenuCategory: React.FC<MenuCategoryProps> = ({
   menuId,
 }) => {
   return (
-    <Container id={menuId}>
-      <Header>{categoryName}</Header>
+    <Container>
+      <Header id={menuId}>{categoryName}</Header>
 
       <MenuItems>
         {menuItems.map((menuItem, index) => (

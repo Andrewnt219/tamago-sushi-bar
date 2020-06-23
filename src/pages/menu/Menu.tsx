@@ -5,6 +5,7 @@ import {
   CategoryRice,
   CategorySushi,
 } from './components';
+import { useScroll } from '../../hook/useScroll';
 
 interface MenuProps {}
 
@@ -12,6 +13,8 @@ interface MenuProps {}
  * @description renders the Menu Page for the app
  */
 export const Menu: React.FC<MenuProps> = () => {
+  useScroll();
+
   return (
     <>
       <CategorySalad />
