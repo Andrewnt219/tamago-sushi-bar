@@ -8,6 +8,10 @@ import menuRice from '../../../../asset/menu-rice.jpg';
 import menuDrink from '../../../../asset/menu-drink.jpg';
 
 interface LandingMenuProps {}
+
+/**
+ * @description the menu section of the Landing Page, manages many LandingMenuItem
+ */
 export const LandingMenu: React.FC<LandingMenuProps> = () => {
   return (
     <LandingSection sectionName="culture of the far east">
@@ -53,7 +57,6 @@ export const LandingMenu: React.FC<LandingMenuProps> = () => {
   );
 };
 
-interface ContainerProps {}
 const LandingMenuItems = styled.div`
   padding: 0 2vw;
   width: 100%;

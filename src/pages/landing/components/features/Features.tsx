@@ -7,6 +7,10 @@ import familyIcon from '../../../../asset/family.svg';
 import { LandingSection } from '../LandingSection';
 
 interface FeaturesProps {}
+
+/**
+ * @description a section that displays multiple FeatureCards in grid
+ */
 export const Features: React.FC<FeaturesProps> = () => {
   return (
     <LandingSection backgroundIsStrong sectionName="Why Tamago?">

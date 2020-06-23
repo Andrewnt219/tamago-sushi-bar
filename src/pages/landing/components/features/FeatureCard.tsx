@@ -14,6 +14,14 @@ interface FeatureCardProps {
     footer: string;
   };
 }
+
+/**
+ * @description a flipping card with content that has a Front and a Back as its 2 faces
+ * @param cardThemeColor the main color theme of this card
+ * @param cardContent an object that stores the text content of this card's front
+ * @param cardIcon the source of this card's icon
+ * @param children text content for the back of this card
+ */
 export const FeatureCard: React.FC<FeatureCardProps> = ({
   cardThemeColor,
   cardContent,

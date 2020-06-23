@@ -7,6 +7,10 @@ import faker from 'faker';
 import { LandingSection } from '../LandingSection';
 
 interface TestimonialProps {}
+
+/**
+ * @description the Testimonial section inside of the Landing Page
+ */
 export const Testimonial: React.FC<TestimonialProps> = () => {
   return (
     <LandingSection sectionName="words from our customers">

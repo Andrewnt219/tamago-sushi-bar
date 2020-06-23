@@ -9,6 +9,14 @@ export interface MenuItemProps {
   description?: string;
   imgSrc?: string;
 }
+
+/**
+ * @description render a single MenuItem with all the dish's info
+ * @param name the name of this dish
+ * @param price the price of this dish
+ * @param description the description of this dish
+ * @param imgSrc the source of this dish's img
+ */
 export const MenuItem: React.FC<MenuItemProps> = ({
   name,
   price,

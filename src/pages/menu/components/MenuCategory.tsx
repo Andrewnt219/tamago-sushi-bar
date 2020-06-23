@@ -9,6 +9,13 @@ interface MenuCategoryProps {
   menuItems: MenuItemProps[];
   menuId: menuIds;
 }
+
+/**
+ * @description render a container with heading for many MenuItem
+ * @param categoryName the header of this category
+ * @param menuItems an array of MenuItem
+ * @param menuId the id that matches with links from the Landing PAge
+ */
 export const MenuCategory: React.FC<MenuCategoryProps> = ({
   categoryName,
   menuItems,

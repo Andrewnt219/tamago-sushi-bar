@@ -5,6 +5,10 @@ interface LandingSectionProps {
   sectionName?: string;
   className?: string;
 }
+
+/**
+ * @description renders a section container with heading for the each Landing Page's section
+ */
 export const LandingSection: React.FC<LandingSectionProps & ContainerProps> = ({
   sectionName,
   children,

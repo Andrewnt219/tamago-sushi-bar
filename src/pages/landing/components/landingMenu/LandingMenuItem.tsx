@@ -9,6 +9,14 @@ interface LandingMenuItemProps {
   header: string;
   menuId: menuIds;
 }
+
+/**
+ * @description renders a category overview inside the Landing Page
+ * @param imgSrc the source for img used in this LandingMenuItem
+ * @param children the description of the LandingMenuItem
+ * @param menuId the id that links with the corresponding category in Menu Page
+ * @param header the name of this LandingMenuItem
+ */
 export const LandingMenuItem: React.FC<
   LandingMenuItemProps & ContainerProps
 > = ({ imgSrc, children, header, menuId }) => {

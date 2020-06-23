@@ -11,6 +11,13 @@ interface TestimonialCardProps {
   customer: CustomerDetail;
   heading: string;
 }
+
+/**
+ * @description renders a single card that store a user's testimonial inside the Landing Page
+ * @param customer an object stores customer's info
+ * @param heading the title of the customer's review
+ * @param children the body of the review
+ */
 export const TestimonialCard: React.FC<TestimonialCardProps> = ({
   customer,
   heading,

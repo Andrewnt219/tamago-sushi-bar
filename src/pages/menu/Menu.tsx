@@ -7,6 +7,10 @@ import {
 } from './components';
 
 interface MenuProps {}
+
+/**
+ * @description renders the Menu Page for the app
+ */
 export const Menu: React.FC<MenuProps> = () => {
   return (
     <>

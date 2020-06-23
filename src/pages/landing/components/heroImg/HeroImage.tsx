@@ -6,9 +6,10 @@ import { BaseButton } from '../../../../components/ui/BaseButton';
 
 interface HeroImageProps {}
 /**
- * @param children the content displaying on the hero img
+ * @description the first section upon visiting the app, with fullscreen img
+ *
  */
-export const HeroImage: React.FC<HeroImageProps> = ({ children }) => {
+export const HeroImage: React.FC<HeroImageProps> = () => {
   return (
     <Backdrop>
       <Content>

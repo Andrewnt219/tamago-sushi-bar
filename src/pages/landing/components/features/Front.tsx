@@ -12,6 +12,13 @@ interface FrontProps {
   iconSrc: string;
   cardContent: FrontCardContent;
 }
+
+/**
+ * @description make up the front face of a FeatureCard
+ * @param onClick triggers card flipping on clicking the button
+ * @param iconSrc the source for this icon
+ * @param cardContent an object with few words
+ */
 export const Front: React.FC<FrontProps> = ({
   onClick,
   iconSrc,

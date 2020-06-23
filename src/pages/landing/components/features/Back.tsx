@@ -6,6 +6,13 @@ interface BackProps {
   onClick: () => void;
   footer: string;
 }
+
+/**
+ * @description make up the back face of a FeatureCard
+ * @param onClick a function that triggers the flip effect on click
+ * @param children the text content of the back face
+ * @param footer a short text content at the end of the card
+ */
 export const Back: React.FC<BackProps> = ({ onClick, children, footer }) => {
   return (
     <Container onClick={onClick}>
