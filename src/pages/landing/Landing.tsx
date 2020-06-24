@@ -9,7 +9,7 @@ interface SectionLandingProps {}
 /**
  * @description renders a Landing Page for the app
  */
-export const Landing: React.FC<LandingProps> = () => {
+const Landing: React.FC<LandingProps> = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
@@ -22,3 +22,5 @@ export const Landing: React.FC<LandingProps> = () => {
     </>
   );
 };
+
+export default Landing;

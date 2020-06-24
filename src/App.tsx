@@ -5,7 +5,14 @@ import { GlobalStyle } from './theme/GlobalStyle';
 import { Switch, Route } from 'react-router-dom';
 
 import { Layout } from './hoc/Layout';
-import { Landing, Order, Reservation, About, Empty, Menu } from './pages';
+import About from './pages/about/About';
+import Order from './pages/order/Order';
+import Reservation from './pages/reservation/Reservation';
+import Empty from './pages/empty/Empty';
+import Landing from './pages/landing/Landing';
+import Menu from './pages/menu/Menu';
+
+// const Menu = React.lazy(() => import('./pages/menu/Menu'));
 
 function App() {
   return (
@@ -16,7 +23,9 @@ function App() {
           <Route path="/about" component={About} />
           <Route path="/order" component={Order} />
           <Route path="/reservation" component={Reservation} />
+
           <Route path="/menu" component={Menu} />
+
           <Route path="/" exact component={Landing} />
           <Route component={Empty} />
         </Switch>

@@ -1,7 +1,15 @@
 import React from 'react';
+import { ReservationForm } from './components/ReservationForm';
 
 interface ReservationProps {}
 
-export const Reservation: React.FC<ReservationProps> = () => {
-  return <div>Reservation</div>;
+const Reservation: React.FC<ReservationProps> = () => {
+  return (
+    <div>
+      Reservation
+      <ReservationForm />
+    </div>
+  );
 };
+
+export default Reservation;

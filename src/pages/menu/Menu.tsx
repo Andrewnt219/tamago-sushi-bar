@@ -12,7 +12,7 @@ interface MenuProps {}
 /**
  * @description renders the Menu Page for the app
  */
-export const Menu: React.FC<MenuProps> = () => {
+const Menu: React.FC<MenuProps> = () => {
   useScroll();
 
   return (
@@ -24,3 +24,5 @@ export const Menu: React.FC<MenuProps> = () => {
     </>
   );
 };
+
+export default Menu;

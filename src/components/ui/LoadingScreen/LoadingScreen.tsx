@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import styled, { useTheme } from 'styled-components/macro';
 import Spinner from './Spinner/Spinner';
-import { BaseLogo } from '../BaseLogo';
 
 interface LoadingScreenProps {}
 
