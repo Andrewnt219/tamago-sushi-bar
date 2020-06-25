@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components/macro';
 
 import { TextField } from '../../../components/ui/form/TextField';
@@ -11,25 +11,26 @@ import {
 } from '../../../components/ui/form/ControllerInputsGroup';
 import { useFormState } from '../../../hook/useFormState';
 
-interface ReservationFormProps {
-  currentStep: number;
-}
-interface ReservationFormValues {
+interface ReservationForm1Props {}
+interface FormValues {
   firstName: string;
   lastName: string;
-  date: string;
-  radioGroup: string;
-  checkboxes: string;
+  gender: 'male' | 'female' | 'other';
+  phoneNumber: string;
+  email: string;
 }
-const ReservationForm: React.FC<ReservationFormProps> = ({ currentStep }) => {
-  const { handleSubmit, errors, register } = useForm<ReservationFormValues>();
+const ReservationForm1: React.FC<ReservationForm1Props> = () => {
+  const { handleSubmit, errors, register } = useForm<FormValues>({
+    mode: 'onBlur',
+    validateCriteriaMode: 'all',
+  });
 
-  const [formState, handleChange] = useFormState<ReservationFormValues>({
+  const [formState, handleChange] = useFormState<FormValues>({
     firstName: '',
     lastName: '',
-    date: '',
-    radioGroup: '',
-    checkboxes: '',
+    gender: 'male',
+    phoneNumber: '',
+    email: '',
   });
 
   const onSubmit = handleSubmit((data, e) => {
@@ -37,45 +38,24 @@ const ReservationForm: React.FC<ReservationFormProps> = ({ currentStep }) => {
     console.log(data);
   });
 
-  const radios: ControllerObject<ReservationFormValues>[] = [
+  const radios: ControllerObject<FormValues, typeof formState.gender>[] = [
     {
       id: 'radio1',
       label: 'Radio 1st',
       register: register(),
-      value: 'radio1',
+      value: 'male',
     },
     {
       id: 'radio2',
       label: 'Radio 2nd',
       register: register(),
-      value: 'radio2',
+      value: 'female',
     },
     {
       id: 'radio3',
       label: 'Radio 3rd',
       register: register(),
-      value: 'radio3',
-    },
-  ];
-
-  const checkboxes: ControllerObject<ReservationFormValues>[] = [
-    {
-      id: 'checkbox 1',
-      label: 'checkbox  1st',
-      register: register(),
-      value: 'checkbox 1',
-    },
-    {
-      id: 'checkbox 2',
-      label: 'checkbox  2nd',
-      register: register(),
-      value: 'checkbox 2',
-    },
-    {
-      id: 'checkbox 3',
-      label: 'checkbox  3rd',
-      register: register(),
-      value: 'checkbox 3',
+      value: 'other',
     },
   ];
 
@@ -113,25 +93,18 @@ const ReservationForm: React.FC<ReservationFormProps> = ({ currentStep }) => {
 
       <ControllerInputsGroup
         type="radio"
-        name="radioGroup"
+        name="gender"
         controllers={radios}
         errors={errors}
         handleChange={handleChange}
       />
 
-      <ControllerInputsGroup
-        type="checkbox"
-        name="checkboxes"
-        controllers={checkboxes}
-        errors={errors}
-        handleChange={handleChange}
-      />
       <Button type="submit">SUBMIT</Button>
     </Form>
   );
 };
 
-export { ReservationForm };
+export { ReservationForm1 };
 
 const Form = styled(BaseForm)`
   .input {

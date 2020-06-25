@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { ReservationForm } from './components/ReservationForm';
+import { ReservationForm1 } from './components/ReservationForm1';
 import { useFormStep } from '../../hook';
+import { BaseButton } from '../../components/ui/BaseButton';
+import ReservationForm2 from './components/ReservationForm2';
 
 interface ReservationProps {}
 
@@ -11,45 +13,50 @@ const Reservation: React.FC<ReservationProps> = () => {
     NUMBER_OF_STEP
   );
 
+  let form;
+  switch (currentStep) {
+    case 1:
+      form = <ReservationForm1 />;
+      break;
+    case 2:
+      form = <ReservationForm2 />;
+      break;
+
+    default:
+      throw new Error('No form matches currentStep');
+  }
+
   return (
     <div>
-      <Button active={currentStep === 1} onClick={() => jumpToStep(1)}>
+      <FormSelectButton
+        active={currentStep === 1}
+        onClick={() => jumpToStep(1)}
+      >
         Form 1
-      </Button>
-      <Button active={currentStep === 2} onClick={() => jumpToStep(2)}>
+      </FormSelectButton>
+
+      <FormSelectButton
+        active={currentStep === 2}
+        onClick={() => jumpToStep(2)}
+      >
         Form 2
-      </Button>
-      <Button active={currentStep === 3} onClick={() => jumpToStep(3)}>
-        Form 3
-      </Button>
-      <ReservationForm currentStep={currentStep} />
-      <button onClick={nextStep}>Next</button>
-      <button onClick={prevStep}>Prev</button>
-      <button onClick={() => jumpToStep(2)}>2</button>
+      </FormSelectButton>
+
+      {form}
+
+      <FormController onClick={nextStep}>Next</FormController>
+      <FormController onClick={prevStep}>Prev</FormController>
     </div>
   );
 };
 
-// function generateStepButton(
-//   numberOfStep: number,
-//   handleClick: (stepNumber: number) => void
-// ): React.ReactNode[] {
-//   let stepButtons: React.ReactNode[] = [];
-//   for (let i = 1; i <= numberOfStep; i++) {
-//     stepButtons.push(
-//       <Button active={} value={i} onClick={() => handleClick(i)}>
-//         Form {i}
-//       </Button>
-//     );
-//   }
-//   return stepButtons;
-// }
-
 interface ButtonProps {
   active: boolean;
 }
-const Button = styled.button<ButtonProps>`
+const FormSelectButton = styled.button<ButtonProps>`
   background: ${(p) => p.active && p.theme.primary};
 `;
+
+const FormController = styled(BaseButton)``;
 
 export default Reservation;

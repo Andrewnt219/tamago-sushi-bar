@@ -25,6 +25,8 @@ export const useFormStep = (
     (step: number) => {
       if (step >= 1 && step <= numberOfSteps) {
         setCurrentStep(step);
+      } else {
+        throw new Error('selected step is out of range');
       }
     },
     [numberOfSteps]

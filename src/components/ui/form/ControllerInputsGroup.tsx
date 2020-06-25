@@ -10,20 +10,20 @@ import { FormContextValues, FieldElement } from 'react-hook-form';
  * @param register returned value of register from react-hook-form/useForm()
  * @param label the label of each input
  */
-export interface ControllerObject<FormValues> {
+export interface ControllerObject<FormValues, OptionValue extends string> {
   id: string;
   checked?: boolean;
-  value: string;
+  value: OptionValue;
   register: (ref: FieldElement<FormValues> | null) => void;
   label: string;
 }
 
-interface ControllerInputsGroupProps<FormValues> {
+interface ControllerInputsGroupProps<FormValues, OptionValue extends string> {
   name: keyof FormValues;
   handleChange?:
     | ((event: React.ChangeEvent<HTMLInputElement>) => void)
     | undefined;
-  controllers: ControllerObject<FormValues>[];
+  controllers: ControllerObject<FormValues, OptionValue>[];
   errors: FormContextValues['errors'];
   type: 'radio' | 'checkbox';
 }
@@ -37,20 +37,21 @@ interface ControllerInputsGroupProps<FormValues> {
  * @param type the type of the inputs
  * @param handleChange handle when user changes the value of input controllers
  */
-function ControllerInputsGroup<FormValues>({
+function ControllerInputsGroup<FormValues, OptionValue extends string>({
   name,
   controllers,
   errors,
   type,
   handleChange,
-}: ControllerInputsGroupProps<FormValues> &
+}: ControllerInputsGroupProps<FormValues, OptionValue> &
   React.FieldsetHTMLAttributes<HTMLFieldSetElement>) {
   return (
     <Container>
       <Legend>{name}</Legend>
-      {controllers.map((controllerInputProps, index) => (
+      {controllers.map((controllerProps, index) => (
         <ControllerInput
-          {...controllerInputProps}
+          {...controllerProps}
+          value={controllerProps.value}
           onChange={handleChange}
           key={index}
           name={name}

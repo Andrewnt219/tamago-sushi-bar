@@ -3,10 +3,7 @@ import styled from 'styled-components/macro';
 import ErrorText, { ErrorTextProps } from './ErrorText';
 import { FieldElement } from 'react-hook-form';
 
-interface ControllerInputProps<FormValues>
-  extends React.InputHTMLAttributes<HTMLInputElement>,
-    ErrorTextProps {
-  value: string;
+interface ControllerInputProps<FormValues> {
   type: 'radio' | 'checkbox';
   register: (ref: FieldElement<FormValues> | null) => void;
   id: string;
@@ -33,7 +30,9 @@ function ControllerInput<FormValues>({
   register,
   type,
   ...htmlRadioAttrs
-}: ControllerInputProps<FormValues>) {
+}: ControllerInputProps<FormValues> &
+  React.InputHTMLAttributes<HTMLInputElement> &
+  ErrorTextProps) {
   return (
     <Container>
       <Label htmlFor={id}>
@@ -42,13 +41,13 @@ function ControllerInput<FormValues>({
       </Label>
 
       <input
+        {...htmlRadioAttrs}
         ref={register}
         type={type}
         name={name}
         id={id}
         onChange={onChange}
         hidden
-        {...htmlRadioAttrs}
       />
 
       <ErrorText errors={errors} name={name} />
