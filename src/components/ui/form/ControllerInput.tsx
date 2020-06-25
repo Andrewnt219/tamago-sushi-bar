@@ -25,6 +25,7 @@ interface ControllerInputProps<FormValues>
  * @param htmlRadioAttrs others are html input interface
  */
 function ControllerInput<FormValues>({
+  onChange,
   id,
   label,
   name,
@@ -45,6 +46,7 @@ function ControllerInput<FormValues>({
         type={type}
         name={name}
         id={id}
+        onChange={onChange}
         hidden
         {...htmlRadioAttrs}
       />

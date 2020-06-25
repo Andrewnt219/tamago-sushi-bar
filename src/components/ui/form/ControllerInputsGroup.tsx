@@ -11,9 +11,11 @@ export interface ControllerObject<FormValues> {
   label: string;
 }
 
-interface ControllerInputsGroupProps<FormValues>
-  extends React.FieldsetHTMLAttributes<HTMLFieldSetElement> {
-  name: string;
+interface ControllerInputsGroupProps<FormValues> {
+  name: keyof FormValues;
+  handleChange?:
+    | ((event: React.ChangeEvent<HTMLInputElement>) => void)
+    | undefined;
   controllers: ControllerObject<FormValues>[];
   errors: FormContextValues['errors'];
   type: 'radio' | 'checkbox';
@@ -26,19 +28,23 @@ interface ControllerInputsGroupProps<FormValues>
  * @param name the name of the group, and each radio/checkbox
  * @param errors the errors object from react-hook-form/useForm()
  * @param type the type of the inputs
+ * @param handleChange handle when user changes the value of input controllers
  */
 function ControllerInputsGroup<FormValues>({
   name,
   controllers,
   errors,
   type,
-}: ControllerInputsGroupProps<FormValues>) {
+  handleChange,
+}: ControllerInputsGroupProps<FormValues> &
+  React.FieldsetHTMLAttributes<HTMLFieldSetElement>) {
   return (
     <Container>
       <Legend>{name}</Legend>
       {controllers.map((controllerInputProps, index) => (
         <ControllerInput
           {...controllerInputProps}
+          onChange={handleChange}
           key={index}
           name={name}
           errors={errors}
