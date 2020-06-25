@@ -3,6 +3,13 @@ import styled from 'styled-components/macro';
 import { ControllerInput } from './ControllerInput';
 import { FormContextValues, FieldElement } from 'react-hook-form';
 
+/**
+ * @description the object model to put in ControllerInputsGroup
+ * @param id the id of each input
+ * @param value the value of each input
+ * @param register returned value of register from react-hook-form/useForm()
+ * @param label the label of each input
+ */
 export interface ControllerObject<FormValues> {
   id: string;
   checked?: boolean;

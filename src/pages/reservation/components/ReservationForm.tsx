@@ -9,8 +9,11 @@ import {
   ControllerObject,
   ControllerInputsGroup,
 } from '../../../components/ui/form/ControllerInputsGroup';
+import { useFormState } from '../../../hook/useFormState';
 
-interface ReservationFormProps {}
+interface ReservationFormProps {
+  currentStep: number;
+}
 interface ReservationFormValues {
   firstName: string;
   lastName: string;
@@ -18,10 +21,10 @@ interface ReservationFormValues {
   radioGroup: string;
   checkboxes: string;
 }
-const ReservationForm: React.FC<ReservationFormProps> = () => {
+const ReservationForm: React.FC<ReservationFormProps> = ({ currentStep }) => {
   const { handleSubmit, errors, register } = useForm<ReservationFormValues>();
-  // const [formState, dispatchFormState] = useReducer(formReducer, initialState);
-  const [formState, setFormState] = useState<ReservationFormValues>({
+
+  const [formState, handleChange] = useFormState<ReservationFormValues>({
     firstName: '',
     lastName: '',
     date: '',
@@ -33,17 +36,6 @@ const ReservationForm: React.FC<ReservationFormProps> = () => {
     console.log('Submit event', e);
     console.log(data);
   });
-
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const { name, value } = e.currentTarget;
-    setFormState(
-      (prev) =>
-        ({ ...prev, [name]: value } as Pick<
-          ReservationFormValues,
-          keyof ReservationFormValues
-        >)
-    );
-  };
 
   const radios: ControllerObject<ReservationFormValues>[] = [
     {
@@ -140,29 +132,6 @@ const ReservationForm: React.FC<ReservationFormProps> = () => {
 };
 
 export { ReservationForm };
-
-type Action = {
-  type: 'UPDATED_FORM';
-  payload: { [field in keyof ReservationFormValues]: string };
-};
-
-// const initialState: ReservationFormValues = {
-//   firstName: '',
-//   lastName: '',
-// };
-
-// const formReducer = (
-//   state: ReservationFormValues,
-//   { type, payload }: Action
-// ) => {
-//   switch (type) {
-//     case 'UPDATED_FORM':
-//       return { ...state, ...payload };
-
-//     default:
-//       throw new Error('Something went wrong');
-//   }
-// };
 
 const Form = styled(BaseForm)`
   .input {
