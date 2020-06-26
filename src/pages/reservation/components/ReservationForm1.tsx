@@ -92,7 +92,6 @@ const ReservationForm1: React.FC<ReservationForm1Props> = () => {
         type="radio"
         name="gender"
         controllers={radios}
-        errors={errors}
         handleChange={handleChange}
       />
 
@@ -103,6 +102,9 @@ const ReservationForm1: React.FC<ReservationForm1Props> = () => {
 
 export { ReservationForm1 };
 
-const Form = styled(BaseForm)``;
+const Form = styled(BaseForm)`
+  width: 60%;
+  margin: 0 auto;
+`;
 
 const Button = styled(BaseButton)``;

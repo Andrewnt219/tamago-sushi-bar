@@ -59,8 +59,6 @@ export function TextField<FormValues>({
   );
 }
 const Container = styled.div`
-  padding: 0 2rem;
-
   font-size: 1rem;
 
   & > :not(:last-child) {

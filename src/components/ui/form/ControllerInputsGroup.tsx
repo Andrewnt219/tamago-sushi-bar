@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { ControllerInput } from './ControllerInput';
-import { FormContextValues, FieldElement } from 'react-hook-form';
+import { FieldElement } from 'react-hook-form';
 
 /**
  * @description the object model to put in ControllerInputsGroup
@@ -24,7 +24,6 @@ interface ControllerInputsGroupProps<FormValues, OptionValue extends string> {
     | ((event: React.ChangeEvent<HTMLInputElement>) => void)
     | undefined;
   controllers: ControllerObject<FormValues, OptionValue>[];
-  errors: FormContextValues['errors'];
   type: 'radio' | 'checkbox';
 }
 
@@ -33,14 +32,12 @@ interface ControllerInputsGroupProps<FormValues, OptionValue extends string> {
  * @template FormValues the interface of all the inputs' value of the form this group is in
  * @param controllers an array of ControllerObject<FormValues>
  * @param name the name of the group, and each radio/checkbox
- * @param errors the errors object from react-hook-form/useForm()
  * @param type the type of the inputs
  * @param handleChange handle when user changes the value of input controllers
  */
 function ControllerInputsGroup<FormValues, OptionValue extends string>({
   name,
   controllers,
-  errors,
   type,
   handleChange,
 }: ControllerInputsGroupProps<FormValues, OptionValue> &
@@ -55,7 +52,6 @@ function ControllerInputsGroup<FormValues, OptionValue extends string>({
           onChange={handleChange}
           key={index}
           name={name}
-          errors={errors}
           type={type}
         />
       ))}
@@ -66,7 +62,16 @@ function ControllerInputsGroup<FormValues, OptionValue extends string>({
 export { ControllerInputsGroup };
 
 interface ContainerProps {}
-const Container = styled.fieldset<ContainerProps>``;
+const Container = styled.fieldset<ContainerProps>`
+  display: flex;
+  border: none;
+
+  & > :not(:last-child) {
+    margin-right: 1rem;
+  }
+`;
 
 interface LegendProps {}
-const Legend = styled.legend<LegendProps>``;
+const Legend = styled.legend<LegendProps>`
+  margin-bottom: 1rem;
+`;
