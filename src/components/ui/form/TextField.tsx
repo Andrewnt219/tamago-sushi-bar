@@ -29,6 +29,8 @@ export function TextField<FormValues>({
   label,
   id,
   type = 'text',
+  disabled,
+  required,
   ...htmlInputProps
 }: TextFieldProps<FormValues> &
   React.InputHTMLAttributes<HTMLInputElement> &
@@ -38,6 +40,10 @@ export function TextField<FormValues>({
   const switchPrimaryColor = (theme: DefaultTheme): DefaultTheme => {
     if (hasError) {
       return { ...theme, primary: theme.error, black: theme.error };
+    }
+
+    if (disabled) {
+      return { ...theme, primary: '#ccc', black: '#ccc' };
     }
 
     return theme;
@@ -55,8 +61,11 @@ export function TextField<FormValues>({
             ref={register}
             onChange={onChange}
             placeholder=" "
+            disabled={disabled}
           />
-          <Label htmlFor={id}>{label}</Label>
+          <Label required={required} htmlFor={id}>
+            {label}
+          </Label>
           <BottomBar />
         </InputWrapper>
         <ErrorText errors={errors} name={name} />
@@ -102,6 +111,8 @@ const Input = styled.input.attrs({ marginTop: '2rem', borderBottom: '' })<
   border-style: solid;
   border-color: ${(p) => p.theme.black};
 
+  cursor: ${(p) => p.disabled && 'not-allowed'};
+
   &:placeholder-shown + label {
     /* Y equals to input margin-top */
     transform: translateY(${(p) => p.marginTop});
@@ -119,7 +130,9 @@ const Input = styled.input.attrs({ marginTop: '2rem', borderBottom: '' })<
   }
 `;
 
-type LabelProps = {};
+type LabelProps = {
+  required?: boolean;
+};
 const Label = styled.label<LabelProps>`
   display: block;
   position: absolute;
@@ -130,6 +143,10 @@ const Label = styled.label<LabelProps>`
   transform-origin: top left;
   transform: translateY(0) scale(0.9);
   transition: all 200ms cubic-bezier(0, 0, 0.2, 1);
+
+  ::after {
+    content: "${(p) => p.required && ' *'}";
+  }
 `;
 
 type BottomBarProps = {};

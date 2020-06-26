@@ -65,6 +65,7 @@ const ReservationForm1: React.FC<ReservationForm1Props> = () => {
     <ThemeProvider theme={{ ...defaultTheme, primary: defaultTheme.lightBlue }}>
       <Form onSubmit={onSubmit} noValidate>
         <TextField
+          required
           id="firstName"
           name="firstName"
           label="first name"
