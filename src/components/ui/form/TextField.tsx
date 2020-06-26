@@ -46,7 +46,7 @@ export function TextField<FormValues>({
           name={name}
           ref={register}
           onChange={onChange}
-          placeholder=""
+          placeholder=" "
           inputIsInvalid={hasError}
         />
         <Label inputIsInvalid={hasError} htmlFor={id}>
@@ -66,7 +66,7 @@ const Container = styled.div`
   }
 `;
 
-const InputWrapper = styled.fieldset`
+const InputWrapper = styled.div`
   position: relative;
   overflow: hidden;
 
@@ -101,7 +101,7 @@ const Input = styled.input.attrs({ marginTop: '1.5rem', borderBottom: '' })<
   &:focus {
     + label {
       color: ${(p) => (p.inputIsInvalid ? p.theme.error : p.theme.lightBlue)};
-      transform: translateY(0) scale(0.9);
+      transform: translateY(0);
     }
 
     ~ div {
@@ -125,7 +125,7 @@ const Label = styled.label<LabelProps>`
   color: ${(p) => (p.inputIsInvalid ? p.theme.error : p.theme.black)};
 
   transform-origin: top left;
-  transform: translateY(0) scale(0.9);
+  transform: translateY(0);
   transition: all 200ms cubic-bezier(0, 0, 0.2, 1);
 `;
 

@@ -53,7 +53,7 @@ function ControllerInput<FormValues>({
 export { ControllerInput };
 
 interface ContainerProps {}
-const Container = styled.div<ContainerProps>``;
+const Container = styled.li<ContainerProps>``;
 
 interface InputProps {}
 const Input = styled.input<InputProps>`

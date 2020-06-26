@@ -14,21 +14,29 @@ export interface ErrorTextProps {
  */
 const ErrorText: React.FC<ErrorTextProps> = ({ name, errors }) => {
   return (
-    <ErrorMessage errors={errors} name={name}>
-      {({ message, messages }) => {
-        if (messages) {
-          return Object.entries(messages).map(([type, message]) => (
-            <Text key={type}>{message}</Text>
-          ));
-        }
+    <Container>
+      <ErrorMessage errors={errors} name={name}>
+        {({ message, messages }) => {
+          if (messages) {
+            return Object.entries(messages).map(([type, message]) => (
+              <Text key={type}>{message}</Text>
+            ));
+          }
 
-        return <p>{message}</p>;
-      }}
-    </ErrorMessage>
+          return <p>{message}</p>;
+        }}
+      </ErrorMessage>
+    </Container>
   );
 };
 
 export default ErrorText;
+
+/* To avoid that line jump */
+interface ContainerProps {}
+const Container = styled.div<ContainerProps>`
+  min-height: 2rem;
+`;
 
 interface TextProps {}
 const Text = styled.p<TextProps>`
