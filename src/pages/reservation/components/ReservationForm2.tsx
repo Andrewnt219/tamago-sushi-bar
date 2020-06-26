@@ -9,7 +9,7 @@ import DateFnsUtils from '@date-io/date-fns';
 
 type Props = {};
 
-function ReservationForm2({}: Props): ReactElement {
+function ReservationForm2(props: Props): ReactElement {
   const [date, setDate] = useState<Date | null>(new Date());
 
   return (
@@ -18,7 +18,6 @@ function ReservationForm2({}: Props): ReactElement {
         <KeyboardDatePicker
           disableToolbar
           variant="inline"
-          inputVariant="outlined"
           autoOk
           format="MM/dd/yyyy"
           margin="normal"

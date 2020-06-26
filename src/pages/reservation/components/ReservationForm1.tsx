@@ -60,7 +60,7 @@ const ReservationForm1: React.FC<ReservationForm1Props> = () => {
   ];
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit} noValidate>
       <TextField
         id="firstName"
         name="firstName"
@@ -78,17 +78,14 @@ const ReservationForm1: React.FC<ReservationForm1Props> = () => {
       />
 
       <TextField
+        type="number"
         id="lastName"
         name="lastName"
         errors={errors}
         label="last name"
         value={formState?.lastName}
         onChange={handleChange}
-        register={register({
-          validate: (data: string) => {
-            return data !== '' || 'This is a custom valudation';
-          },
-        })}
+        register={register()}
       />
 
       <ControllerInputsGroup
@@ -106,10 +103,6 @@ const ReservationForm1: React.FC<ReservationForm1Props> = () => {
 
 export { ReservationForm1 };
 
-const Form = styled(BaseForm)`
-  .input {
-    color: red;
-  }
-`;
+const Form = styled(BaseForm)``;
 
 const Button = styled(BaseButton)``;
