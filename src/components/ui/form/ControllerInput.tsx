@@ -80,15 +80,15 @@ const InputButton = styled.span<InputButtonProps>`
     content: '';
     visibility: hidden;
     display: block;
-
-    width: 80%;
-    padding-top: 80%;
-    background: ${(p) => p.theme.lightBlue};
-    border-radius: ${(p) => p.type === 'radio' && '50%'};
-
     position: absolute;
     top: 50%;
     left: 50%;
+
+    width: 80%;
+    height: 80%;
+    background: ${(p) => p.theme.lightBlue};
+    border-radius: ${(p) => p.type === 'radio' && '50%'};
+
     transform: translate(-50%, -50%) scale(0);
     transition: transform 200ms ease;
   }

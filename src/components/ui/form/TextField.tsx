@@ -1,10 +1,10 @@
 /* -------------------------------- TextField ------------------------------- */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { FieldElement } from 'react-hook-form';
 import ErrorText, { ErrorTextProps } from './ErrorText';
 import styled from 'styled-components/macro';
-import { lighten, darken } from '@material-ui/core';
+import { darken } from '@material-ui/core';
 
 export interface TextFieldProps<FormValues> {
   register: (ref: FieldElement<FormValues> | null) => void;

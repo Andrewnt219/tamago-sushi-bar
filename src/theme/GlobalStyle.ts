@@ -11,19 +11,19 @@ export const GlobalStyle = createGlobalStyle`
     overflow-x:hidden;
 
     @media screen and (min-width: ${(p) => p.theme.breakpoints.sm}) {
-      font-size: 75%;
+      font-size: 75%; /* 16px => 12px */
     }
 
     @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
-      font-size: 80%;
+      font-size: 81.25%; /* 16px => 13px */
     }
 
     @media screen and (min-width: ${(p) => p.theme.breakpoints.lg}) {
-      font-size: 85%;
+      font-size: 87.5%; /* 16px => 14px */
     }
 
     @media screen and (min-width: ${(p) => p.theme.breakpoints.xl}) {
-      font-size: 90%;
+      font-size: 93.75%; /* 16px => 15px */
     }
 
 
