@@ -44,7 +44,7 @@ function ControllerInputsGroup<FormValues, OptionValue extends string>({
   React.FieldsetHTMLAttributes<HTMLFieldSetElement>) {
   return (
     <Container>
-      <Legend>{name}</Legend>
+      <GroupName className="group-name">{name}</GroupName>
       <Controllers>
         {controllers.map((controllerProps, index) => (
           <ControllerInput
@@ -68,12 +68,17 @@ const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
   border: none;
+
+  :hover .group-name {
+    color: ${(p) => p.theme.primary};
+  }
 `;
 
-interface LegendProps {}
-const Legend = styled.p<LegendProps>`
+interface GroupNameProps {}
+const GroupName = styled.p<GroupNameProps>`
   margin-bottom: 1rem;
   font-size: inherit;
+  transition: color 200ms ease;
 `;
 
 interface ControllersProps {}

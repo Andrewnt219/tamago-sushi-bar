@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled, { useTheme, ThemeProvider } from 'styled-components/macro';
 
 import { TextField } from '../../../components/ui/form/TextField';
 import { BaseForm } from '../../../components/ui/form/BaseForm';
@@ -19,7 +19,9 @@ interface FormValues {
   phoneNumber: string;
   email: string;
 }
+
 const ReservationForm1: React.FC<ReservationForm1Props> = () => {
+  const defaultTheme = useTheme();
   const { handleSubmit, errors, register } = useForm<FormValues>({
     mode: 'onBlur',
     validateCriteriaMode: 'all',
@@ -60,43 +62,45 @@ const ReservationForm1: React.FC<ReservationForm1Props> = () => {
   ];
 
   return (
-    <Form onSubmit={onSubmit} noValidate>
-      <TextField
-        id="firstName"
-        name="firstName"
-        label="first name"
-        errors={errors}
-        value={formState?.firstName}
-        onChange={handleChange}
-        register={register({
-          required: 'First name is required',
-          minLength: {
-            value: 3,
-            message: 'At least 1 character',
-          },
-        })}
-      />
+    <ThemeProvider theme={{ ...defaultTheme, primary: defaultTheme.lightBlue }}>
+      <Form onSubmit={onSubmit} noValidate>
+        <TextField
+          id="firstName"
+          name="firstName"
+          label="first name"
+          errors={errors}
+          value={formState?.firstName}
+          onChange={handleChange}
+          register={register({
+            required: 'First name is required',
+            minLength: {
+              value: 3,
+              message: 'At least 1 character',
+            },
+          })}
+        />
 
-      <TextField
-        type="number"
-        id="lastName"
-        name="lastName"
-        errors={errors}
-        label="last name"
-        value={formState?.lastName}
-        onChange={handleChange}
-        register={register()}
-      />
+        <TextField
+          type="number"
+          id="lastName"
+          name="lastName"
+          errors={errors}
+          label="last name"
+          value={formState?.lastName}
+          onChange={handleChange}
+          register={register()}
+        />
 
-      <ControllerInputsGroup
-        type="radio"
-        name="gender"
-        controllers={radios}
-        handleChange={handleChange}
-      />
+        <ControllerInputsGroup
+          type="radio"
+          name="gender"
+          controllers={radios}
+          handleChange={handleChange}
+        />
 
-      <Button type="submit">SUBMIT</Button>
-    </Form>
+        <Button type="submit">SUBMIT</Button>
+      </Form>
+    </ThemeProvider>
   );
 };
 

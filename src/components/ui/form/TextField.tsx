@@ -3,8 +3,7 @@
 import React from 'react';
 import { FieldElement } from 'react-hook-form';
 import ErrorText, { ErrorTextProps } from './ErrorText';
-import styled from 'styled-components/macro';
-import { darken } from '@material-ui/core';
+import styled, { ThemeProvider, DefaultTheme } from 'styled-components/macro';
 
 export interface TextFieldProps<FormValues> {
   register: (ref: FieldElement<FormValues> | null) => void;
@@ -36,26 +35,33 @@ export function TextField<FormValues>({
   ErrorTextProps) {
   const hasError = Boolean(errors[name]);
 
+  const switchPrimaryColor = (theme: DefaultTheme): DefaultTheme => {
+    if (hasError) {
+      return { ...theme, primary: theme.error, black: theme.error };
+    }
+
+    return theme;
+  };
+
   return (
-    <Container>
-      <InputWrapper>
-        <Input
-          {...htmlInputProps}
-          id={id}
-          type={type}
-          name={name}
-          ref={register}
-          onChange={onChange}
-          placeholder=" "
-          inputIsInvalid={hasError}
-        />
-        <Label inputIsInvalid={hasError} htmlFor={id}>
-          {label}
-        </Label>
-        <BottomBar inputIsInvalid={hasError} />
-      </InputWrapper>
-      <ErrorText errors={errors} name={name} />
-    </Container>
+    <ThemeProvider theme={switchPrimaryColor}>
+      <Container>
+        <InputWrapper>
+          <Input
+            {...htmlInputProps}
+            id={id}
+            type={type}
+            name={name}
+            ref={register}
+            onChange={onChange}
+            placeholder=" "
+          />
+          <Label htmlFor={id}>{label}</Label>
+          <BottomBar />
+        </InputWrapper>
+        <ErrorText errors={errors} name={name} />
+      </Container>
+    </ThemeProvider>
   );
 }
 const Container = styled.div`
@@ -66,18 +72,21 @@ const Container = styled.div`
   }
 `;
 
-const InputWrapper = styled.div`
+interface InputWrapperProps {}
+const InputWrapper = styled.div<InputWrapperProps>`
   position: relative;
   overflow: hidden;
 
   border: none;
   width: 100%;
+
+  :hover label {
+    color: ${(p) => p.theme.primary};
+  }
 `;
 
-type InputProps = {
-  inputIsInvalid: boolean;
-};
-const Input = styled.input.attrs({ marginTop: '1.5rem', borderBottom: '' })<
+type InputProps = {};
+const Input = styled.input.attrs({ marginTop: '2rem', borderBottom: '' })<
   InputProps
 >`
   appearance: none;
@@ -91,7 +100,7 @@ const Input = styled.input.attrs({ marginTop: '1.5rem', borderBottom: '' })<
   /* Same with BottomBar */
   border-width: 0 0 1px 0;
   border-style: solid;
-  border-color: ${(p) => (p.inputIsInvalid ? 'red' : 'black')};
+  border-color: ${(p) => p.theme.black};
 
   &:placeholder-shown + label {
     /* Y equals to input margin-top */
@@ -100,38 +109,30 @@ const Input = styled.input.attrs({ marginTop: '1.5rem', borderBottom: '' })<
 
   &:focus {
     + label {
-      color: ${(p) => (p.inputIsInvalid ? p.theme.error : p.theme.lightBlue)};
-      transform: translateY(0);
+      color: ${(p) => p.theme.primary};
+      transform: translateY(0) scale(0.9);
     }
 
     ~ div {
       width: 100%;
     }
   }
-
-  :hover {
-    background: ${darken('#fff', 0.03)};
-  }
 `;
 
-type LabelProps = {
-  inputIsInvalid: boolean;
-};
+type LabelProps = {};
 const Label = styled.label<LabelProps>`
   display: block;
   position: absolute;
   left: 0;
   top: 0;
-  color: ${(p) => (p.inputIsInvalid ? p.theme.error : p.theme.black)};
+  color: ${(p) => p.theme.black};
 
   transform-origin: top left;
-  transform: translateY(0);
+  transform: translateY(0) scale(0.9);
   transition: all 200ms cubic-bezier(0, 0, 0.2, 1);
 `;
 
-type BottomBarProps = {
-  inputIsInvalid: boolean;
-};
+type BottomBarProps = {};
 const BottomBar = styled.div<BottomBarProps>`
   content: '';
   display: block;
@@ -143,8 +144,7 @@ const BottomBar = styled.div<BottomBarProps>`
 
   margin: 0 auto;
   /* Same with Input's border */
-  border-bottom: 2px solid
-    ${(p) => (p.inputIsInvalid ? p.theme.error : p.theme.lightBlue)};
+  border-bottom: 2px solid ${(p) => p.theme.primary};
   transition: all 200ms cubic-bezier(0, 0, 0.2, 1);
   width: 0.1px;
 `;
