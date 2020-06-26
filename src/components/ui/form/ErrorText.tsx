@@ -31,4 +31,8 @@ const ErrorText: React.FC<ErrorTextProps> = ({ name, errors }) => {
 export default ErrorText;
 
 interface TextProps {}
-const Text = styled.p<TextProps>``;
+const Text = styled.p<TextProps>`
+  font-size: inherit;
+  color: ${(p) => p.theme.error};
+  font-style: italic;
+`;

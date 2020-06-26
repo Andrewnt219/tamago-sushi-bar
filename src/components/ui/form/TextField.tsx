@@ -1,9 +1,10 @@
 /* -------------------------------- TextField ------------------------------- */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { FieldElement } from 'react-hook-form';
 import ErrorText, { ErrorTextProps } from './ErrorText';
 import styled from 'styled-components/macro';
+import { lighten, darken } from '@material-ui/core';
 
 export interface TextFieldProps<FormValues> {
   register: (ref: FieldElement<FormValues> | null) => void;
@@ -33,6 +34,8 @@ export function TextField<FormValues>({
 }: TextFieldProps<FormValues> &
   React.InputHTMLAttributes<HTMLInputElement> &
   ErrorTextProps) {
+  const hasError = Boolean(errors[name]);
+
   return (
     <Container>
       <InputWrapper>
@@ -44,9 +47,12 @@ export function TextField<FormValues>({
           ref={register}
           onChange={onChange}
           placeholder=""
+          inputIsInvalid={hasError}
         />
-        <Label htmlFor={id}>{label}</Label>
-        <BottomBar />
+        <Label inputIsInvalid={hasError} htmlFor={id}>
+          {label}
+        </Label>
+        <BottomBar inputIsInvalid={hasError} />
       </InputWrapper>
       <ErrorText errors={errors} name={name} />
     </Container>
@@ -54,7 +60,14 @@ export function TextField<FormValues>({
 }
 const Container = styled.div`
   padding: 0 2rem;
+
+  font-size: 1rem;
+
+  & > :not(:last-child) {
+    margin-bottom: 0.5rem;
+  }
 `;
+
 const InputWrapper = styled.fieldset`
   position: relative;
   overflow: hidden;
@@ -63,7 +76,12 @@ const InputWrapper = styled.fieldset`
   width: 100%;
 `;
 
-const Input = styled.input.attrs({ marginTop: '1.5rem', borderBottom: '' })`
+type InputProps = {
+  inputIsInvalid: boolean;
+};
+const Input = styled.input.attrs({ marginTop: '1.5rem', borderBottom: '' })<
+  InputProps
+>`
   appearance: none;
   display: block;
   font-size: inherit;
@@ -75,7 +93,7 @@ const Input = styled.input.attrs({ marginTop: '1.5rem', borderBottom: '' })`
   /* Same with BottomBar */
   border-width: 0 0 1px 0;
   border-style: solid;
-  border-color: black;
+  border-color: ${(p) => (p.inputIsInvalid ? 'red' : 'black')};
 
   &:placeholder-shown + label {
     /* Y equals to input margin-top */
@@ -84,7 +102,7 @@ const Input = styled.input.attrs({ marginTop: '1.5rem', borderBottom: '' })`
 
   &:focus {
     + label {
-      color: red;
+      color: ${(p) => (p.inputIsInvalid ? p.theme.error : p.theme.lightBlue)};
       transform: translateY(0) scale(0.9);
     }
 
@@ -93,22 +111,30 @@ const Input = styled.input.attrs({ marginTop: '1.5rem', borderBottom: '' })`
     }
   }
 
-  :invalid {
+  :hover {
+    background: ${darken('#fff', 0.03)};
   }
 `;
 
-const Label = styled.label`
+type LabelProps = {
+  inputIsInvalid: boolean;
+};
+const Label = styled.label<LabelProps>`
   display: block;
   position: absolute;
   left: 0;
   top: 0;
+  color: ${(p) => (p.inputIsInvalid ? p.theme.error : p.theme.black)};
 
   transform-origin: top left;
   transform: translateY(0) scale(0.9);
   transition: all 200ms cubic-bezier(0, 0, 0.2, 1);
 `;
 
-const BottomBar = styled.div`
+type BottomBarProps = {
+  inputIsInvalid: boolean;
+};
+const BottomBar = styled.div<BottomBarProps>`
   content: '';
   display: block;
   position: absolute;
@@ -119,7 +145,8 @@ const BottomBar = styled.div`
 
   margin: 0 auto;
   /* Same with Input's border */
-  border-bottom: 2px solid red;
+  border-bottom: 2px solid
+    ${(p) => (p.inputIsInvalid ? p.theme.error : p.theme.lightBlue)};
   transition: all 200ms cubic-bezier(0, 0, 0.2, 1);
   width: 0.1px;
 `;
