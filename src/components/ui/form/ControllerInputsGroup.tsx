@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { ControllerInput } from './ControllerInput';
-import { FieldElement } from 'react-hook-form';
+import { FieldElement, FormContextValues } from 'react-hook-form';
+import ErrorText from './ErrorText';
 
 /**
  * @description the object model to put in ControllerInputsGroup
@@ -26,6 +27,8 @@ interface ControllerInputsGroupProps<FormValues, OptionValue extends string> {
   controllers: ControllerObject<FormValues, OptionValue>[];
   type: 'radio' | 'checkbox';
   label: string;
+  defaultCheckedValue: string;
+  errors: FormContextValues<FormValues>['errors'];
 }
 
 /**
@@ -42,6 +45,8 @@ function ControllerInputsGroup<FormValues, OptionValue extends string>({
   controllers,
   type,
   handleChange,
+  defaultCheckedValue,
+  errors,
 }: ControllerInputsGroupProps<FormValues, OptionValue> &
   React.FieldsetHTMLAttributes<HTMLFieldSetElement>) {
   return (
@@ -51,14 +56,15 @@ function ControllerInputsGroup<FormValues, OptionValue extends string>({
         {controllers.map((controllerProps, index) => (
           <ControllerInput
             {...controllerProps}
-            value={controllerProps.value}
             onChange={handleChange}
+            checked={defaultCheckedValue === controllerProps.value}
             key={index}
             name={name}
             type={type}
           />
         ))}
       </Controllers>
+      <ErrorText errors={errors} name={name} />
     </Container>
   );
 }

@@ -29,7 +29,6 @@ function ReservationForm2(props: Props): ReactElement {
           disablePast
           minDateMessage="Reservation cannot be made on a past day"
           clearable
-          showTodayButton
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}

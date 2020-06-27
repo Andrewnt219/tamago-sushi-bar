@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { ErrorTextProps } from './ErrorText';
 import { FieldElement } from 'react-hook-form';
 
 interface ControllerInputProps<FormValues> {

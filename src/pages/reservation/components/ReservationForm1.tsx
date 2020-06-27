@@ -15,8 +15,7 @@ interface ReservationForm1Props {
   nextStep: () => void;
 }
 interface FormValues {
-  firstName: string;
-  lastName: string;
+  preferredName: string;
   prefix: 'mr' | 'mrs' | 'ms' | 'dr' | 'name';
   phoneNumber: string;
   email: string;
@@ -25,13 +24,12 @@ interface FormValues {
 const ReservationForm1: React.FC<ReservationForm1Props> = ({ nextStep }) => {
   const defaultTheme = useTheme();
   const { handleSubmit, errors, register, formState } = useForm<FormValues>({
-    mode: 'onBlur',
+    mode: 'onChange',
     validateCriteriaMode: 'all',
   });
 
   const [formValues, handleChange] = useFormState<FormValues>({
-    firstName: '',
-    lastName: '',
+    preferredName: '',
     prefix: 'name',
     phoneNumber: '',
     email: '',
@@ -79,28 +77,14 @@ const ReservationForm1: React.FC<ReservationForm1Props> = ({ nextStep }) => {
       <Form onSubmit={onSubmit} noValidate>
         <TextField
           required
-          id="firstName"
-          name="firstName"
-          label="first name"
+          id="preferredName"
+          name="preferredName"
+          label="preferred name"
           errors={errors}
-          value={formValues?.firstName}
+          value={formValues?.preferredName}
           onChange={handleChange}
           register={register({
-            required: 'First name is required',
-          })}
-        />
-
-        <TextField
-          required
-          type="text"
-          id="lastName"
-          name="lastName"
-          errors={errors}
-          label="last name"
-          value={formValues?.lastName}
-          onChange={handleChange}
-          register={register({
-            required: 'Last name is required',
+            required: 'A name is required',
           })}
         />
 
@@ -127,7 +111,7 @@ const ReservationForm1: React.FC<ReservationForm1Props> = ({ nextStep }) => {
           id="phoneNumber"
           name="phoneNumber"
           errors={errors}
-          label="phoneNumber"
+          label="phone"
           value={formValues?.phoneNumber}
           onChange={handleChange}
           register={register({
@@ -141,6 +125,8 @@ const ReservationForm1: React.FC<ReservationForm1Props> = ({ nextStep }) => {
         <ControllerInputsGroup
           type="radio"
           label="how should we address you?"
+          errors={errors}
+          defaultCheckedValue={formValues.prefix}
           name="prefix"
           controllers={radios}
           handleChange={handleChange}
@@ -159,11 +145,8 @@ export { ReservationForm1 };
 const Form = styled(BaseForm)`
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   width: 100%;
-
-  & > *:not(:last-child) {
-    margin-bottom: 1rem;
-  }
 
   @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
     width: 80%;
