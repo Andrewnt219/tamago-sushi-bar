@@ -52,3 +52,7 @@ function add<T>(a: T): string {
 
 // function add<string>(a: string): string
 const f1 = add('2');
+
+/* ---------------------------------- UNION --------------------------------- */
+type g1 = 'a' | 'b';
+const g2: g1 = 'a';

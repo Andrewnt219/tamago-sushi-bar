@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import styled, { useTheme, ThemeProvider } from 'styled-components/macro';
 
 import { TextField } from '../../../components/ui/form/TextField';
@@ -9,16 +9,7 @@ import {
   ControllerObject,
   ControllerInputsGroup,
 } from '../../../components/ui/form/ControllerInputsGroup';
-import { FormContextValues } from 'react-hook-form';
-
-interface ReservationForm1Props<FormValues> {
-  onSubmit: () => void;
-  register: FormContextValues['register'];
-  errors: FormContextValues['errors'];
-  formValues: FormValues;
-  handleChange: (e: React.FormEvent<HTMLInputElement>) => void;
-  isSubmittable: boolean;
-}
+import { FormProps } from '../../../interfaces/FormProps';
 
 interface ReservationForm1Values {
   preferredName: string;
@@ -34,7 +25,7 @@ function ReservationForm1<FormValues extends ReservationForm1Values>({
   formValues,
   handleChange,
   isSubmittable,
-}: ReservationForm1Props<FormValues>): React.ReactElement {
+}: FormProps<FormValues>): ReactElement {
   const defaultTheme = useTheme();
 
   const radios: ControllerObject<typeof formValues.prefix>[] = [

@@ -8,6 +8,11 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 
 type Props = {};
+type ReservationForm2Values = {
+  date: string;
+  guests: string;
+  time: string;
+};
 
 function ReservationForm2(props: Props): ReactElement {
   const [date, setDate] = useState<Date | null>(new Date());
@@ -17,7 +22,7 @@ function ReservationForm2(props: Props): ReactElement {
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDatePicker
           disableToolbar
-          variant="inline"
+          variant="dialog"
           autoOk
           format="MM/dd/yyyy"
           margin="normal"
@@ -28,7 +33,6 @@ function ReservationForm2(props: Props): ReactElement {
           maxDateMessage="Reservation can only be made 14 days in advance"
           disablePast
           minDateMessage="Reservation cannot be made on a past day"
-          clearable
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
