@@ -11,6 +11,8 @@ import {
 } from '../../../components/ui/form/ControllerInputsGroup';
 import { FormProps } from '../../../interfaces/FormProps';
 
+type Props<FormValues> = FormProps<FormValues> & {};
+
 interface ReservationForm1Values {
   preferredName: string;
   prefix: 'mr' | 'mrs' | 'ms' | 'dr' | 'name';
@@ -25,7 +27,7 @@ function ReservationForm1<FormValues extends ReservationForm1Values>({
   formValues,
   handleChange,
   isSubmittable,
-}: FormProps<FormValues>): ReactElement {
+}: Props<FormValues>): ReactElement {
   const defaultTheme = useTheme();
 
   const radios: ControllerObject<typeof formValues.prefix>[] = [

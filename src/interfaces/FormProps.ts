@@ -1,10 +1,11 @@
 import { FormContextValues } from 'react-hook-form';
-
-export interface FormProps<FormValues extends Record<string, any>> {
-  onSubmit: () => void;
+import { handleInputChange } from '../hook/useFormState';
+export type FormProps<FormValues extends Record<string, any>> = {
+  onSubmit: ((event: React.FormEvent<HTMLFormElement>) => void) | undefined;
   register: FormContextValues['register'];
   errors: FormContextValues['errors'];
   formValues: FormValues;
-  handleChange: (e: React.FormEvent<HTMLInputElement>) => void;
+  handleChange: handleInputChange;
   isSubmittable: boolean;
-}
+  control?: FormContextValues['control'];
+};

@@ -15,6 +15,9 @@ interface FormValues {
   prefix: 'mr' | 'mrs' | 'ms' | 'dr' | 'name';
   phoneNumber: string;
   email: string;
+  date: string;
+  time: string;
+  guests: '1' | '2-4' | '4-6' | '8-10';
 }
 
 const Reservation: React.FC<ReservationProps> = () => {
@@ -31,9 +34,16 @@ const Reservation: React.FC<ReservationProps> = () => {
     prefix: 'name',
     phoneNumber: '',
     email: '',
+    date: new Date().toDateString(),
+    time: '09:00',
+    guests: '1',
   });
+
   const onSubmitStep1 = handleSubmit((_, __) => {
     nextStep();
+  });
+  const onSubmitStep2 = handleSubmit((data, __) => {
+    console.log(data);
   });
 
   let form;
@@ -51,7 +61,16 @@ const Reservation: React.FC<ReservationProps> = () => {
       );
       break;
     case 2:
-      form = <ReservationForm2 />;
+      form = (
+        <ReservationForm2
+          isSubmittable={formState.isValid}
+          formValues={formValues}
+          register={register}
+          errors={errors}
+          handleChange={handleChange}
+          onSubmit={onSubmitStep2}
+        />
+      );
       break;
 
     default:
@@ -81,12 +100,15 @@ const Reservation: React.FC<ReservationProps> = () => {
         {form}
 
         <FormFooter>
-          <FormController disabled={currentStep === 1} onClick={prevStep}>
+          <FormController
+            disabled={!formState.isValid || currentStep === 1}
+            onClick={prevStep}
+          >
             Prev
           </FormController>
 
           <FormController
-            disabled={currentStep === NUMBER_OF_STEP}
+            disabled={!formState.isValid || currentStep === NUMBER_OF_STEP}
             onClick={nextStep}
           >
             Next
@@ -144,7 +166,9 @@ const FormSelectButton = styled.button<ButtonProps>`
   background: ${(p) => p.active && p.theme.primary};
 `;
 
-const FormController = styled(BaseButton)``;
+const FormController = styled(BaseButton).attrs((p) => ({
+  color: p.theme.primary,
+}))``;
 
 const Image = styled.div`
   position: absolute;

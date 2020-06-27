@@ -56,3 +56,12 @@ const f1 = add('2');
 /* ---------------------------------- UNION --------------------------------- */
 type g1 = 'a' | 'b';
 const g2: g1 = 'a';
+
+/* -------------------------------- OVERWRITE ------------------------------- */
+type Overwrite<T, U> = Pick<T, Exclude<keyof T, keyof U>> & U;
+type h1 = {
+  overwrite: 'a';
+  props1: '1';
+  props2: '2';
+};
+type h2 = Exclude<h1, 'overwrite'>;
