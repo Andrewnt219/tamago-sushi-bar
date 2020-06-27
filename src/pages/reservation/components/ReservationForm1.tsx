@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import styled, { useTheme, ThemeProvider } from 'styled-components/macro';
+import styled from 'styled-components/macro';
 
 import { TextField } from '../../../components/ui/form/TextField';
 import { BaseForm } from '../../../components/ui/form/BaseForm';
@@ -28,8 +28,6 @@ function ReservationForm1<FormValues extends ReservationForm1Values>({
   handleChange,
   isSubmittable,
 }: Props<FormValues>): ReactElement {
-  const defaultTheme = useTheme();
-
   const radios: ControllerObject<typeof formValues.prefix>[] = [
     {
       id: 'address--mr',
@@ -63,72 +61,69 @@ function ReservationForm1<FormValues extends ReservationForm1Values>({
     },
   ];
 
-  console.log(isSubmittable);
   return (
-    <ThemeProvider theme={{ ...defaultTheme, primary: defaultTheme.lightBlue }}>
-      <Form onSubmit={onSubmit} noValidate>
-        <TextField
-          required
-          id="preferredName"
-          name="preferredName"
-          label="preferred name"
-          errors={errors}
-          value={formValues?.preferredName}
-          onChange={handleChange}
-          register={register({
-            required: 'A name is required',
-          })}
-        />
+    <Form onSubmit={onSubmit} noValidate>
+      <TextField
+        required
+        id="preferredName"
+        name="preferredName"
+        label="preferred name"
+        errors={errors}
+        value={formValues?.preferredName}
+        onChange={handleChange}
+        register={register({
+          required: 'A name is required',
+        })}
+      />
 
-        <TextField
-          required
-          type="email"
-          id="email"
-          name="email"
-          errors={errors}
-          label="email"
-          value={formValues?.email}
-          onChange={handleChange}
-          register={register({
-            required: 'Email is required',
-            pattern: {
-              value: /.*@.*\..+/,
-              message: 'Not a valid email',
-            },
-          })}
-        />
+      <TextField
+        required
+        type="email"
+        id="email"
+        name="email"
+        errors={errors}
+        label="email"
+        value={formValues?.email}
+        onChange={handleChange}
+        register={register({
+          required: 'Email is required',
+          pattern: {
+            value: /.*@.*\..+/,
+            message: 'Not a valid email',
+          },
+        })}
+      />
 
-        <TextField
-          type="tel"
-          id="phoneNumber"
-          name="phoneNumber"
-          errors={errors}
-          label="phone"
-          value={formValues?.phoneNumber}
-          onChange={handleChange}
-          register={register({
-            pattern: {
-              value: /(\d[- ]?){9}\d/,
-              message: 'Not a phone number',
-            },
-          })}
-        />
+      <TextField
+        type="tel"
+        id="phoneNumber"
+        name="phoneNumber"
+        errors={errors}
+        label="phone"
+        value={formValues?.phoneNumber}
+        onChange={handleChange}
+        register={register({
+          pattern: {
+            value: /(\d[- ]?){9}\d/,
+            message: 'Not a phone number',
+          },
+        })}
+      />
 
-        <ControllerInputsGroup
-          type="radio"
-          label="how should we address you?"
-          errors={errors}
-          defaultCheckedValue={formValues.prefix}
-          name="prefix"
-          controllers={radios}
-          handleChange={handleChange}
-        />
+      <ControllerInputsGroup
+        type="radio"
+        label="how should we address you?"
+        errors={errors}
+        defaultCheckedValue={formValues.prefix}
+        name="prefix"
+        controllers={radios}
+        handleChange={handleChange}
+      />
 
-        <Button disabled={!isSubmittable} type="submit" outlined>
-          NEXT
-        </Button>
-      </Form>
-    </ThemeProvider>
+      <Button disabled={!isSubmittable} type="submit" outlined>
+        NEXT
+      </Button>
+    </Form>
   );
 }
 
@@ -139,6 +134,7 @@ const Form = styled(BaseForm)`
   flex-direction: column;
   justify-content: space-around;
   width: 100%;
+  font-size: 1.2rem;
 
   @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
     width: 80%;

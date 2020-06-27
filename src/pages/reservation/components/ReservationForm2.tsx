@@ -4,15 +4,16 @@ import styled from 'styled-components/macro';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
+  KeyboardTimePicker,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { FormProps } from '../../../interfaces/FormProps';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
-import { Controller } from 'react-hook-form';
 import { BaseForm } from '../../../components/ui/form/BaseForm';
 import { Button } from '@material-ui/core';
 import { InputData } from '../../../hook/useFormState';
-
+import { MdAccessTime } from 'react-icons/md';
+import ErrorText from '../../../components/ui/form/ErrorText';
 type Props<FormValues> = FormProps<FormValues> & {
   children?: never;
 };
@@ -24,7 +25,6 @@ type ReservationForm2Values = {
 };
 
 function ReservationForm2<FormValues extends ReservationForm2Values>({
-  control,
   onSubmit,
   register,
   errors,
@@ -32,14 +32,14 @@ function ReservationForm2<FormValues extends ReservationForm2Values>({
   formValues,
   isSubmittable,
 }: Props<FormValues>): ReactElement {
-  const handleDateChange = (
-    date: MaterialUiPickersDate,
-    _?: string | null | undefined
+  console.log(errors);
+  const handleDateChange = (inputName: keyof ReservationForm2Values) => (
+    date: MaterialUiPickersDate
   ): void => {
     const inputData: InputData = {
       currentTarget: {
-        name: 'data',
-        value: date?.toDateString() ?? '',
+        name: inputName,
+        value: date?.toString() ?? new Date().toString(),
       },
     };
     handleChange(inputData);
@@ -50,7 +50,7 @@ function ReservationForm2<FormValues extends ReservationForm2Values>({
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDatePicker
           name="date"
-          onChange={handleDateChange}
+          onChange={handleDateChange('date')}
           disableToolbar
           variant="dialog"
           autoOk
@@ -58,13 +58,29 @@ function ReservationForm2<FormValues extends ReservationForm2Values>({
           margin="normal"
           label="Reservation's Date"
           value={formValues.date}
-          inputRef={register({ required: 'true' })}
+          inputRef={register()}
           maxDate={add(new Date(), { days: 14 })}
           maxDateMessage="Reservation can only be made 14 days in advance"
           disablePast
           minDateMessage="Reservation cannot be made on a past day"
           KeyboardButtonProps={{
             'aria-label': 'change date',
+          }}
+        />
+
+        <KeyboardTimePicker
+          name="time"
+          ampm={false}
+          autoOk
+          keyboardIcon={<MdAccessTime />}
+          inputRef={register({ required: 'true' })}
+          margin="normal"
+          id="time-picker"
+          label="Time picker"
+          value={formValues.time}
+          onChange={handleDateChange('time')}
+          KeyboardButtonProps={{
+            'aria-label': 'change time',
           }}
         />
       </MuiPickersUtilsProvider>

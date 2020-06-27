@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled, { ThemeProvider, DefaultTheme } from 'styled-components/macro';
 import { ReservationForm1 } from './components/ReservationForm1';
 import { useFormStep } from '../../hook';
 import { BaseButton } from '../../components/ui/BaseButton';
@@ -35,7 +35,7 @@ const Reservation: React.FC<ReservationProps> = () => {
     phoneNumber: '',
     email: '',
     date: new Date().toDateString(),
-    time: '09:00',
+    time: new Date().toString(),
     guests: '1',
   });
 
@@ -78,45 +78,49 @@ const Reservation: React.FC<ReservationProps> = () => {
   }
 
   return (
-    <Container>
-      <FormContainer>
-        <FormHeader>
-          <Header>Reservation</Header>
-          <FormSelectButton
-            active={currentStep === 1}
-            onClick={() => jumpToStep(1)}
-          >
-            Form 1
-          </FormSelectButton>
+    <ThemeProvider
+      theme={(defaultTheme: DefaultTheme) => ({
+        ...defaultTheme,
+        primary: defaultTheme.lightBlue,
+      })}
+    >
+      <Container>
+        <FormContainer>
+          <FormHeader>
+            <Header>Reservation</Header>
+            <FormSelectButton
+              active={currentStep === 1}
+              onClick={() => jumpToStep(1)}
+            >
+              Form 1
+            </FormSelectButton>
 
-          <FormSelectButton
-            active={currentStep === 2}
-            onClick={() => jumpToStep(2)}
-          >
-            Form 2
-          </FormSelectButton>
-        </FormHeader>
+            <FormSelectButton
+              active={currentStep === 2}
+              onClick={() => jumpToStep(2)}
+            >
+              Form 2
+            </FormSelectButton>
+          </FormHeader>
 
-        {form}
+          {form}
 
-        <FormFooter>
-          <FormController
-            disabled={!formState.isValid || currentStep === 1}
-            onClick={prevStep}
-          >
-            Prev
-          </FormController>
+          <FormFooter>
+            <FormController disabled={currentStep === 1} onClick={prevStep}>
+              Prev
+            </FormController>
 
-          <FormController
-            disabled={!formState.isValid || currentStep === NUMBER_OF_STEP}
-            onClick={nextStep}
-          >
-            Next
-          </FormController>
-        </FormFooter>
-      </FormContainer>
-      <Image />
-    </Container>
+            <FormController
+              disabled={!formState.isValid || currentStep === NUMBER_OF_STEP}
+              onClick={nextStep}
+            >
+              Next
+            </FormController>
+          </FormFooter>
+        </FormContainer>
+        <Image />
+      </Container>
+    </ThemeProvider>
   );
 };
 
@@ -166,9 +170,7 @@ const FormSelectButton = styled.button<ButtonProps>`
   background: ${(p) => p.active && p.theme.primary};
 `;
 
-const FormController = styled(BaseButton).attrs((p) => ({
-  color: p.theme.primary,
-}))``;
+const FormController = styled(BaseButton).attrs({ contained: true })``;
 
 const Image = styled.div`
   position: absolute;

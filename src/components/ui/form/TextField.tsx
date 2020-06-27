@@ -73,9 +73,7 @@ export function TextField<FormValues>({
     </ThemeProvider>
   );
 }
-const Container = styled.div`
-  font-size: 1rem;
-`;
+const Container = styled.div``;
 
 interface InputWrapperProps {}
 const InputWrapper = styled.div<InputWrapperProps>`
