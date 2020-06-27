@@ -61,6 +61,11 @@ export const GlobalStyle = createGlobalStyle`
     font-family: inherit;
   }
 
+  input {
+    font-size: inherit;
+    font-family: inherit;
+  }
+
   #root {
     min-height: 100vh;
     position: relative;

@@ -75,10 +75,6 @@ export function TextField<FormValues>({
 }
 const Container = styled.div`
   font-size: 1rem;
-
-  & > :not(:last-child) {
-    margin-bottom: 0.5rem;
-  }
 `;
 
 interface InputWrapperProps {}
@@ -88,6 +84,7 @@ const InputWrapper = styled.div<InputWrapperProps>`
 
   border: none;
   width: 100%;
+  margin-bottom: 1rem;
 
   :hover label {
     color: ${(p) => p.theme.primary};
@@ -106,6 +103,7 @@ const Input = styled.input.attrs({ marginTop: '2rem', borderBottom: '' })<
   margin-top: ${(p) => p.marginTop};
   padding-bottom: 1rem;
   outline: none;
+  background: transparent;
   /* Same with BottomBar */
   border-width: 0 0 1px 0;
   border-style: solid;

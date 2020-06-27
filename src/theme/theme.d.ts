@@ -29,6 +29,13 @@ declare module 'styled-components' {
       lw: number;
     };
 
+    /**
+     * @param xl 1920px
+     * @param lg 1280px
+     * @param md 960px
+     * @param sm 600px
+     * @param xs 0px
+     */
     breakpoints: {
       xl: string;
       lg: string;

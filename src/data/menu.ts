@@ -125,13 +125,13 @@ export const menus: Menus = {
       name: 'Wakame Salad',
       price: 7.95,
       imgSrc: wakameSalad,
-      description: 'Seasweed &amp; Mixed Greens with Ginger Dressing',
+      description: 'Seasweed & Mixed Greens with Ginger Dressing',
     },
     {
       name: 'Avocado Salad',
       price: 7.95,
       imgSrc: avocadoSalad,
-      description: 'Avocado &amp; Mixed Greens with Ginger Dressing',
+      description: 'Avocado & Mixed Greens with Ginger Dressing',
     },
     {
       name: 'Green Kaiso Salad',

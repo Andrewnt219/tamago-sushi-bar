@@ -11,53 +11,66 @@ import {
 } from '../../../components/ui/form/ControllerInputsGroup';
 import { useFormState } from '../../../hook/useFormState';
 
-interface ReservationForm1Props {}
+interface ReservationForm1Props {
+  nextStep: () => void;
+}
 interface FormValues {
   firstName: string;
   lastName: string;
-  gender: 'male' | 'female' | 'other';
+  prefix: 'mr' | 'mrs' | 'ms' | 'dr' | 'name';
   phoneNumber: string;
   email: string;
 }
 
-const ReservationForm1: React.FC<ReservationForm1Props> = () => {
+const ReservationForm1: React.FC<ReservationForm1Props> = ({ nextStep }) => {
   const defaultTheme = useTheme();
-  const { handleSubmit, errors, register } = useForm<FormValues>({
+  const { handleSubmit, errors, register, formState } = useForm<FormValues>({
     mode: 'onBlur',
     validateCriteriaMode: 'all',
   });
 
-  const [formState, handleChange] = useFormState<FormValues>({
+  const [formValues, handleChange] = useFormState<FormValues>({
     firstName: '',
     lastName: '',
-    gender: 'male',
+    prefix: 'name',
     phoneNumber: '',
     email: '',
   });
 
-  const onSubmit = handleSubmit((data, e) => {
-    console.log('Submit event', e);
-    console.log(data);
+  const onSubmit = handleSubmit((_, __) => {
+    nextStep();
   });
 
-  const radios: ControllerObject<FormValues, typeof formState.gender>[] = [
+  const radios: ControllerObject<FormValues, typeof formValues.prefix>[] = [
     {
-      id: 'radio1',
-      label: 'Radio 1st',
+      id: 'address--mr',
+      label: 'Sir',
       register: register(),
-      value: 'male',
+      value: 'mr',
     },
     {
-      id: 'radio2',
-      label: 'Radio 2nd',
+      id: 'address--ms',
+      label: 'Ms.',
       register: register(),
-      value: 'female',
+      value: 'ms',
     },
     {
-      id: 'radio3',
-      label: 'Radio 3rd',
+      id: 'address--mrs',
+      label: 'Mrs.',
       register: register(),
-      value: 'other',
+      value: 'mrs',
+    },
+    {
+      id: 'address--dr',
+      label: 'Dr.',
+      register: register(),
+      value: 'dr',
+    },
+    {
+      id: 'address--none',
+      label: 'By name',
+      register: register(),
+      value: 'name',
     },
   ];
 
@@ -70,36 +83,72 @@ const ReservationForm1: React.FC<ReservationForm1Props> = () => {
           name="firstName"
           label="first name"
           errors={errors}
-          value={formState?.firstName}
+          value={formValues?.firstName}
           onChange={handleChange}
           register={register({
             required: 'First name is required',
-            minLength: {
-              value: 3,
-              message: 'At least 1 character',
+          })}
+        />
+
+        <TextField
+          required
+          type="text"
+          id="lastName"
+          name="lastName"
+          errors={errors}
+          label="last name"
+          value={formValues?.lastName}
+          onChange={handleChange}
+          register={register({
+            required: 'Last name is required',
+          })}
+        />
+
+        <TextField
+          required
+          type="email"
+          id="email"
+          name="email"
+          errors={errors}
+          label="email"
+          value={formValues?.email}
+          onChange={handleChange}
+          register={register({
+            required: 'Email is required',
+            pattern: {
+              value: /.*@.*\..+/,
+              message: 'Not a valid email',
             },
           })}
         />
 
         <TextField
-          type="number"
-          id="lastName"
-          name="lastName"
+          type="tel"
+          id="phoneNumber"
+          name="phoneNumber"
           errors={errors}
-          label="last name"
-          value={formState?.lastName}
+          label="phoneNumber"
+          value={formValues?.phoneNumber}
           onChange={handleChange}
-          register={register()}
+          register={register({
+            pattern: {
+              value: /(\d[- ]?){9}\d/,
+              message: 'Not a phone number',
+            },
+          })}
         />
 
         <ControllerInputsGroup
           type="radio"
-          name="gender"
+          label="how should we address you?"
+          name="prefix"
           controllers={radios}
           handleChange={handleChange}
         />
 
-        <Button type="submit">SUBMIT</Button>
+        <Button disabled={!formState.isValid} type="submit" outlined>
+          NEXT
+        </Button>
       </Form>
     </ThemeProvider>
   );
@@ -108,8 +157,19 @@ const ReservationForm1: React.FC<ReservationForm1Props> = () => {
 export { ReservationForm1 };
 
 const Form = styled(BaseForm)`
-  width: 60%;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  & > *:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
+    width: 80%;
+  }
 `;
 
-const Button = styled(BaseButton)``;
+const Button = styled(BaseButton)`
+  margin-top: 2rem;
+`;

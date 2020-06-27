@@ -11,7 +11,7 @@ export const CategorySushi: React.FC<CategorySushiProps> = () => {
   return (
     <MenuCategory
       menuId="sushiAndSashimi"
-      categoryName="Sushi &amp; Sashimi"
+      categoryName="Sushi & Sashimi"
       menuItems={menus.sashimi}
     />
   );

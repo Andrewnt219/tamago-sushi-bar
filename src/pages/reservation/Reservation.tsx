@@ -4,11 +4,13 @@ import { ReservationForm1 } from './components/ReservationForm1';
 import { useFormStep } from '../../hook';
 import { BaseButton } from '../../components/ui/BaseButton';
 import ReservationForm2 from './components/ReservationForm2';
+import background from '../../asset/background/reservation.jpg';
+import { rgba } from 'polished';
 
 interface ReservationProps {}
 
 const Reservation: React.FC<ReservationProps> = () => {
-  const NUMBER_OF_STEP = 3;
+  const NUMBER_OF_STEP = 2;
   const [currentStep, nextStep, prevStep, jumpToStep] = useFormStep(
     NUMBER_OF_STEP
   );
@@ -16,39 +18,94 @@ const Reservation: React.FC<ReservationProps> = () => {
   let form;
   switch (currentStep) {
     case 1:
-      form = <ReservationForm1 />;
+      form = <ReservationForm1 nextStep={nextStep} />;
       break;
     case 2:
       form = <ReservationForm2 />;
       break;
 
     default:
-      throw new Error('No form matches currentStep');
+      break;
   }
 
   return (
-    <div>
-      <FormSelectButton
-        active={currentStep === 1}
-        onClick={() => jumpToStep(1)}
-      >
-        Form 1
-      </FormSelectButton>
+    <Container>
+      <FormContainer>
+        <FormHeader>
+          <Header>Reservation</Header>
+          <FormSelectButton
+            active={currentStep === 1}
+            onClick={() => jumpToStep(1)}
+          >
+            Form 1
+          </FormSelectButton>
 
-      <FormSelectButton
-        active={currentStep === 2}
-        onClick={() => jumpToStep(2)}
-      >
-        Form 2
-      </FormSelectButton>
+          <FormSelectButton
+            active={currentStep === 2}
+            onClick={() => jumpToStep(2)}
+          >
+            Form 2
+          </FormSelectButton>
+        </FormHeader>
 
-      {form}
+        {form}
 
-      <FormController onClick={nextStep}>Next</FormController>
-      <FormController onClick={prevStep}>Prev</FormController>
-    </div>
+        <FormFooter>
+          <FormController disabled={currentStep === 1} onClick={prevStep}>
+            Prev
+          </FormController>
+
+          <FormController
+            disabled={currentStep === NUMBER_OF_STEP}
+            onClick={nextStep}
+          >
+            Next
+          </FormController>
+        </FormFooter>
+      </FormContainer>
+      <Image />
+    </Container>
   );
 };
+
+const Container = styled.section`
+  max-width: 90vw;
+  margin: 0 auto;
+  position: relative;
+  height: 80vh;
+
+  padding: 10vw;
+`;
+
+interface FormContainerProps {}
+const FormContainer = styled.div<FormContainerProps>`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+  shape-margin: 2rem;
+  background: ${(p) => p.theme.white};
+  z-index: ${(p) => p.theme.zIndex.lw};
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
+    clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);
+    width: 50%;
+  }
+`;
+const FormHeader = styled.div``;
+const Header = styled.h2``;
+const FormFooter = styled.div`
+  display: flex;
+  align-self: flex-end;
+  justify-content: space-between;
+`;
 
 interface ButtonProps {
   active: boolean;
@@ -58,5 +115,27 @@ const FormSelectButton = styled.button<ButtonProps>`
 `;
 
 const FormController = styled(BaseButton)``;
+
+const Image = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+
+  background: linear-gradient(
+      ${(p) => rgba(p.theme.black, 0.6)},
+      ${(p) => rgba(p.theme.black, 0.6)}
+    ),
+    url(${background});
+  background-size: cover;
+
+  background-position: center;
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
+    /* width is calc-ed on the third point of form's polygon */
+    width: 60%;
+  }
+`;
 
 export default Reservation;

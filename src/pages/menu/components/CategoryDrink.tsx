@@ -11,7 +11,7 @@ export const CategoryDrink: React.FC<CategoryDrinkProps> = () => {
   return (
     <MenuCategory
       menuId="dessertsAndDrinks"
-      categoryName="Desserts &amp; Drinks"
+      categoryName="Desserts & Drinks"
       menuItems={menus.drinks.concat(menus.desserts)}
     />
   );

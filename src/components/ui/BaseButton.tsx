@@ -8,6 +8,7 @@ interface BaseButtonProps {
   fontSize?: string;
   shadowed?: boolean;
 }
+
 export const BaseButton = styled.button<BaseButtonProps>`
   font-size: ${(p) => p.fontSize ?? 'inherit'};
   padding: 0.75rem 1.5rem;
@@ -74,4 +75,22 @@ export const BaseButton = styled.button<BaseButtonProps>`
           color: ${p.theme.text};
         }
       `}
+
+      /* IMPORTANT!! Put at the end of css */
+      ${(p) =>
+        p.disabled &&
+        css`
+          cursor: not-allowed;
+          &,
+          :hover,
+          :active,
+          :link {
+            opacity: 0.5;
+            color: ${(p) => p.theme.black};
+            background: unset;
+            border-color: unset;
+            box-shadow: unset;
+            transform: unset;
+          }
+        `}
 `;

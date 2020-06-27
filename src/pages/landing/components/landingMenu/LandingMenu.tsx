@@ -27,7 +27,7 @@ export const LandingMenu: React.FC<LandingMenuProps> = () => {
 
         <LandingMenuItem
           menuId="appetizersAndSalads"
-          header="APPETIZER &amp; SALADS"
+          header="APPETIZER & SALADS"
           imgSrc={menuSalad}
         >
           We have an extensive range of traditional Japanese appetizer and
@@ -36,7 +36,7 @@ export const LandingMenu: React.FC<LandingMenuProps> = () => {
 
         <LandingMenuItem
           menuId="riceAndNoodles"
-          header="RICE &amp; NOODLES"
+          header="RICE & NOODLES"
           imgSrc={menuRice}
         >
           It is impossible to get bored with out variety from Japanese udon
@@ -46,7 +46,7 @@ export const LandingMenu: React.FC<LandingMenuProps> = () => {
 
         <LandingMenuItem
           menuId="dessertsAndDrinks"
-          header="DESSERTS &amp; DRINKS"
+          header="DESSERTS & DRINKS"
           imgSrc={menuDrink}
         >
           We have an extensive range of traditional Japanese desserts and

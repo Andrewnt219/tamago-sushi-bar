@@ -25,6 +25,7 @@ interface ControllerInputsGroupProps<FormValues, OptionValue extends string> {
     | undefined;
   controllers: ControllerObject<FormValues, OptionValue>[];
   type: 'radio' | 'checkbox';
+  label: string;
 }
 
 /**
@@ -37,6 +38,7 @@ interface ControllerInputsGroupProps<FormValues, OptionValue extends string> {
  */
 function ControllerInputsGroup<FormValues, OptionValue extends string>({
   name,
+  label,
   controllers,
   type,
   handleChange,
@@ -44,7 +46,7 @@ function ControllerInputsGroup<FormValues, OptionValue extends string>({
   React.FieldsetHTMLAttributes<HTMLFieldSetElement>) {
   return (
     <Container>
-      <GroupName className="group-name">{name}</GroupName>
+      <GroupName className="group-name">{label}</GroupName>
       <Controllers>
         {controllers.map((controllerProps, index) => (
           <ControllerInput
