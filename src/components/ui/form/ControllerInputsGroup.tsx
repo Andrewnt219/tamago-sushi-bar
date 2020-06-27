@@ -11,11 +11,11 @@ import ErrorText from './ErrorText';
  * @param register returned value of register from react-hook-form/useForm()
  * @param label the label of each input
  */
-export interface ControllerObject<FormValues, OptionValue extends string> {
+export interface ControllerObject<OptionValue extends string> {
   id: string;
   checked?: boolean;
   value: OptionValue;
-  register: (ref: FieldElement<FormValues> | null) => void;
+  register: (ref: FieldElement | null) => void;
   label: string;
 }
 
@@ -24,7 +24,7 @@ interface ControllerInputsGroupProps<FormValues, OptionValue extends string> {
   handleChange?:
     | ((event: React.ChangeEvent<HTMLInputElement>) => void)
     | undefined;
-  controllers: ControllerObject<FormValues, OptionValue>[];
+  controllers: ControllerObject<OptionValue>[];
   type: 'radio' | 'checkbox';
   label: string;
   defaultCheckedValue: string;

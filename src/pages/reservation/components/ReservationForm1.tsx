@@ -3,43 +3,41 @@ import styled, { useTheme, ThemeProvider } from 'styled-components/macro';
 
 import { TextField } from '../../../components/ui/form/TextField';
 import { BaseForm } from '../../../components/ui/form/BaseForm';
-import { useForm } from 'react-hook-form';
+
 import { BaseButton } from '../../../components/ui/BaseButton';
 import {
   ControllerObject,
   ControllerInputsGroup,
 } from '../../../components/ui/form/ControllerInputsGroup';
-import { useFormState } from '../../../hook/useFormState';
+import { FormContextValues } from 'react-hook-form';
 
-interface ReservationForm1Props {
-  nextStep: () => void;
+interface ReservationForm1Props<FormValues> {
+  onSubmit: () => void;
+  register: FormContextValues['register'];
+  errors: FormContextValues['errors'];
+  formValues: FormValues;
+  handleChange: (e: React.FormEvent<HTMLInputElement>) => void;
+  isSubmittable: boolean;
 }
-interface FormValues {
+
+interface ReservationForm1Values {
   preferredName: string;
   prefix: 'mr' | 'mrs' | 'ms' | 'dr' | 'name';
   phoneNumber: string;
   email: string;
 }
 
-const ReservationForm1: React.FC<ReservationForm1Props> = ({ nextStep }) => {
+function ReservationForm1<FormValues extends ReservationForm1Values>({
+  onSubmit,
+  register,
+  errors,
+  formValues,
+  handleChange,
+  isSubmittable,
+}: ReservationForm1Props<FormValues>): React.ReactElement {
   const defaultTheme = useTheme();
-  const { handleSubmit, errors, register, formState } = useForm<FormValues>({
-    mode: 'onChange',
-    validateCriteriaMode: 'all',
-  });
 
-  const [formValues, handleChange] = useFormState<FormValues>({
-    preferredName: '',
-    prefix: 'name',
-    phoneNumber: '',
-    email: '',
-  });
-
-  const onSubmit = handleSubmit((_, __) => {
-    nextStep();
-  });
-
-  const radios: ControllerObject<FormValues, typeof formValues.prefix>[] = [
+  const radios: ControllerObject<typeof formValues.prefix>[] = [
     {
       id: 'address--mr',
       label: 'Sir',
@@ -72,6 +70,7 @@ const ReservationForm1: React.FC<ReservationForm1Props> = ({ nextStep }) => {
     },
   ];
 
+  console.log(isSubmittable);
   return (
     <ThemeProvider theme={{ ...defaultTheme, primary: defaultTheme.lightBlue }}>
       <Form onSubmit={onSubmit} noValidate>
@@ -132,13 +131,13 @@ const ReservationForm1: React.FC<ReservationForm1Props> = ({ nextStep }) => {
           handleChange={handleChange}
         />
 
-        <Button disabled={!formState.isValid} type="submit" outlined>
+        <Button disabled={!isSubmittable} type="submit" outlined>
           NEXT
         </Button>
       </Form>
     </ThemeProvider>
   );
-};
+}
 
 export { ReservationForm1 };
 

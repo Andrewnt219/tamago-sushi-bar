@@ -1,3 +1,5 @@
+import React from 'react';
+
 type c = { key: string };
 type implicitFunctionSignature = (obj: c) => c;
 
@@ -40,9 +42,13 @@ const d: b | a = {
   duplicate: 'c',
 };
 
-/* ----------------------------- UNION & STRING ----------------------------- */
-type Fruits = 'Orange' | 'Apple' | 'Banana';
+/* ----------------------------- RECORD ----------------------------- */
+type e1 = Record<string, string>;
 
-const myFruit: Fruits = 'Apple';
+/* -------------------------------- TEMPLATE -------------------------------- */
+function add<T>(a: T): string {
+  return typeof a;
+}
 
-const myString: string = myFruit;
+// function add<string>(a: string): string
+const f1 = add('2');

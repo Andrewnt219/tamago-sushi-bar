@@ -6,19 +6,49 @@ import { BaseButton } from '../../components/ui/BaseButton';
 import ReservationForm2 from './components/ReservationForm2';
 import background from '../../asset/background/reservation.jpg';
 import { rgba } from 'polished';
+import { useForm } from 'react-hook-form';
+import { useFormState } from '../../hook/useFormState';
 
 interface ReservationProps {}
+interface FormValues {
+  preferredName: string;
+  prefix: 'mr' | 'mrs' | 'ms' | 'dr' | 'name';
+  phoneNumber: string;
+  email: string;
+}
 
 const Reservation: React.FC<ReservationProps> = () => {
   const NUMBER_OF_STEP = 2;
   const [currentStep, nextStep, prevStep, jumpToStep] = useFormStep(
     NUMBER_OF_STEP
   );
+  const { handleSubmit, errors, register, formState } = useForm<FormValues>({
+    mode: 'onChange',
+    validateCriteriaMode: 'all',
+  });
+  const [formValues, handleChange] = useFormState<FormValues>({
+    preferredName: '',
+    prefix: 'name',
+    phoneNumber: '',
+    email: '',
+  });
+  const onSubmitStep1 = handleSubmit((_, __) => {
+    nextStep();
+  });
 
   let form;
   switch (currentStep) {
     case 1:
-      form = <ReservationForm1 nextStep={nextStep} />;
+      form = (
+        <ReservationForm1<FormValues>
+          isSubmittable={formState.isValid}
+          formValues={formValues}
+          register={register}
+          errors={errors}
+          handleChange={handleChange}
+          onSubmit={onSubmitStep1}
+        />
+      );
       break;
     case 2:
       form = <ReservationForm2 />;
