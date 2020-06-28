@@ -72,3 +72,26 @@ type i1 = {
   b: string;
 };
 type i2 = Extract<keyof i1, string>;
+
+type ReservationForm2Values = {
+  date: string;
+  guests: string;
+  time: string;
+};
+interface FormValues {
+  preferredName: string;
+  prefix: 'mr' | 'mrs' | 'ms' | 'dr' | 'name';
+  phoneNumber: string;
+  email: string;
+  date: string;
+  time: string;
+  guests: '1' | '2-4' | '4-6' | '8-10';
+}
+
+type Props<FV extends ReservationForm2Values> = {
+  a: FV;
+};
+
+const j1: Props<FormValues> = {
+  a: {},
+};

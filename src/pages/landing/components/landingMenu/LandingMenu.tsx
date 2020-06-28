@@ -65,7 +65,7 @@ const LandingMenuItems = styled.div`
     margin-bottom: 2rem;
   }
 
-  @media screen and (min-width: ${(p) => p.theme.breakpoints.xs}) {
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.xxs}) {
     display: grid;
 
     grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));

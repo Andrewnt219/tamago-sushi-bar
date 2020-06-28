@@ -27,7 +27,7 @@ interface ControllerInputsGroupProps<FormValues, OptionValue extends string> {
   controllers: ControllerObject<FormValues, OptionValue>[];
   type: 'radio' | 'checkbox';
   label: string;
-  defaultCheckedValue: string;
+  defaultCheckedValue?: string;
   errors: FormContextValues<FormValues>['errors'];
 }
 
@@ -57,7 +57,7 @@ function ControllerInputsGroup<FormValues, OptionValue extends string>({
           <ControllerInput
             {...controllerProps}
             onChange={handleChange}
-            checked={defaultCheckedValue === controllerProps.value}
+            defaultChecked={defaultCheckedValue === controllerProps.value}
             key={index}
             name={name}
             type={type}

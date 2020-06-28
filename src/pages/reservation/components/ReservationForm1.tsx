@@ -15,9 +15,9 @@ type Props<FormValues> = FormProps<FormValues> & {};
 
 type FormValues = {
   preferredName: string;
-  prefix: 'mr' | 'mrs' | 'ms' | 'dr' | 'name';
-  phoneNumber: string;
+  prefix: 'mr' | 'mrs' | 'ms' | 'name';
   email: string;
+  createAccount: 'yes' | 'no';
 };
 
 function ReservationForm1({
@@ -48,16 +48,22 @@ function ReservationForm1({
       value: 'mrs',
     },
     {
-      id: 'address--dr',
-      label: 'Dr.',
-      register: register(),
-      value: 'dr',
-    },
-    {
       id: 'address--none',
       label: 'By name',
       register: register(),
       value: 'name',
+    },
+  ];
+
+  const checkboxes: ControllerObject<
+    FormValues,
+    typeof formValues['createAccount']
+  >[] = [
+    {
+      id: 'create-account-yes',
+      label: 'Yes, save me time',
+      register: register(),
+      value: 'yes',
     },
   ];
 
@@ -94,22 +100,6 @@ function ReservationForm1({
         })}
       />
 
-      <TextField
-        type="tel"
-        id="phoneNumber"
-        name="phoneNumber"
-        errors={errors}
-        label="phone"
-        value={formValues?.phoneNumber}
-        onChange={handleChange}
-        register={register({
-          pattern: {
-            value: /(\d[- ]?){9}\d/,
-            message: 'Not a phone number',
-          },
-        })}
-      />
-
       <ControllerInputsGroup
         type="radio"
         label="how should we address you?"
@@ -120,9 +110,18 @@ function ReservationForm1({
         handleChange={handleChange}
       />
 
-      <Button disabled={!isSubmittable} type="submit" outlined>
+      <ControllerInputsGroup
+        type="checkbox"
+        label="Create an account with these info?"
+        errors={errors}
+        name="createAccount"
+        controllers={checkboxes}
+        handleChange={handleChange}
+      />
+
+      <SubmitButton disabled={!isSubmittable} type="submit" outlined>
         NEXT
-      </Button>
+      </SubmitButton>
     </Form>
   );
 }
@@ -135,12 +134,8 @@ const Form = styled(BaseForm)`
   justify-content: space-around;
   width: 100%;
   font-size: 1.2rem;
-
-  @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
-    width: 80%;
-  }
 `;
 
-const Button = styled(BaseButton)`
+const SubmitButton = styled(BaseButton)`
   margin-top: 2rem;
 `;

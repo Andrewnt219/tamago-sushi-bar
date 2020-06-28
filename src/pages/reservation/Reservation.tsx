@@ -1,8 +1,12 @@
 import React from 'react';
-import styled, { ThemeProvider, DefaultTheme } from 'styled-components/macro';
+import styled, {
+  ThemeProvider,
+  DefaultTheme,
+  css,
+} from 'styled-components/macro';
 import { ReservationForm1 } from './components/ReservationForm1';
 import { useFormStep } from '../../hook';
-import { BaseButton } from '../../components/ui/BaseButton';
+
 import ReservationForm2 from './components/ReservationForm2';
 import background from '../../asset/background/reservation.jpg';
 import { rgba } from 'polished';
@@ -14,19 +18,18 @@ import { add } from 'date-fns';
 interface ReservationProps {}
 interface FormValues {
   preferredName: string;
-  prefix: 'mr' | 'mrs' | 'ms' | 'dr' | 'name';
-  phoneNumber: string;
+  prefix: 'mr' | 'mrs' | 'ms' | 'name';
   email: string;
   date: string;
   time: string;
   guests: '1' | '2-4' | '4-8';
+  createAccount: 'yes' | 'no';
 }
 
+const NUMBER_OF_STEP = 2;
 const Reservation: React.FC<ReservationProps> = () => {
-  const NUMBER_OF_STEP = 2;
-  const [currentStep, nextStep, prevStep, jumpToStep] = useFormStep(
-    NUMBER_OF_STEP
-  );
+  const [currentStep, nextStep, , jumpToStep] = useFormStep(NUMBER_OF_STEP);
+
   const {
     handleSubmit,
     errors,
@@ -37,14 +40,16 @@ const Reservation: React.FC<ReservationProps> = () => {
     mode: 'onBlur',
     validateCriteriaMode: 'all',
   });
+
   const [formValues, handleChange] = useFormState<FormValues>({
     preferredName: '',
     prefix: 'name',
-    phoneNumber: '',
+
     email: '',
     date: add(new Date(), { days: 1 }).toDateString(),
     time: roundToNearestMinutes(new Date(), { nearestTo: 15 }).toString(),
     guests: '1',
+    createAccount: 'no',
   });
 
   const onSubmitStep1 = handleSubmit((_, __) => {
@@ -97,35 +102,24 @@ const Reservation: React.FC<ReservationProps> = () => {
         <FormContainer>
           <FormHeader>
             <Header>Reservation</Header>
-            <FormSelectButton
-              active={currentStep === 1}
-              onClick={() => jumpToStep(1)}
-            >
-              Form 1
-            </FormSelectButton>
+            <FormSelectButtons>
+              <FormSelectButton
+                active={currentStep === 1}
+                onClick={() => jumpToStep(1)}
+              >
+                INFO
+              </FormSelectButton>
 
-            <FormSelectButton
-              active={currentStep === 2}
-              onClick={() => jumpToStep(2)}
-            >
-              Form 2
-            </FormSelectButton>
+              <FormSelectButton
+                active={currentStep === 2}
+                onClick={() => jumpToStep(2)}
+              >
+                BOOKING
+              </FormSelectButton>
+            </FormSelectButtons>
           </FormHeader>
 
-          {form}
-
-          <FormFooter>
-            <FormController disabled={currentStep === 1} onClick={prevStep}>
-              Prev
-            </FormController>
-
-            <FormController
-              disabled={!formState.isValid || currentStep === NUMBER_OF_STEP}
-              onClick={nextStep}
-            >
-              Next
-            </FormController>
-          </FormFooter>
+          <FormBody>{form}</FormBody>
         </FormContainer>
         <Image />
       </Container>
@@ -137,56 +131,105 @@ const Container = styled.section`
   max-width: 90vw;
   margin: 0 auto;
   position: relative;
-  height: 80vh;
-
   padding: 10vw;
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
+    height: 60vh;
+  }
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.lg}) {
+    min-height: 80vh;
+  }
 `;
 
 interface FormContainerProps {}
 const FormContainer = styled.div<FormContainerProps>`
-  position: absolute;
-  top: 0;
-  left: 0;
-
   width: 100%;
-  height: 100%;
   shape-margin: 2rem;
   background: ${(p) => p.theme.white};
   z-index: ${(p) => p.theme.zIndex.lw};
+  margin: auto 0;
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
 
   @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    align-items: flex-start;
+
     clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);
     width: 50%;
+    height: 100%;
   }
 `;
-const FormHeader = styled.div``;
-const Header = styled.h2``;
-const FormFooter = styled.div`
+const FormHeader = styled.div`
+  width: 100%;
   display: flex;
-  align-self: flex-end;
+  flex-direction: column;
+  margin-top: 1rem;
   justify-content: space-between;
+  margin-bottom: 2rem;
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.xs}) {
+    flex-direction: row;
+  }
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.sm}) {
+    width: 80%;
+  }
+`;
+
+const FormBody = styled.div`
+  width: 100%;
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.sm}) {
+    width: 80%;
+  }
+`;
+const Header = styled.h2``;
+
+const FormSelectButtons = styled.div`
+  display: flex;
+  align-self: stretch;
 `;
 
 interface ButtonProps {
   active: boolean;
+  inactive?: boolean;
 }
 const FormSelectButton = styled.button<ButtonProps>`
-  background: ${(p) => p.active && p.theme.primary};
+  padding: 0.75rem 1rem;
+  border: none;
+  color: ${(p) => p.theme.white};
+  background: ${(p) => p.theme.grey};
+  width: max-content;
+  cursor: pointer;
+  transition: flex 400ms cubic-bezier(0, 0, 0.2, 1), background 200ms ease,
+    transform 200ms cubic-bezier(0, 0, 0.2, 1);
+  ${(p) =>
+    p.active &&
+    css`
+      color: ${p.theme.white};
+      background: ${p.theme.primary};
+      flex: 1;
+
+      @media screen and (min-width: ${(p) => p.theme.breakpoints.xs}) {
+        transform: translateY(-0.2rem);
+        flex: unset;
+      }
+    `};
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.xs}) {
+    border-radius: 10px 10px 0 0;
+  }
 `;
 
-const FormController = styled(BaseButton).attrs({ contained: true })``;
-
 const Image = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
   width: 100%;
+  height: 15vh;
+  margin-top: 2rem;
 
   background: linear-gradient(
       ${(p) => rgba(p.theme.black, 0.6)},
@@ -198,8 +241,14 @@ const Image = styled.div`
   background-position: center;
 
   @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
+    margin-bottom: 0;
     /* width is calc-ed on the third point of form's polygon */
     width: 60%;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
   }
 `;
 

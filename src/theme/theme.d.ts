@@ -10,6 +10,7 @@ declare module 'styled-components' {
     pink: string;
     darkBlue: string;
     lightBlue: string;
+    grey: string;
     h1: string;
     h2: string;
     text: string;
@@ -34,7 +35,8 @@ declare module 'styled-components' {
      * @param lg 1280px
      * @param md 960px
      * @param sm 600px
-     * @param xs 0px
+     * @param xs 480px
+     * @param xss 300px
      */
     breakpoints: {
       xl: string;
@@ -42,6 +44,7 @@ declare module 'styled-components' {
       md: string;
       sm: string;
       xs: string;
+      xxs: string;
     };
 
     shadow: {
