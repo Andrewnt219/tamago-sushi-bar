@@ -1,4 +1,4 @@
-import { add } from 'date-fns';
+import { add, format } from 'date-fns';
 import React, { ReactElement } from 'react';
 import styled from 'styled-components/macro';
 import {
@@ -13,27 +13,31 @@ import { BaseForm } from '../../../components/ui/form/BaseForm';
 import { Button } from '@material-ui/core';
 import { InputData } from '../../../hook/useFormState';
 import { MdAccessTime } from 'react-icons/md';
-import ErrorText from '../../../components/ui/form/ErrorText';
+import {
+  ControllerObject,
+  ControllerInputsGroup,
+} from '../../../components/ui/form/ControllerInputsGroup';
+
 type Props<FormValues> = FormProps<FormValues> & {
   children?: never;
 };
 
-type ReservationForm2Values = {
+type FormValues = {
   date: string;
-  guests: string;
+  guests: '1' | '2-4' | '4-8';
   time: string;
 };
-
-function ReservationForm2<FormValues extends ReservationForm2Values>({
+const maxFutureDate = add(new Date(), { days: 14 });
+const minDate = add(new Date(), { days: 1 });
+function ReservationForm2({
   onSubmit,
   register,
-  errors,
   handleChange,
   formValues,
   isSubmittable,
+  errors,
 }: Props<FormValues>): ReactElement {
-  console.log(errors);
-  const handleDateChange = (inputName: keyof ReservationForm2Values) => (
+  const handleDateChange = (inputName: keyof FormValues) => (
     date: MaterialUiPickersDate
   ): void => {
     const inputData: InputData = {
@@ -42,38 +46,63 @@ function ReservationForm2<FormValues extends ReservationForm2Values>({
         value: date?.toString() ?? new Date().toString(),
       },
     };
+
     handleChange(inputData);
   };
+
+  const radios: ControllerObject<FormValues, typeof formValues.guests>[] = [
+    {
+      id: 'guest-1',
+      label: 'Alone',
+      register: register(),
+      value: '1',
+    },
+    {
+      id: 'guest-2',
+      label: '2-4 guests',
+      register: register(),
+      value: '2-4',
+    },
+    {
+      id: 'guest-4',
+      label: '4-8 guests',
+      register: register(),
+      value: '4-8',
+    },
+  ];
 
   return (
     <StyledForm onSubmit={onSubmit} noValidate>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <KeyboardDatePicker
+        <DatePicker
           name="date"
           onChange={handleDateChange('date')}
           disableToolbar
           variant="dialog"
-          autoOk
           format="MM/dd/yyyy"
           margin="normal"
           label="Reservation's Date"
           value={formValues.date}
-          inputRef={register()}
-          maxDate={add(new Date(), { days: 14 })}
-          maxDateMessage="Reservation can only be made 14 days in advance"
-          disablePast
-          minDateMessage="Reservation cannot be made on a past day"
+          inputRef={register({ required: true })}
+          minDate={minDate}
+          maxDate={maxFutureDate}
+          maxDateMessage={`Date must be within 14 days (before ${format(
+            maxFutureDate,
+            'MM/dd/yy'
+          )})`}
+          minDateMessage="Date cannot be in the past"
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
         />
 
-        <KeyboardTimePicker
+        <TimePicker
           name="time"
+          minutesStep={15}
           ampm={false}
           autoOk
           keyboardIcon={<MdAccessTime />}
-          inputRef={register({ required: 'true' })}
+          inputRef={register({ required: true })}
           margin="normal"
           id="time-picker"
           label="Time picker"
@@ -85,6 +114,16 @@ function ReservationForm2<FormValues extends ReservationForm2Values>({
         />
       </MuiPickersUtilsProvider>
 
+      <ControllerInputsGroup
+        type="radio"
+        label="Number of guests"
+        errors={errors}
+        defaultCheckedValue={formValues.guests}
+        name="guests"
+        controllers={radios}
+        handleChange={handleChange}
+      />
+
       <Button type="submit" disabled={!isSubmittable}>
         SUBMIT
       </Button>
@@ -94,5 +133,22 @@ function ReservationForm2<FormValues extends ReservationForm2Values>({
 
 type StyledFormProps = {};
 const StyledForm = styled(BaseForm)<StyledFormProps>``;
+
+interface DatePickerProps {}
+const DatePicker = styled(KeyboardDatePicker)<DatePickerProps>`
+  .MuiFormHelperText-root {
+    font-size: 1.2rem;
+    font-style: italic;
+    font-family: inherit;
+  }
+`;
+
+const TimePicker = styled(KeyboardTimePicker)<DatePickerProps>`
+  .MuiFormHelperText-root {
+    font-size: 1.2rem;
+    font-style: italic;
+    font-family: inherit;
+  }
+`;
 
 export default ReservationForm2;

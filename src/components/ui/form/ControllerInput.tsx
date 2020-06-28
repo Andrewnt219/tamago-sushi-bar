@@ -2,12 +2,11 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { FieldElement } from 'react-hook-form';
 
-interface ControllerInputProps {
+interface ControllerInputProps<FormValues> {
   type: 'radio' | 'checkbox';
-  register: (ref: FieldElement | null) => void;
+  register: (ref: FieldElement<FormValues> | null) => void;
   id: string;
   label: string;
-  name: string;
 }
 
 /**
@@ -19,7 +18,7 @@ interface ControllerInputProps {
  * @param type type of the input
  * @param htmlRadioAttrs others are html input interface
  */
-function ControllerInput({
+function ControllerInput<FormValues>({
   onChange,
   id,
   label,
@@ -27,7 +26,8 @@ function ControllerInput({
   register,
   type,
   ...htmlRadioAttrs
-}: ControllerInputProps & React.InputHTMLAttributes<HTMLInputElement>) {
+}: ControllerInputProps<FormValues> &
+  React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <Container>
       <Input

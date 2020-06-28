@@ -65,3 +65,10 @@ type h1 = {
   props2: '2';
 };
 type h2 = Exclude<h1, 'overwrite'>;
+
+/* --------------------------------- EXTRACT -------------------------------- */
+type i1 = {
+  a: string;
+  b: string;
+};
+type i2 = Extract<keyof i1, string>;

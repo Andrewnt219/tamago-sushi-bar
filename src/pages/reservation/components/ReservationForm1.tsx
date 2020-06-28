@@ -13,14 +13,14 @@ import { FormProps } from '../../../interfaces/FormProps';
 
 type Props<FormValues> = FormProps<FormValues> & {};
 
-interface ReservationForm1Values {
+type FormValues = {
   preferredName: string;
   prefix: 'mr' | 'mrs' | 'ms' | 'dr' | 'name';
   phoneNumber: string;
   email: string;
-}
+};
 
-function ReservationForm1<FormValues extends ReservationForm1Values>({
+function ReservationForm1({
   onSubmit,
   register,
   errors,
@@ -28,7 +28,7 @@ function ReservationForm1<FormValues extends ReservationForm1Values>({
   handleChange,
   isSubmittable,
 }: Props<FormValues>): ReactElement {
-  const radios: ControllerObject<typeof formValues.prefix>[] = [
+  const radios: ControllerObject<FormValues, typeof formValues.prefix>[] = [
     {
       id: 'address--mr',
       label: 'Sir',

@@ -6,7 +6,7 @@ import ErrorText, { ErrorTextProps } from './ErrorText';
 import styled, { ThemeProvider, DefaultTheme } from 'styled-components/macro';
 
 export interface TextFieldProps<FormValues> {
-  register: (ref: FieldElement | null) => void;
+  register: (ref: FieldElement<FormValues> | null) => void;
   id: string;
   label: string;
   name: keyof FormValues;

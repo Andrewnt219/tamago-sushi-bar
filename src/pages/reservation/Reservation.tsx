@@ -8,6 +8,8 @@ import background from '../../asset/background/reservation.jpg';
 import { rgba } from 'polished';
 import { useForm } from 'react-hook-form';
 import { useFormState } from '../../hook/useFormState';
+import { roundToNearestMinutes } from 'date-fns/esm';
+import { add } from 'date-fns';
 
 interface ReservationProps {}
 interface FormValues {
@@ -17,7 +19,7 @@ interface FormValues {
   email: string;
   date: string;
   time: string;
-  guests: '1' | '2-4' | '4-6' | '8-10';
+  guests: '1' | '2-4' | '4-8';
 }
 
 const Reservation: React.FC<ReservationProps> = () => {
@@ -25,8 +27,14 @@ const Reservation: React.FC<ReservationProps> = () => {
   const [currentStep, nextStep, prevStep, jumpToStep] = useFormStep(
     NUMBER_OF_STEP
   );
-  const { handleSubmit, errors, register, formState } = useForm<FormValues>({
-    mode: 'onChange',
+  const {
+    handleSubmit,
+    errors,
+    register,
+    formState,
+    triggerValidation,
+  } = useForm<FormValues>({
+    mode: 'onBlur',
     validateCriteriaMode: 'all',
   });
   const [formValues, handleChange] = useFormState<FormValues>({
@@ -34,8 +42,8 @@ const Reservation: React.FC<ReservationProps> = () => {
     prefix: 'name',
     phoneNumber: '',
     email: '',
-    date: new Date().toDateString(),
-    time: new Date().toString(),
+    date: add(new Date(), { days: 1 }).toDateString(),
+    time: roundToNearestMinutes(new Date(), { nearestTo: 15 }).toString(),
     guests: '1',
   });
 
@@ -50,7 +58,7 @@ const Reservation: React.FC<ReservationProps> = () => {
   switch (currentStep) {
     case 1:
       form = (
-        <ReservationForm1<FormValues>
+        <ReservationForm1
           isSubmittable={formState.isValid}
           formValues={formValues}
           register={register}
@@ -69,6 +77,7 @@ const Reservation: React.FC<ReservationProps> = () => {
           errors={errors}
           handleChange={handleChange}
           onSubmit={onSubmitStep2}
+          triggerValidation={triggerValidation}
         />
       );
       break;
