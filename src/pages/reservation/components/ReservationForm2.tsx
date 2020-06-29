@@ -84,7 +84,7 @@ function ReservationForm2({
           variant="dialog"
           format="MM/dd/yyyy"
           margin="normal"
-          label="Reservation's Date"
+          label="reservation's date"
           value={formValues.date}
           inputRef={register({ required: true })}
           minDate={minDate}
@@ -108,7 +108,7 @@ function ReservationForm2({
           inputRef={register({ required: true })}
           margin="normal"
           id="time-picker"
-          label="Time picker"
+          label="reservation's time"
           value={formValues.time}
           onChange={handleDateChange('time')}
           KeyboardButtonProps={{
@@ -140,6 +140,18 @@ const overwritten = css`
   .MuiInputLabel-root {
     font-size: inherit;
     font-family: 'Montserrat', sans-serif;
+  }
+
+  .MuiInputLabel-shrink {
+    transform: translate(0, -1.5px);
+  }
+
+  .MuiInputLabel-root {
+    color: ${(p) => p.theme.black};
+
+    :hover label {
+      color: ${(p) => p.theme.primary};
+    }
   }
 
   .MuiFormHelperText-root {

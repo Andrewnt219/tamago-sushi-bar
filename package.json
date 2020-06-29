@@ -2,6 +2,7 @@
   "name": "tamago",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://andrewnt219.github.io/tamago-sushi-bar",
   "dependencies": {
     "@date-io/date-fns": "1.x",
     "@date-io/moment": "1.x",
@@ -22,6 +23,7 @@
     "axios": "^0.19.2",
     "date-fns": "^2.14.0",
     "faker": "^4.1.0",
+    "gh-pages": "^3.1.0",
     "moment": "^2.27.0",
     "polished": "^3.6.5",
     "query-string": "^6.13.1",
@@ -42,7 +44,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
