@@ -1,5 +1,6 @@
 import styled from 'styled-components/macro';
 import LogoImg from '../../asset/logo.svg';
+import TextLogo from '../../asset/textLogo.svg';
 
 // interface LogoStyledProps {}
 
@@ -20,7 +21,12 @@ import LogoImg from '../../asset/logo.svg';
 //   );
 // };
 
-export const BaseLogo = styled.img.attrs({ src: LogoImg })`
+type BaseLogoProps = {
+  withText?: boolean;
+};
+export const BaseLogo = styled.img.attrs((p: BaseLogoProps) => ({
+  src: p.withText ? TextLogo : LogoImg,
+}))<BaseLogoProps>`
   max-height: 100%;
 `;
 

@@ -6,7 +6,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import { Layout } from './hoc/Layout';
 import About from './pages/about/About';
-import Order from './pages/order/Order';
+import Order from './pages/order/OrdersPage';
 import Reservation from './pages/reservation/Reservation';
 import Empty from './pages/empty/Empty';
 import Landing from './pages/landing/Landing';
