@@ -16,7 +16,7 @@ export const DesktopNavigationItems: React.FC<DesktopNavigationItemsProps> = () 
         Reservation
       </DesktopNavigationItem>
 
-      <DesktopNavigationItem to="/order">Order</DesktopNavigationItem>
+      <DesktopNavigationItem to="/me">Dashboard</DesktopNavigationItem>
 
       <DesktopNavigationItem to="/about">About</DesktopNavigationItem>
     </StyledNavigationItems>

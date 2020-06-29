@@ -29,7 +29,7 @@ function Order({ type, date, price, orderId }: Props): ReactElement {
         <Date>{date}</Date>
 
         <Price>
-          <PriceText>{price.toFixed(2)}</PriceText>
+          <PriceText>${price.toFixed(2)}</PriceText>
           <MdKeyboardArrowRight />
         </Price>
 
@@ -120,9 +120,6 @@ const PriceText = styled.span<PriceTextProps>`
   display: inline-block;
   margin-right: 0.4rem;
   width: max-content;
-  ::before {
-    content: '$';
-  }
 `;
 
 export default Order;

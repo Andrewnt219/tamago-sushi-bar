@@ -5,7 +5,7 @@ import {
   MdHome,
   MdRestaurantMenu,
   MdBook,
-  MdPhone,
+  MdDashboard,
   MdInfoOutline,
 } from 'react-icons/md';
 
@@ -25,12 +25,12 @@ export const MobileNavigationItems: React.FC<MobileNavigationItemsProps> = () =>
         Reservation
       </MobileNavigationItem>
 
-      <MobileNavigationItem to="/order" Icon={MdPhone}>
-        Order
-      </MobileNavigationItem>
-
       <MobileNavigationItem to="/about" Icon={MdInfoOutline}>
         About
+      </MobileNavigationItem>
+
+      <MobileNavigationItem to="/me" Icon={MdDashboard}>
+        Dashboard
       </MobileNavigationItem>
     </StyledMobileNavigationItems>
   );
@@ -39,7 +39,7 @@ export const MobileNavigationItems: React.FC<MobileNavigationItemsProps> = () =>
 interface StyledMobileNavigationItemsProps {}
 const StyledMobileNavigationItems = styled.ul<StyledMobileNavigationItemsProps>`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  /* grid-template-columns: repeat(2, 1fr); */
   justify-items: flex-start;
   gap: 1rem;
 
