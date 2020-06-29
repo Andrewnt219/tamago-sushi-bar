@@ -1,15 +1,15 @@
 import React, { ReactElement } from 'react';
-import styled from 'styled-components/macro';
 
 import { TextField } from '../../../components/ui/form/TextField';
-import { BaseForm } from '../../../components/ui/form/BaseForm';
-
-import { BaseButton } from '../../../components/ui/BaseButton';
 import {
   ControllerObject,
   ControllerInputsGroup,
 } from '../../../components/ui/form/ControllerInputsGroup';
 import { FormProps } from '../../../interfaces/FormProps';
+import {
+  SubmitButton,
+  BaseReservationForm as Form,
+} from './ReservationUIComponents';
 
 type Props<FormValues> = FormProps<FormValues> & {};
 
@@ -31,7 +31,7 @@ function ReservationForm1({
   const radios: ControllerObject<FormValues, typeof formValues.prefix>[] = [
     {
       id: 'address--mr',
-      label: 'Sir',
+      label: 'Mr.',
       register: register(),
       value: 'mr',
     },
@@ -61,7 +61,7 @@ function ReservationForm1({
   >[] = [
     {
       id: 'create-account-yes',
-      label: 'Yes, save me time',
+      label: 'Yes, remember me',
       register: register(),
       value: 'yes',
     },
@@ -127,15 +127,3 @@ function ReservationForm1({
 }
 
 export { ReservationForm1 };
-
-const Form = styled(BaseForm)`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 100%;
-  font-size: 1.2rem;
-`;
-
-const SubmitButton = styled(BaseButton)`
-  margin-top: 2rem;
-`;

@@ -1,6 +1,6 @@
 import { add, format } from 'date-fns';
 import React, { ReactElement } from 'react';
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -9,14 +9,16 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 import { FormProps } from '../../../interfaces/FormProps';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
-import { BaseForm } from '../../../components/ui/form/BaseForm';
-import { Button } from '@material-ui/core';
 import { InputData } from '../../../hook/useFormState';
 import { MdAccessTime } from 'react-icons/md';
 import {
   ControllerObject,
   ControllerInputsGroup,
 } from '../../../components/ui/form/ControllerInputsGroup';
+import {
+  BaseReservationForm as Form,
+  SubmitButton,
+} from './ReservationUIComponents';
 
 type Props<FormValues> = FormProps<FormValues> & {
   children?: never;
@@ -72,10 +74,11 @@ function ReservationForm2({
   ];
 
   return (
-    <StyledForm onSubmit={onSubmit} noValidate>
+    <Form onSubmit={onSubmit} noValidate>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DatePicker
           name="date"
+          autoOk
           onChange={handleDateChange('date')}
           disableToolbar
           variant="dialog"
@@ -124,31 +127,33 @@ function ReservationForm2({
         handleChange={handleChange}
       />
 
-      <Button type="submit" disabled={!isSubmittable}>
+      <SubmitButton type="submit" disabled={!isSubmittable} outlined>
         SUBMIT
-      </Button>
-    </StyledForm>
+      </SubmitButton>
+    </Form>
   );
 }
 
-type StyledFormProps = {};
-const StyledForm = styled(BaseForm)<StyledFormProps>``;
+const overwritten = css`
+  .MuiInputBase-input,
+  .MuiFormHelperText-root,
+  .MuiInputLabel-root {
+    font-size: inherit;
+    font-family: 'Montserrat', sans-serif;
+  }
 
-interface DatePickerProps {}
-const DatePicker = styled(KeyboardDatePicker)<DatePickerProps>`
   .MuiFormHelperText-root {
-    font-size: 1.2rem;
     font-style: italic;
-    font-family: inherit;
   }
 `;
 
+interface DatePickerProps {}
+const DatePicker = styled(KeyboardDatePicker)<DatePickerProps>`
+  ${overwritten}
+`;
+
 const TimePicker = styled(KeyboardTimePicker)<DatePickerProps>`
-  .MuiFormHelperText-root {
-    font-size: 1.2rem;
-    font-style: italic;
-    font-family: inherit;
-  }
+  ${overwritten}
 `;
 
 export default ReservationForm2;

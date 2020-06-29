@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, {
   ThemeProvider,
   DefaultTheme,
@@ -29,6 +29,7 @@ interface FormValues {
 const NUMBER_OF_STEP = 2;
 const Reservation: React.FC<ReservationProps> = () => {
   const [currentStep, nextStep, , jumpToStep] = useFormStep(NUMBER_OF_STEP);
+  const [completedStep, setCompletedStep] = useState(-1);
 
   const {
     handleSubmit,
@@ -37,7 +38,7 @@ const Reservation: React.FC<ReservationProps> = () => {
     formState,
     triggerValidation,
   } = useForm<FormValues>({
-    mode: 'onBlur',
+    mode: 'onChange',
     validateCriteriaMode: 'all',
   });
 
@@ -54,9 +55,11 @@ const Reservation: React.FC<ReservationProps> = () => {
 
   const onSubmitStep1 = handleSubmit((_, __) => {
     nextStep();
+    setCompletedStep(1);
   });
-  const onSubmitStep2 = handleSubmit((data, __) => {
-    console.log(data);
+  const onSubmitStep2 = handleSubmit((_, __) => {
+    console.log(formValues);
+    setCompletedStep(2);
   });
 
   let form;
@@ -111,6 +114,7 @@ const Reservation: React.FC<ReservationProps> = () => {
               </FormSelectButton>
 
               <FormSelectButton
+                disabled={completedStep < 1}
                 active={currentStep === 2}
                 onClick={() => jumpToStep(2)}
               >
@@ -131,14 +135,13 @@ const Container = styled.section`
   max-width: 90vw;
   margin: 0 auto;
   position: relative;
-  padding: 10vw;
 
   @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
-    height: 60vh;
+    min-height: 100vh;
   }
 
   @media screen and (min-width: ${(p) => p.theme.breakpoints.lg}) {
-    min-height: 80vh;
+    min-height: 100vh;
   }
 `;
 
@@ -205,7 +208,7 @@ const FormSelectButton = styled.button<ButtonProps>`
   color: ${(p) => p.theme.white};
   background: ${(p) => p.theme.grey};
   width: max-content;
-  cursor: pointer;
+  cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
   transition: flex 400ms cubic-bezier(0, 0, 0.2, 1), background 200ms ease,
     transform 200ms cubic-bezier(0, 0, 0.2, 1);
   ${(p) =>
@@ -241,7 +244,7 @@ const Image = styled.div`
   background-position: center;
 
   @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
-    margin-bottom: 0;
+    margin: 0;
     /* width is calc-ed on the third point of form's polygon */
     width: 60%;
 

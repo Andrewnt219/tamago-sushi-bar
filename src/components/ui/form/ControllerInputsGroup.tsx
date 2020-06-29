@@ -92,7 +92,7 @@ const GroupName = styled.p<GroupNameProps>`
 interface ControllersProps {}
 const Controllers = styled.ul<ControllersProps>`
   display: flex;
-
+  align-items: center;
   & > :not(:last-child) {
     margin-right: 1rem;
   }
