@@ -13,6 +13,8 @@ import Landing from './pages/landing/Landing';
 import Menu from './pages/menu/Menu';
 import { OrderDetail } from './pages/orderDetail/OrderDetail';
 import Cart from './pages/cart/Cart';
+import ProtectedRoute from './components/navigation/ProtectedRoute';
+import Login from './pages/login/Login';
 
 // const Menu = React.lazy(() => import('./pages/menu/Menu'));
 
@@ -24,9 +26,12 @@ function App() {
         <Switch>
           <Route path="/orders/:id" component={OrderDetail} />
 
+          <ProtectedRoute path="/me">
+            <UserDashboard />
+          </ProtectedRoute>
+          <Route path="/login" component={Login} />
           <Route path="/cart" component={Cart} />
           <Route path="/about" component={About} />
-          <Route path="/me" component={UserDashboard} />
           <Route path="/reservation" component={Reservation} />
 
           <Route path="/menu" component={Menu} />
