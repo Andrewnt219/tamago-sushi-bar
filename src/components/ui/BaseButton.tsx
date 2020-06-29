@@ -23,12 +23,12 @@ export const BaseButton = styled.button<BaseButtonProps>`
     filter: brightness(0.9);
   } */
 
-  :hover {
+  &:hover {
     transform: translateY(-.2rem);
     box-shadow: 0 1rem 2rem rgba(0,0,0, .15);
   }
 
-  :active {
+  &:active {
     transform: translateY(0);
     box-shadow: 0 .5rem 1rem rgba(0,0,0, .15);
   }
@@ -39,8 +39,8 @@ export const BaseButton = styled.button<BaseButtonProps>`
       background-color: ${p.color ?? p.theme.primary};
       color: ${p.theme.text};
 
-      :hover,
-      :active {
+      &:hover,
+      &:active {
         filter: brightness(0.9);
       }
     `}
@@ -52,8 +52,8 @@ export const BaseButton = styled.button<BaseButtonProps>`
       border-color: ${p.color ?? p.theme.primary};
       color: ${p.color ?? p.theme.primary};
 
-      :hover,
-      :active {
+      &:hover,
+      &:active {
         background-color: ${p.color ?? p.theme.primary};
         color: ${p.theme.text};
       }
@@ -68,8 +68,8 @@ export const BaseButton = styled.button<BaseButtonProps>`
         padding: 0.25rem 0.5rem;
         color: ${p.color ?? p.theme.primary};
 
-        :hover,
-        :active {
+        &:hover,
+        &:active {
           filter: none;
           background: ${p.color ?? p.theme.primary};
           color: ${p.theme.text};
@@ -82,9 +82,9 @@ export const BaseButton = styled.button<BaseButtonProps>`
         css`
           cursor: not-allowed;
           &,
-          :hover,
-          :active,
-          :link {
+          &:hover,
+          &:active,
+          &:link {
             opacity: 0.5;
             color: ${(p) => p.theme.black};
             background: unset;

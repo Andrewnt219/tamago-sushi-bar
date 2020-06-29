@@ -9,8 +9,8 @@ function ItemDetailsFooter(props: Props): ReactElement {
       <div />
       <Footer>
         <Sub>Subtotal</Sub>
-        <Sub>Tax</Sub>
         <Sub>Tip</Sub>
+        <Sub>Shipping</Sub>
 
         <Primary>Total</Primary>
       </Footer>

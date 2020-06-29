@@ -12,6 +12,7 @@ import Empty from './pages/empty/Empty';
 import Landing from './pages/landing/Landing';
 import Menu from './pages/menu/Menu';
 import { OrderDetail } from './pages/orderDetail/OrderDetail';
+import Cart from './pages/cart/Cart';
 
 // const Menu = React.lazy(() => import('./pages/menu/Menu'));
 
@@ -23,6 +24,7 @@ function App() {
         <Switch>
           <Route path="/orders/:id" component={OrderDetail} />
 
+          <Route path="/cart" component={Cart} />
           <Route path="/about" component={About} />
           <Route path="/me" component={UserDashboard} />
           <Route path="/reservation" component={Reservation} />

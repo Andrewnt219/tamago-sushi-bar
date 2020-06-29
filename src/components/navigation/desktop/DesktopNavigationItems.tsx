@@ -16,9 +16,9 @@ export const DesktopNavigationItems: React.FC<DesktopNavigationItemsProps> = () 
         Reservation
       </DesktopNavigationItem>
 
-      <DesktopNavigationItem to="/me">Dashboard</DesktopNavigationItem>
+      <DesktopNavigationItem to="/cart">Cart</DesktopNavigationItem>
 
-      <DesktopNavigationItem to="/about">About</DesktopNavigationItem>
+      <DesktopNavigationItem to="/me">Dashboard</DesktopNavigationItem>
     </StyledNavigationItems>
   );
 };

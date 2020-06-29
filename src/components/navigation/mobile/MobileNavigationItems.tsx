@@ -6,7 +6,7 @@ import {
   MdRestaurantMenu,
   MdBook,
   MdDashboard,
-  MdInfoOutline,
+  MdShoppingCart,
 } from 'react-icons/md';
 
 interface MobileNavigationItemsProps {}
@@ -25,8 +25,8 @@ export const MobileNavigationItems: React.FC<MobileNavigationItemsProps> = () =>
         Reservation
       </MobileNavigationItem>
 
-      <MobileNavigationItem to="/about" Icon={MdInfoOutline}>
-        About
+      <MobileNavigationItem to="/cart" Icon={MdShoppingCart}>
+        Cart
       </MobileNavigationItem>
 
       <MobileNavigationItem to="/me" Icon={MdDashboard}>
