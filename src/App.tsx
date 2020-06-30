@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { lightTheme } from './theme/lightTheme';
 import { GlobalStyle } from './theme/GlobalStyle';
@@ -15,10 +15,17 @@ import { OrderDetail } from './pages/orderDetail/OrderDetail';
 import Cart from './pages/cart/Cart';
 import ProtectedRoute from './components/navigation/ProtectedRoute';
 import Login from './pages/login/Login';
+import { useDispatch } from 'react-redux';
+import { initCart } from './features/cartSlice';
 
 // const Menu = React.lazy(() => import('./pages/menu/Menu'));
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(initCart());
+  }, [dispatch]);
   return (
     <ThemeProvider theme={lightTheme}>
       <GlobalStyle />

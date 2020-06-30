@@ -1,32 +1,69 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { BaseButton } from '../../../components/ui/BaseButton';
 import ImageSrc from '../../../asset/menus/Agedashi Tofu.jpg';
 import { MdRemove, MdAdd } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  CartItem as CartItemProps,
+  updateCartItem,
+  itemIsLoadingSelector,
+} from '../../../features/cartSlice';
+import Spinner from '../../../components/ui/LoadingScreen/Spinner/Spinner';
 
-type Props = {};
+type Props = CartItemProps & {};
 
-function CartItem({}: Props): ReactElement {
+function CartItem({ id, name, price, quantity }: Props): ReactElement {
+  const firstRender = React.useRef(true);
+  const [currentQuantity, setCurrentQuantity] = useState(quantity);
+
+  const dispatch = useDispatch();
+  const isLoading = useSelector(itemIsLoadingSelector(id));
+
+  const onMinusButtonClicked = () => {
+    setCurrentQuantity((prev) => prev - 1);
+  };
+
+  const onAddButtonClicked = () => {
+    setCurrentQuantity((prev) => prev + 1);
+  };
+
+  useEffect(() => {
+    let timerId: number;
+    if (firstRender.current) {
+      firstRender.current = false;
+    } else {
+      timerId = setTimeout(() => {
+        dispatch(updateCartItem({ itemId: id, amount: currentQuantity }));
+      }, 300);
+    }
+
+    return () => {
+      clearInterval(timerId);
+    };
+  }, [currentQuantity, id, dispatch]);
+
   return (
     <Container>
       <Image src={ImageSrc} />
 
       <SubContainer>
-        <PrimaryText>Some Item Name</PrimaryText>
+        <PrimaryText>{name}</PrimaryText>
         <QuantityContainer>
-          <Button>
+          <Button onClick={onMinusButtonClicked}>
             <MdRemove />
           </Button>
-          <Quantity>1</Quantity>
-          <Button isLeftButton>
+          <Quantity>{currentQuantity}</Quantity>
+          <Button isLeftButton onClick={onAddButtonClicked}>
             <MdAdd />
           </Button>
+          {isLoading && <Spinner size="1rem" />}
         </QuantityContainer>
       </SubContainer>
 
       <ProductPrice>
-        <PrimaryText>$99.00</PrimaryText>
-        <Price>$9.00 each</Price>
+        <PrimaryText>${(currentQuantity * price).toFixed(2)}</PrimaryText>
+        <Price>${price.toFixed(2)} each</Price>
       </ProductPrice>
     </Container>
   );
