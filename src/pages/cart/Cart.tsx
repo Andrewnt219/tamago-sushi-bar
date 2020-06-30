@@ -1,6 +1,9 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components/macro';
 import { CartItems } from './components/CartItems';
+import { BaseButton } from '../../components/ui/BaseButton';
+import { MdLock } from 'react-icons/md';
+import { StyledLink } from '../../components/navigation/StyledLink';
 
 type Props = {};
 
@@ -29,6 +32,13 @@ function Cart({}: Props): ReactElement {
         <Field>
           Total<Value>$100.00</Value>
         </Field>
+
+        <StyledLink to="/checkout">
+          <Button>
+            <MdLock />
+            PROCEED TO CHECKOUT
+          </Button>
+        </StyledLink>
       </Summary>
       <CartItems />
     </Container>
@@ -70,6 +80,7 @@ const Summary = styled.div<SummaryProps>`
   padding: 1rem;
   border-radius: 4px;
   border: 1px solid black;
+  text-align: center;
 `;
 
 type SummaryHeaderProps = {};
@@ -136,6 +147,25 @@ const TipMessage = styled.p<TipMessageProps>`
   font-weight: normal;
   transition: all 100ms ease-in;
   color: ${(p) => p.theme.primary};
+`;
+
+type ButtonProps = {};
+const Button = styled(BaseButton).attrs({ contained: true })<ButtonProps>`
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  :hover {
+    box-shadow: none;
+    transform: none;
+  }
+
+  :active {
+    box-shadow: none;
+    transform: translateY(2px);
+  }
 `;
 
 export default Cart;

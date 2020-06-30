@@ -93,7 +93,7 @@ interface ControllersProps {}
 const Controllers = styled.ul<ControllersProps>`
   display: flex;
   align-items: center;
-  & > :not(:last-child) {
+  & > *:not(:last-child) {
     margin-right: 1rem;
   }
 `;
