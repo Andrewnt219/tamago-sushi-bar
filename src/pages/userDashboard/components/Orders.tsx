@@ -18,8 +18,6 @@ function Orders(props: Props): ReactElement {
 
 type ContainerProps = {};
 const Container = styled.div<ContainerProps>`
-  width: 90%;
-  margin: 0 auto;
   display: grid;
   row-gap: 2rem;
 `;

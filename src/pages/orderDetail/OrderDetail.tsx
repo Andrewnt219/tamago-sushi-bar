@@ -27,13 +27,11 @@ function OrderDetail(props: Props): ReactElement {
 
 type ContainerProps = {};
 const Container = styled.div<ContainerProps>`
-  margin: 2rem 5vw;
+  margin: 2rem;
 `;
 
 type HeaderProps = {};
-const Header = styled.h2<HeaderProps>`
-  font-family: 'Montserrat', sans-serif;
-`;
+const Header = styled.h2<HeaderProps>``;
 
 type SubHeaderProps = {};
 const SubHeader = styled.h3<SubHeaderProps>`

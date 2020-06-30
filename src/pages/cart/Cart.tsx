@@ -37,10 +37,9 @@ function Cart({}: Props): ReactElement {
 
 type ContainerProps = {};
 const Container = styled.div<ContainerProps>`
-  margin-top: 2rem;
+  margin: 2rem;
   display: grid;
   row-gap: 2rem;
-  padding: 0 2rem;
   grid-template-areas:
     'header'
     'summary'

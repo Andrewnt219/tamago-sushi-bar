@@ -132,8 +132,8 @@ const Reservation: React.FC<ReservationProps> = () => {
 };
 
 const Container = styled.section`
-  max-width: 90vw;
-  margin: 0 auto;
+  max-width: 100vw;
+  margin: 2rem;
   position: relative;
 
   @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {

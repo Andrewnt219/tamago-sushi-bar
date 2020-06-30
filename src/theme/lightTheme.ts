@@ -33,7 +33,7 @@ export const lightTheme: DefaultTheme = {
     md: '60em',
     sm: '37.5em',
     xs: '30em',
-    xxs: '18.75em',
+    xxs: '20em',
   },
 
   shadow: {

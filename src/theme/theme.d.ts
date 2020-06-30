@@ -36,7 +36,7 @@ declare module 'styled-components' {
      * @param md 960px
      * @param sm 600px
      * @param xs 480px
-     * @param xss 300px
+     * @param xss 320px
      */
     breakpoints: {
       xl: string;
