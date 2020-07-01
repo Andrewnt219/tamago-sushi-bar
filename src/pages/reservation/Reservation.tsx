@@ -57,7 +57,6 @@ const Reservation: React.FC<ReservationProps> = () => {
     setCompletedStep(1);
   });
   const onSubmitStep2 = handleSubmit((_, __) => {
-    console.log(formValues);
     setCompletedStep(2);
   });
 

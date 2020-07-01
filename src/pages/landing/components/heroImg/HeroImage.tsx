@@ -47,7 +47,7 @@ const Backdrop = styled.article<BackdropProps>`
       ${(p) => rgba(p.theme.black, 0.6)},
       ${(p) => rgba(p.theme.black, 0.6)}
     ),
-    url(${backgroundImgUrl});
+    url('https://i.imgur.com/PrvW34t.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

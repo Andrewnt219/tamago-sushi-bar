@@ -21,8 +21,6 @@ export const CategorySalad: React.FC<CategorySaladProps> = () => {
     '/menus/salads.json'
   );
 
-  console.log(appetizersIsLoading, saladsIsLoading);
-
   return (
     <MenuCategory
       menuId="appetizersAndSalads"

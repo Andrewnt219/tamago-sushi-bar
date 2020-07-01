@@ -2,10 +2,6 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { LandingSection } from '../LandingSection';
 import { LandingMenuItem } from './LandingMenuItem';
-import menuSushi from '../../../../asset/menu-sushi.jpg';
-import menuSalad from '../../../../asset/menu-salad.jpg';
-import menuRice from '../../../../asset/menu-rice.jpg';
-import menuDrink from '../../../../asset/menu-drink.jpg';
 
 interface LandingMenuProps {}
 
@@ -19,7 +15,7 @@ export const LandingMenu: React.FC<LandingMenuProps> = () => {
         <LandingMenuItem
           menuId="sushiAndSashimi"
           header="sushi"
-          imgSrc={menuSushi}
+          imgSrc="https://i.imgur.com/Mq4X2Vl.jpg"
         >
           Originating in Japan, consisting of cooked vinegared rice combined
           with other ingredients such as raw seafood and vegetables
@@ -28,7 +24,7 @@ export const LandingMenu: React.FC<LandingMenuProps> = () => {
         <LandingMenuItem
           menuId="appetizersAndSalads"
           header="APPETIZER & SALADS"
-          imgSrc={menuSalad}
+          imgSrc="https://i.imgur.com/ZPQ0Kc2.jpg"
         >
           We have an extensive range of traditional Japanese appetizer and
           salads, which includes all the traditional food
@@ -37,7 +33,7 @@ export const LandingMenu: React.FC<LandingMenuProps> = () => {
         <LandingMenuItem
           menuId="riceAndNoodles"
           header="RICE & NOODLES"
-          imgSrc={menuRice}
+          imgSrc="https://i.imgur.com/vxOyGwO.jpg"
         >
           It is impossible to get bored with out variety from Japanese udon
           noodles to buckwheat noodles to Japanese ramen and other forms of
@@ -47,7 +43,7 @@ export const LandingMenu: React.FC<LandingMenuProps> = () => {
         <LandingMenuItem
           menuId="dessertsAndDrinks"
           header="DESSERTS & DRINKS"
-          imgSrc={menuDrink}
+          imgSrc="https://i.imgur.com/s6UCB6c.jpg"
         >
           We have an extensive range of traditional Japanese desserts and
           drinks, which includes all the traditional food items this country

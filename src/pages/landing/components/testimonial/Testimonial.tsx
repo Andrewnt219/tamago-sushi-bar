@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import backgroundImg from '../../../../asset/testimonial.jpg';
 import { rgba } from 'polished';
 import { TestimonialCard, CustomerDetail } from './TestimonialCard';
 import faker from 'faker';
@@ -47,7 +46,7 @@ const Container = styled.div`
       ${(p) => rgba(p.theme.white, 0.5)},
       ${(p) => rgba(p.theme.white, 0.5)}
     ),
-    url(${backgroundImg});
+    url('https://i.imgur.com/CsaLwa8.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
