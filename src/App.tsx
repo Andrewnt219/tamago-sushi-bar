@@ -17,6 +17,7 @@ import ProtectedRoute from './components/navigation/ProtectedRoute';
 import Login from './pages/login/Login';
 import { useDispatch } from 'react-redux';
 import { initCart } from './features/cartSlice';
+import Register from './pages/register/Register';
 
 // const Menu = React.lazy(() => import('./pages/menu/Menu'));
 
@@ -36,6 +37,7 @@ function App() {
           <ProtectedRoute path="/me">
             <UserDashboard />
           </ProtectedRoute>
+          <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
           <Route path="/cart" component={Cart} />
           <Route path="/about" component={About} />
