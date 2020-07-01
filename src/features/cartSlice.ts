@@ -4,52 +4,57 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { checkIfLoading } from './loadingSlice';
 import { AppThunk, RootState } from '../app/store';
 import { asyncDispatchWrapper } from '../helpers/redux-helpers';
-import { keyObjectToObjectWithKey, calculateCartOnSuccess } from '../helpers';
+import {
+  keyObjectToObjectWithKey,
+  calculateCartOnSuccess,
+  getCartItemById,
+} from '../helpers';
 import {
   Cart,
   CartItem,
-  UpdateCartItemPayload,
+  IncreaseItemQuantityPayload,
   DatabaseCart,
   CartState,
 } from './cartSliceType';
 
-const state: CartState = {
+const initialState: CartState = {
   id: null,
-  isLoading: false,
   userEmail: '',
   items: {},
+  tip: 0,
+  shipping: 5,
   error: null,
+  isLoading: false,
   subtotal: 0,
   total: 0,
-  tip: 0,
-  shipping: 0,
 };
 
 const cartSlice = createSlice({
   name: 'cart',
-  initialState: state,
+  initialState: initialState,
   reducers: {
     /* createCart */
     createCartRequest: (state) => {
       state.isLoading = true;
       state.error = null;
     },
-    createCartSuccess: (state, { payload }: PayloadAction<DatabaseCart>) => {
-      state = { ...state, ...payload };
-      state = calculateCartOnSuccess(state);
+    createCartSuccess: (state, { payload }: PayloadAction<string>) => {
+      state.id = payload;
+      calculateCartOnSuccess(state);
     },
     createCartFailure: (state, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = payload;
     },
-    /* fetchCart */
+    /* fettchCar */
     fetchCartRequest: (state) => {
       state.isLoading = true;
       state.error = null;
     },
     fetchCartSuccess: (state, { payload }: PayloadAction<DatabaseCart>) => {
       state.items = payload.items ? payload.items : {};
-      state = calculateCartOnSuccess(state);
+      state.id = payload.id;
+      calculateCartOnSuccess(state);
     },
     fetchCartFailure: (state, { payload }: PayloadAction<string>) => {
       state.isLoading = true;
@@ -63,7 +68,7 @@ const cartSlice = createSlice({
     syncCartSuccess: (state, { payload }: PayloadAction<DatabaseCart>) => {
       state.userEmail = payload.userEmail;
       state.items = { ...payload.items, ...state.items };
-      state = calculateCartOnSuccess(state);
+      calculateCartOnSuccess(state);
     },
     syncCartFailure: (state, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
@@ -78,7 +83,7 @@ const cartSlice = createSlice({
       state.isLoading = false;
       state.error = null;
       state.items[payload.id] = { ...payload, isLoading: false, error: null };
-      state = calculateCartOnSuccess(state);
+      calculateCartOnSuccess(state);
     },
     addItemFailure: (state, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
@@ -86,6 +91,8 @@ const cartSlice = createSlice({
     },
     /* removeItem */
     removeItemRequest: (state, { payload: itemId }: PayloadAction<string>) => {
+      state.isLoading = true;
+      state.error = null;
       const requestingItem = state.items[itemId];
 
       if (requestingItem) {
@@ -101,7 +108,7 @@ const cartSlice = createSlice({
         requestingItem.error = null;
 
         state.items = _.omit(state.items, itemId);
-        state = calculateCartOnSuccess(state);
+        calculateCartOnSuccess(state);
       }
     },
     removeItemFailure: (
@@ -115,11 +122,13 @@ const cartSlice = createSlice({
         requestingItem.error = payload.errorMessage;
       }
     },
-    /* updateItemQuantity */
+    /* increaseItemQuantity */
     updateItemQuantityRequest: (
       state,
       { payload: itemId }: PayloadAction<string>
     ) => {
+      state.isLoading = true;
+      state.error = null;
       const updatingItem = state.items[itemId];
 
       if (updatingItem) {
@@ -129,16 +138,16 @@ const cartSlice = createSlice({
     },
     updateItemQuantitySuccess: (
       state,
-      { payload }: PayloadAction<UpdateCartItemPayload>
+      { payload }: PayloadAction<IncreaseItemQuantityPayload>
     ) => {
       const updatingItem = state.items[payload.itemId];
 
       if (updatingItem) {
         updatingItem.isLoading = false;
         updatingItem.error = null;
-        updatingItem.quantity = payload.amount;
+        updatingItem.quantity += payload.increaseAmount;
 
-        state = calculateCartOnSuccess(state);
+        calculateCartOnSuccess(state);
       }
     },
     updateItemQuantityFailure: (
@@ -186,6 +195,7 @@ export const {
 export const initCart = (): AppThunk => async (dispatch) => {
   const cartId = localStorage.getItem('cartId');
   const userEmail = localStorage.getItem('userEmail');
+
   if (cartId) {
     asyncDispatchWrapper(getWithId, dispatch, fetchCartFailure);
   } else if (userEmail) {
@@ -205,6 +215,9 @@ export const initCart = (): AppThunk => async (dispatch) => {
       dispatch(fetchCartSuccess(data));
     } else {
       dispatch(fetchCartFailure('Invalid request'));
+      localStorage.removeItem('cartId');
+
+      asyncDispatchWrapper(postNewCart, dispatch, createCartFailure);
     }
   }
 
@@ -222,32 +235,27 @@ export const initCart = (): AppThunk => async (dispatch) => {
       dispatch(fetchCartSuccess(keyObjectToObjectWithKey(data)));
     } else {
       dispatch(fetchCartFailure('Invalid request'));
+      localStorage.removeItem('email');
+
+      asyncDispatchWrapper(postNewCart, dispatch, createCartFailure);
     }
   }
 
   async function postNewCart() {
     dispatch(createCartRequest());
 
-    const { data: initialData } = await firebaseApi.post<{ name: string }>(
+    const { data } = await firebaseApi.post<{ name: string }>(
       '/cart.json',
-      {
-        userEmail: '',
-      }
+      _.omit(initialState, 'isLoading', 'error', 'subtotal', 'total')
     );
 
-    const newCart: DatabaseCart = {
-      id: initialData.name,
-      userEmail: '',
-      items: {},
-      tip: 0,
-      shipping: 0,
-    };
+    const cartId = data.name;
+    await firebaseApi.patch<DatabaseCart>(`/cart/${cartId}.json`, {
+      id: cartId,
+    });
 
-    await firebaseApi.patch<DatabaseCart>(`/cart/${newCart.id}.json`, newCart);
-
-    newCart.id && localStorage.setItem('cartId', newCart.id);
-
-    dispatch(createCartSuccess(newCart));
+    localStorage.setItem('cartId', cartId);
+    dispatch(createCartSuccess(cartId));
   }
 };
 
@@ -268,29 +276,35 @@ export const syncCart = (): AppThunk => async (dispatch, getState) => {
   }
 };
 
-export const updateCartItem = ({
+export const increaseItemQuantity = ({
   itemId,
-  amount,
-}: UpdateCartItemPayload): AppThunk => async (dispatch, getState) => {
-  const cartId = getState().cart.id;
-  if (cartId) {
+  increaseAmount,
+}: IncreaseItemQuantityPayload): AppThunk => async (dispatch, getState) => {
+  const cart = getState().cart;
+  if (cart.id) {
     dispatch(updateItemQuantityRequest(itemId));
 
-    try {
-      await firebaseApi.patch(`/cart/${cartId}/${itemId}.json`, {
-        quantity: amount,
-      });
+    const item = getCartItemById(cart, itemId);
+    const newQuantity = item.quantity + increaseAmount;
 
-      dispatch(updateItemQuantitySuccess({ itemId, amount }));
-    } catch (error) {
-      dispatch(
-        updateItemQuantityFailure({
-          itemId,
-          errorMessage: error?.response?.data?.error ?? 'Something went wrong',
-        })
-      );
-    }
-  }
+    if (item) {
+      try {
+        await firebaseApi.patch(`/cart/${cart.id}/items/${itemId}.json`, {
+          quantity: newQuantity,
+        });
+
+        dispatch(updateItemQuantitySuccess({ itemId, increaseAmount }));
+      } catch (error) {
+        dispatch(
+          updateItemQuantityFailure({
+            itemId,
+            errorMessage:
+              error?.response?.data?.error ?? 'Something went wrong',
+          })
+        );
+      }
+    } else throw new Error('Item not found!');
+  } else throw new Error('Cart ID not found!');
 };
 
 export const addItemToCart = (item: Omit<CartItem, 'id'>): AppThunk => async (
@@ -301,14 +315,19 @@ export const addItemToCart = (item: Omit<CartItem, 'id'>): AppThunk => async (
   if (cartId) {
     dispatch(addItemRequest());
     asyncDispatchWrapper(postNewItemToCart, dispatch, addItemFailure);
-  }
+  } else throw new Error('Cart ID not found!');
 
   async function postNewItemToCart() {
     const { data } = await firebaseApi.post<{ name: string }>(
       `/cart/${cartId}/items.json`,
       item
     );
-    dispatch(addItemSucces({ ...item, id: data.name }));
+
+    const cartItemId = data.name;
+    await firebaseApi.patch(`/cart/${cartId}/items/${cartItemId}.json`, {
+      id: cartItemId,
+    });
+    dispatch(addItemSucces({ ...item, id: cartItemId }));
   }
 };
 
@@ -321,7 +340,7 @@ export const removeItemFromCart = (itemId: string): AppThunk => async (
     dispatch(removeItemRequest(itemId));
 
     try {
-      await firebaseApi.delete(`/cart/${cartId}/${itemId}.json`);
+      await firebaseApi.delete(`/cart/${cartId}/items/${itemId}.json`);
       dispatch(removeItemSucces(itemId));
     } catch (error) {
       dispatch(
@@ -331,5 +350,5 @@ export const removeItemFromCart = (itemId: string): AppThunk => async (
         })
       );
     }
-  }
+  } else throw new Error('Cart ID not found!');
 };

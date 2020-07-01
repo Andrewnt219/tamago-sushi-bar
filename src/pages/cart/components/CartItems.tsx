@@ -1,19 +1,17 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components/macro';
 import { CartItem } from './CartItem';
-import { useSelector, useDispatch } from 'react-redux';
-import { cartItemsSelector, initCart } from '../../../features/cartSlice';
+import { CartItemsState } from '../../../features/cartSliceType';
 
-type Props = {};
+type Props = {
+  cartItems: CartItemsState;
+};
 
-function CartItems(props: Props): ReactElement {
-  const cartItems = useSelector(cartItemsSelector);
-  const dispatch = useDispatch();
+function CartItems({ cartItems }: Props): ReactElement {
   return (
     <Container>
-      <button onClick={() => dispatch(initCart())}>CREATE CART</button>
       {Object.values(cartItems).map((cartItem) => (
-        <CartItem key={cartItem.id} {...cartItem} />
+        <CartItem key={cartItem.sku} {...cartItem} />
       ))}
     </Container>
   );

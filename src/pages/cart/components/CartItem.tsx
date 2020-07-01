@@ -4,15 +4,16 @@ import { BaseButton } from '../../../components/ui/BaseButton';
 import { MdRemove, MdAdd } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  updateCartItem,
+  increaseItemQuantity,
   itemIsLoadingSelector,
+  removeItemFromCart,
 } from '../../../features/cartSlice';
 import Spinner from '../../../components/ui/LoadingScreen/Spinner/Spinner';
 import { CartItem as CartItemProps } from '../../../features/cartSliceType';
 
 type Props = CartItemProps & {};
 
-function CartItem({ id, name, price, quantity }: Props): ReactElement {
+function CartItem({ id, name, price, quantity, imgSrc }: Props): ReactElement {
   const firstRender = React.useRef(true);
   const [currentQuantity, setCurrentQuantity] = useState(quantity);
 
@@ -33,23 +34,35 @@ function CartItem({ id, name, price, quantity }: Props): ReactElement {
       firstRender.current = false;
     } else {
       timerId = setTimeout(() => {
-        dispatch(updateCartItem({ itemId: id, amount: currentQuantity }));
+        if (currentQuantity <= 0) {
+          dispatch(removeItemFromCart(id));
+        } else {
+          dispatch(
+            increaseItemQuantity({
+              itemId: id,
+              increaseAmount: currentQuantity - quantity,
+            })
+          );
+        }
       }, 300);
     }
 
     return () => {
       clearInterval(timerId);
     };
-  }, [currentQuantity, id, dispatch]);
+  }, [currentQuantity, id, dispatch, quantity]);
 
   return (
     <Container>
-      <Image src="https://i.imgur.com/lDhoiJR.jpg" />
+      <Image src={imgSrc} />
 
       <SubContainer>
         <PrimaryText>{name}</PrimaryText>
         <QuantityContainer>
-          <Button onClick={onMinusButtonClicked}>
+          <Button
+            disabled={currentQuantity === 0}
+            onClick={onMinusButtonClicked}
+          >
             <MdRemove />
           </Button>
           <Quantity>{currentQuantity}</Quantity>

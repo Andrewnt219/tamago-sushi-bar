@@ -6,9 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   addItemToCart,
   cartSelector,
-  updateCartItem,
+  increaseItemQuantity,
 } from '../../../features/cartSlice';
-import { searchItemInCart } from '../../../helpers';
+import { getCartItemIdByKey } from '../../../helpers';
 
 export interface MenuItemProps {
   name: string;
@@ -38,10 +38,9 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   const cart = useSelector(cartSelector);
 
   const onAddItem = () => {
-    const itemId = searchItemInCart(cart, 'name', name);
-    debugger;
+    const itemId = getCartItemIdByKey(cart, 'name', name);
     if (itemId) {
-      dispatch(updateCartItem({ itemId, amount: 1 }));
+      dispatch(increaseItemQuantity({ itemId, increaseAmount: 1 }));
     } else {
       dispatch(
         addItemToCart({
@@ -49,6 +48,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
           price,
           sku,
           quantity: 1,
+          imgSrc,
         })
       );
     }

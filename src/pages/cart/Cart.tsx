@@ -4,21 +4,27 @@ import { CartItems } from './components/CartItems';
 import { BaseButton } from '../../components/ui/BaseButton';
 import { MdLock } from 'react-icons/md';
 import { StyledLink } from '../../components/navigation/StyledLink';
+import { cartSelector } from '../../features/cartSlice';
+import { useSelector } from 'react-redux';
+import Spinner from '../../components/ui/LoadingScreen/Spinner/Spinner';
 
 type Props = {};
 
 function Cart(props: Props): ReactElement {
+  const cart = useSelector(cartSelector);
+
   return (
     <Container>
       <Header>Your Tray</Header>
       <Summary>
         <SummaryHeader>Order Summary</SummaryHeader>
         <SubField>
-          Subtotal<Value>$99.00</Value>
+          Subtotal
+          {renderValue(cart.subtotal, cart.isLoading)}
         </SubField>
 
         <SubField>
-          Shipping<Value>$0.00</Value>
+          Shipping{renderValue(cart.shipping, cart.isLoading)}
         </SubField>
 
         <SubField>
@@ -29,19 +35,31 @@ function Cart(props: Props): ReactElement {
           </InputContainer>
         </SubField>
 
-        <Field>
-          Total<Value>$100.00</Value>
-        </Field>
+        <Field>Total{renderValue(cart.total, cart.isLoading)}</Field>
 
         <StyledLink to="/checkout">
-          <Button>
-            <MdLock />
-            PROCEED TO CHECKOUT
+          <Button disabled={cart.isLoading || cart.subtotal === 0}>
+            {cart.subtotal === 0 ? (
+              'YOUR CART IS EMPTY'
+            ) : (
+              <>
+                <MdLock />
+                PROCEED TO CHECKOUT
+              </>
+            )}
           </Button>
         </StyledLink>
       </Summary>
-      <CartItems />
+      <CartItems cartItems={cart.items} />
     </Container>
+  );
+}
+
+function renderValue(value: number, isLoading: boolean) {
+  return isLoading ? (
+    <Spinner size="1.2rem" />
+  ) : (
+    <Value>${value.toFixed(2)}</Value>
   );
 }
 
