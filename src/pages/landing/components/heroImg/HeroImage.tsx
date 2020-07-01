@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components/macro';
-import backgroundImgUrl from '../../../../asset/bg-2.jpg';
 import { rgba } from 'polished';
 import { BaseButton } from '../../../../components/ui/BaseButton';
 
@@ -14,7 +13,7 @@ interface HeroImageProps {
 export const HeroImage: React.FC<HeroImageProps> = ({ onLoad }) => {
   useEffect(() => {
     const img = new Image();
-    img.src = backgroundImgUrl;
+    img.src = 'https://i.imgur.com/PrvW34t.jpg';
     img.onload = function () {
       onLoad();
     };

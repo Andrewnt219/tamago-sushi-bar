@@ -1,7 +1,6 @@
 import React, { ReactElement, useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { BaseButton } from '../../../components/ui/BaseButton';
-import ImageSrc from '../../../asset/menus/Agedashi Tofu.jpg';
 import { MdRemove, MdAdd } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -45,7 +44,7 @@ function CartItem({ id, name, price, quantity }: Props): ReactElement {
 
   return (
     <Container>
-      <Image src={ImageSrc} />
+      <Image src="https://i.imgur.com/lDhoiJR.jpg" />
 
       <SubContainer>
         <PrimaryText>{name}</PrimaryText>
