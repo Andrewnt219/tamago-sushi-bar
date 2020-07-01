@@ -2,12 +2,14 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { MenuItem, MenuItemProps } from './MenuItem';
 import { menuIds } from '../../../data/menu';
+import Spinner from '../../../components/ui/LoadingScreen/Spinner/Spinner';
 
 interface MenuCategoryProps {
   categoryName: string;
   children?: never;
-  menuItems: MenuItemProps[];
+  menuItems: (MenuItemProps | null)[] | null;
   menuId: menuIds;
+  isFetching: boolean;
 }
 
 /**
@@ -20,19 +22,51 @@ export const MenuCategory: React.FC<MenuCategoryProps> = ({
   categoryName,
   menuItems,
   menuId,
+  isFetching,
 }) => {
+  let renderedMenuItems = (
+    <SpinnerWrapper>
+      <Spinner />
+    </SpinnerWrapper>
+  );
+
+  if (!isFetching) {
+    if (!menuItems) {
+      renderedMenuItems = (
+        <Error>
+          Fail to get menu
+          <span role="img" aria-label="crying-emoji">
+            😢
+          </span>
+        </Error>
+      );
+    } else {
+      renderedMenuItems = <MenuItems>{renderMenuItems(menuItems)}</MenuItems>;
+    }
+  }
+
   return (
     <Container>
       <Header id={menuId}>{categoryName}</Header>
-
-      <MenuItems>
-        {menuItems.map((menuItem, index) => (
-          <MenuItem key={index} {...menuItem} />
-        ))}
-      </MenuItems>
+      {renderedMenuItems}
     </Container>
   );
 };
+
+function renderMenuItems(menuItems: (MenuItemProps | null)[]) {
+  return menuItems.map((menuItem, index) =>
+    menuItem ? (
+      <MenuItem key={index} {...menuItem} />
+    ) : (
+      <Error key={index}>
+        Fail to get item
+        <span role="img" aria-label="crying-emoji">
+          😢
+        </span>
+      </Error>
+    )
+  );
+}
 
 interface ContainerProps {}
 const Container = styled.div<ContainerProps>`
@@ -53,3 +87,13 @@ const MenuItems = styled.ul`
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   gap: 5rem;
 `;
+
+const SpinnerWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Error = styled.p``;

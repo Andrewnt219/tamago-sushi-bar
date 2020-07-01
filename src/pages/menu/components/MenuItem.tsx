@@ -28,7 +28,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   name,
   price,
   description = 'No description',
-  imgSrc = '../../../asset/404.png',
+  imgSrc = 'https://i.imgur.com/tjk7okS.png',
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();

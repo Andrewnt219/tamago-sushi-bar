@@ -126,7 +126,7 @@ const Dot = styled.div<DotProps>`
     display: block;
     width: 25%;
     height: 25%;
-    background-color: ${(p) => p.color ?? 'black'};
+    background-color: ${(p) => p.color ?? p.theme.primary};
     border-radius: 100%;
     animation: ${skyChaseDotBefore} 2s infinite ease-in-out both;
   }

@@ -8,7 +8,6 @@ import { ReservationForm1 } from './components/ReservationForm1';
 import { useFormStep } from '../../hook';
 
 import ReservationForm2 from './components/ReservationForm2';
-import background from '../../asset/background/reservation.jpg';
 import { rgba } from 'polished';
 import { useForm } from 'react-hook-form';
 import { useFormState } from '../../hook/useFormState';
@@ -238,7 +237,7 @@ const Image = styled.div`
       ${(p) => rgba(p.theme.black, 0.6)},
       ${(p) => rgba(p.theme.black, 0.6)}
     ),
-    url(${background});
+    url('https://i.imgur.com/UOWF4s0.jpg');
   background-size: cover;
 
   background-position: center;

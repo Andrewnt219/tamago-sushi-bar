@@ -1,6 +1,9 @@
 import React from 'react';
 import { MenuCategory } from './MenuCategory';
-import { menus } from '../../../data/menu';
+import _ from 'lodash';
+import { useApiGet } from '../../../hook/useApiGet';
+import { firebaseApi } from '../../../apis/firebase';
+import { MenuItemProps } from './MenuItem';
 
 interface CategorySaladProps {}
 
@@ -9,11 +12,23 @@ interface CategorySaladProps {}
  */
 
 export const CategorySalad: React.FC<CategorySaladProps> = () => {
+  const [appetizers, appetizersIsLoading] = useApiGet<MenuItemProps[]>(
+    firebaseApi,
+    '/menus/appetizers.json'
+  );
+  const [salads, saladsIsLoading] = useApiGet<MenuItemProps[]>(
+    firebaseApi,
+    '/menus/salads.json'
+  );
+
+  console.log(appetizersIsLoading, saladsIsLoading);
+
   return (
     <MenuCategory
       menuId="appetizersAndSalads"
       categoryName="Appetizers & Salad"
-      menuItems={menus.salads.concat(menus.appetizers)}
+      menuItems={_.concat(appetizers, salads)}
+      isFetching={appetizersIsLoading || saladsIsLoading}
     />
   );
 };
