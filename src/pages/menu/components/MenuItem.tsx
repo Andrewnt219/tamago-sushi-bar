@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { BaseButton } from '../../../components/ui/BaseButton';
 import Spinner from '../../../components/ui/LoadingScreen/Spinner/Spinner';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addItemToCart,
+  cartSelector,
+  updateCartItem,
+} from '../../../features/cartSlice';
+import { searchItemInCart } from '../../../helpers';
 
 export interface MenuItemProps {
   name: string;
@@ -24,6 +31,25 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   imgSrc = '../../../asset/404.png',
 }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const cart = useSelector(cartSelector);
+
+  const onAddItem = () => {
+    const itemId = searchItemInCart(cart, 'name', name);
+    debugger;
+    if (itemId) {
+      dispatch(updateCartItem({ itemId, amount: 1 }));
+    } else {
+      dispatch(
+        addItemToCart({
+          name,
+          price,
+          quantity: 1,
+          id: Math.random().toString(),
+        })
+      );
+    }
+  };
 
   return (
     <Container>
@@ -42,7 +68,9 @@ export const MenuItem: React.FC<MenuItemProps> = ({
       <ItemName>{name}</ItemName>
       <ItemPrice>{price.toFixed(2)}</ItemPrice>
       <ItemDescription>{description}</ItemDescription>
-      <Button outlined>+</Button>
+      <Button outlined onClick={onAddItem}>
+        +
+      </Button>
     </Container>
   );
 };

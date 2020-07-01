@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { checkIfLoading } from './loadingSlice';
 import { AppThunk, RootState } from '../app/store';
 import { asyncDispatchWrapper } from '../helpers/redux-helpers';
-import { keyObjectToObjectWithKey } from '../helpers/helpers';
+import { keyObjectToObjectWithKey, calculateCartOnSuccess } from '../helpers';
 
 export type CartItem = {
   id: string;
@@ -13,16 +13,20 @@ export type CartItem = {
   price: number;
 };
 
-type Cart = {
+export type Cart = {
   id: string | null;
+  subtotal: number;
+  total: number;
   userEmail: string;
+  tip: number;
+  shipping: number;
   items: Record<
     string,
     CartItem & { isLoading: boolean; error: string | null }
   >;
 };
 
-type CartState = Cart & {
+export type CartState = Cart & {
   isLoading: boolean;
   error: string | null;
 };
@@ -33,6 +37,10 @@ const state: CartState = {
   userEmail: '',
   items: {},
   error: null,
+  subtotal: 0,
+  total: 0,
+  tip: 0,
+  shipping: 0,
 };
 
 const cartSlice = createSlice({
@@ -70,10 +78,9 @@ const cartSlice = createSlice({
       state.error = null;
     },
     syncCartSuccess: (state, { payload }: PayloadAction<Cart>) => {
-      state.isLoading = false;
-      state.error = null;
-      state.items = { ...payload.items, ...state.items };
       state.userEmail = payload.userEmail;
+      state.items = { ...payload.items, ...state.items };
+      state = calculateCartOnSuccess(state);
     },
     syncCartFailure: (state, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
@@ -88,6 +95,7 @@ const cartSlice = createSlice({
       state.isLoading = false;
       state.error = null;
       state.items[payload.id] = { ...payload, isLoading: false, error: null };
+      state = calculateCartOnSuccess(state);
     },
     addItemFailure: (state, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
@@ -110,6 +118,7 @@ const cartSlice = createSlice({
         requestingItem.error = null;
 
         state.items = _.omit(state.items, itemId);
+        state = calculateCartOnSuccess(state);
       }
     },
     removeItemFailure: (
@@ -145,6 +154,8 @@ const cartSlice = createSlice({
         updatingItem.isLoading = false;
         updatingItem.error = null;
         updatingItem.quantity = payload.amount;
+
+        state = calculateCartOnSuccess(state);
       }
     },
     updateItemQuantityFailure: (
@@ -162,6 +173,7 @@ const cartSlice = createSlice({
 });
 
 export default cartSlice.reducer;
+export const cartSelector = (state: RootState) => state.cart;
 export const itemIsLoadingSelector = (itemId: string) => (
   state: RootState
 ): boolean | undefined => state.cart.items[itemId]?.isLoading;
@@ -242,6 +254,10 @@ export const initCart = (): AppThunk => async (dispatch) => {
       id: initialData.name,
       userEmail: '',
       items: {},
+      subtotal: 0,
+      total: 0,
+      tip: 0,
+      shipping: 0,
     };
 
     await firebaseApi.patch<Cart>(`/cart/${newCart.id}.json`, newCart);
@@ -252,7 +268,7 @@ export const initCart = (): AppThunk => async (dispatch) => {
   }
 };
 
-export const syncCart = (userEmail: string): AppThunk => async (dispatch) => {
+export const syncCart = (): AppThunk => async (dispatch, getState) => {
   asyncDispatchWrapper(getWithId, dispatch, syncCartFailure);
 
   async function getWithId() {
@@ -261,7 +277,7 @@ export const syncCart = (userEmail: string): AppThunk => async (dispatch) => {
     const { data } = await firebaseApi.get<Cart>(`/cart.json`, {
       params: {
         orderBy: '"userEmail"',
-        equalTo: `"${userEmail}"`,
+        equalTo: `"${getState().user.email}"`,
       },
     });
 
@@ -280,10 +296,12 @@ export const updateCartItem = ({
   const cartId = getState().cart.id;
   if (cartId) {
     dispatch(updateItemQuantityRequest(itemId));
+
     try {
       await firebaseApi.patch(`/cart/${cartId}/${itemId}.json`, {
         quantity: amount,
       });
+
       dispatch(updateItemQuantitySuccess({ itemId, amount }));
     } catch (error) {
       dispatch(
