@@ -1,5 +1,4 @@
 import { Dispatch, ActionCreatorWithPayload } from '@reduxjs/toolkit';
-import { AxiosError } from 'axios';
 
 export const asyncDispatchWrapper = async (
   callback: () => void,

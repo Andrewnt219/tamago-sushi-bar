@@ -7,7 +7,7 @@ import { StyledLink } from '../../components/navigation/StyledLink';
 
 type Props = {};
 
-function Cart({}: Props): ReactElement {
+function Cart(props: Props): ReactElement {
   return (
     <Container>
       <Header>Your Tray</Header>

@@ -6,7 +6,7 @@ import { cartItemsSelector, initCart } from '../../../features/cartSlice';
 
 type Props = {};
 
-function CartItems({}: Props): ReactElement {
+function CartItems(props: Props): ReactElement {
   const cartItems = useSelector(cartItemsSelector);
   const dispatch = useDispatch();
   return (

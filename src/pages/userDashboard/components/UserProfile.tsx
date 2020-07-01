@@ -1,10 +1,9 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components/macro';
-import { lighten } from '@material-ui/core';
 
 type Props = {};
 
-function UserProfile({}: Props): ReactElement {
+function UserProfile(props: Props): ReactElement {
   return (
     <Container>
       <PrimaryInfo>
