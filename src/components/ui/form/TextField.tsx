@@ -12,6 +12,7 @@ export interface TextFieldProps<FormValues> {
   name: keyof FormValues;
   type?:
     | 'text'
+    | 'password'
     | 'number'
     | 'tel'
     | 'email'
