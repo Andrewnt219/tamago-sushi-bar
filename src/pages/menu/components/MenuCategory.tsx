@@ -72,6 +72,8 @@ interface ContainerProps {}
 const Container = styled.div<ContainerProps>`
   width: 80%;
   margin: 3rem auto;
+  /* For intial loading */
+  min-height: 30rem;
 `;
 
 const Header = styled.h2`
