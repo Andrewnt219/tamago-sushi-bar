@@ -5,10 +5,12 @@ import { TextField } from '../../components/ui/form/TextField';
 import { BaseForm } from '../../components/ui/form/BaseForm';
 import { useForm } from 'react-hook-form';
 import { BaseButton } from '../../components/ui/BaseButton';
+import { useDispatch } from 'react-redux';
+import { authUser } from '../../features/userSlice';
 
 type Props = {};
 
-type FormValues = {
+export type LoginFormValues = {
   email: string;
   password: string;
 };
@@ -20,13 +22,17 @@ function Login(props: Props): ReactElement {
   >();
   const history = useHistory();
   let pathname = state?.from?.pathname ?? '/';
-  const { register, errors, handleSubmit, formState } = useForm<FormValues>({
+  const { register, errors, handleSubmit, formState } = useForm<
+    LoginFormValues
+  >({
     mode: 'onChange',
     validateCriteriaMode: 'all',
   });
 
+  const dispatch = useDispatch();
+
   const onSubmit = handleSubmit((formData) => {
-    console.log(formData);
+    dispatch(authUser(formData));
     history.push(pathname);
   });
 
