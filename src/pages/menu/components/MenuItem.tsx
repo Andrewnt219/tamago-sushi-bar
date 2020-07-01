@@ -15,6 +15,7 @@ export interface MenuItemProps {
   price: number;
   description?: string;
   imgSrc?: string;
+  sku: string;
 }
 
 /**
@@ -27,7 +28,9 @@ export interface MenuItemProps {
 export const MenuItem: React.FC<MenuItemProps> = ({
   name,
   price,
+  sku,
   description = 'No description',
+  /* default is 404 img */
   imgSrc = 'https://i.imgur.com/tjk7okS.png',
 }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -44,8 +47,8 @@ export const MenuItem: React.FC<MenuItemProps> = ({
         addItemToCart({
           name,
           price,
+          sku,
           quantity: 1,
-          id: Math.random().toString(),
         })
       );
     }

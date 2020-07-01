@@ -4,11 +4,11 @@ import { BaseButton } from '../../../components/ui/BaseButton';
 import { MdRemove, MdAdd } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  CartItem as CartItemProps,
   updateCartItem,
   itemIsLoadingSelector,
 } from '../../../features/cartSlice';
 import Spinner from '../../../components/ui/LoadingScreen/Spinner/Spinner';
+import { CartItem as CartItemProps } from '../../../features/cartSliceType';
 
 type Props = CartItemProps & {};
 

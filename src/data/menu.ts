@@ -1,5 +1,3 @@
-import { MenuItemProps } from '../pages/menu/components/MenuItem';
-
 type menuNames =
   | 'desserts'
   | 'drinks'
@@ -8,10 +6,6 @@ type menuNames =
   | 'noodles'
   | 'salads'
   | 'appetizers';
-
-type Menus = {
-  [menuName in menuNames]: MenuItemProps[];
-};
 
 export type menuIds =
   | 'appetizersAndSalads'

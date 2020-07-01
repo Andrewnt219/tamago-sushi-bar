@@ -1,4 +1,4 @@
-import { CartItem, Cart, CartState } from '../features/cartSlice';
+import { CartItem, Cart, CartState } from '../features/cartSliceType';
 import _ from 'lodash';
 
 /* ------------------------------ CART HELPERS ------------------------------ */
@@ -20,11 +20,6 @@ export const calculateCart = (cart: Cart): Cart => {
 
 export const calculateCartOnSuccess = (cartState: CartState): CartState => {
   return { ...calculateCart(cartState), isLoading: false, error: null };
-};
-
-type FindItem = {
-  (cart: Cart, itemId: string): boolean;
-  (cart: Cart, cartItem: CartItem): boolean;
 };
 
 export const searchItemInCart = (

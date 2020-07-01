@@ -5,31 +5,13 @@ import { checkIfLoading } from './loadingSlice';
 import { AppThunk, RootState } from '../app/store';
 import { asyncDispatchWrapper } from '../helpers/redux-helpers';
 import { keyObjectToObjectWithKey, calculateCartOnSuccess } from '../helpers';
-
-export type CartItem = {
-  id: string;
-  name: string;
-  quantity: number;
-  price: number;
-};
-
-export type Cart = {
-  id: string | null;
-  subtotal: number;
-  total: number;
-  userEmail: string;
-  tip: number;
-  shipping: number;
-  items: Record<
-    string,
-    CartItem & { isLoading: boolean; error: string | null }
-  >;
-};
-
-export type CartState = Cart & {
-  isLoading: boolean;
-  error: string | null;
-};
+import {
+  Cart,
+  CartItem,
+  UpdateCartItemPayload,
+  DatabaseCart,
+  CartState,
+} from './cartSliceType';
 
 const state: CartState = {
   id: null,
@@ -52,8 +34,9 @@ const cartSlice = createSlice({
       state.isLoading = true;
       state.error = null;
     },
-    createCartSuccess: (_, { payload }: PayloadAction<Cart>) => {
-      return { ...payload, items: {}, isLoading: false, error: null };
+    createCartSuccess: (state, { payload }: PayloadAction<DatabaseCart>) => {
+      state = { ...state, ...payload };
+      state = calculateCartOnSuccess(state);
     },
     createCartFailure: (state, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
@@ -64,9 +47,9 @@ const cartSlice = createSlice({
       state.isLoading = true;
       state.error = null;
     },
-    fetchCartSuccess: (_, { payload }: PayloadAction<Cart>) => {
-      const items = payload.items ? payload.items : {};
-      return { ...payload, items, isLoading: false, error: null };
+    fetchCartSuccess: (state, { payload }: PayloadAction<DatabaseCart>) => {
+      state.items = payload.items ? payload.items : {};
+      state = calculateCartOnSuccess(state);
     },
     fetchCartFailure: (state, { payload }: PayloadAction<string>) => {
       state.isLoading = true;
@@ -77,7 +60,7 @@ const cartSlice = createSlice({
       state.isLoading = true;
       state.error = null;
     },
-    syncCartSuccess: (state, { payload }: PayloadAction<Cart>) => {
+    syncCartSuccess: (state, { payload }: PayloadAction<DatabaseCart>) => {
       state.userEmail = payload.userEmail;
       state.items = { ...payload.items, ...state.items };
       state = calculateCartOnSuccess(state);
@@ -214,7 +197,9 @@ export const initCart = (): AppThunk => async (dispatch) => {
   async function getWithId() {
     dispatch(fetchCartRequest());
 
-    const { data } = await firebaseApi.get<Cart | null>(`/cart/${cartId}.json`);
+    const { data } = await firebaseApi.get<DatabaseCart | null>(
+      `/cart/${cartId}.json`
+    );
 
     if (data) {
       dispatch(fetchCartSuccess(data));
@@ -226,7 +211,7 @@ export const initCart = (): AppThunk => async (dispatch) => {
   async function getWithEmail() {
     dispatch(fetchCartRequest());
 
-    const { data } = await firebaseApi.get<Cart | null>(`/cart.json`, {
+    const { data } = await firebaseApi.get<DatabaseCart | null>(`/cart.json`, {
       params: {
         orderBy: '"userEmail"',
         equalTo: `"${userEmail}"`,
@@ -250,17 +235,15 @@ export const initCart = (): AppThunk => async (dispatch) => {
       }
     );
 
-    const newCart: Cart = {
+    const newCart: DatabaseCart = {
       id: initialData.name,
       userEmail: '',
       items: {},
-      subtotal: 0,
-      total: 0,
       tip: 0,
       shipping: 0,
     };
 
-    await firebaseApi.patch<Cart>(`/cart/${newCart.id}.json`, newCart);
+    await firebaseApi.patch<DatabaseCart>(`/cart/${newCart.id}.json`, newCart);
 
     newCart.id && localStorage.setItem('cartId', newCart.id);
 
@@ -285,10 +268,6 @@ export const syncCart = (): AppThunk => async (dispatch, getState) => {
   }
 };
 
-type UpdateCartItemPayload = {
-  itemId: string;
-  amount: number;
-};
 export const updateCartItem = ({
   itemId,
   amount,
@@ -314,7 +293,7 @@ export const updateCartItem = ({
   }
 };
 
-export const addItemToCart = (item: CartItem): AppThunk => async (
+export const addItemToCart = (item: Omit<CartItem, 'id'>): AppThunk => async (
   dispatch,
   getState
 ) => {
