@@ -16,7 +16,6 @@ import {
   DatabaseCart,
   CartState,
   CartItemsState,
-  CartItemState,
 } from './cartSliceType';
 
 const initialState: CartState = {
@@ -189,7 +188,7 @@ export const itemIsLoadingSelector = (itemId: string) => (
 ): boolean | undefined => state.cart.items[itemId]?.isLoading;
 export const cartItemsSelector = (state: RootState) => state.cart.items;
 export const cartIsLoadingSelector = checkIfLoading('cart');
-export const {
+const {
   updateItemQuantityRequest,
   updateItemQuantitySuccess,
   updateItemQuantityFailure,

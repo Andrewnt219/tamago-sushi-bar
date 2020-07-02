@@ -20,11 +20,14 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    /* Auth */
     authRequest: (state) => {
       state.isLoading = true;
       state.error = null;
     },
     authSuccess: (state, { payload }: PayloadAction<string>) => {
+      localStorage.setItem('userEmail', payload);
+
       state.isLoading = false;
       state.error = null;
       state.email = payload;
@@ -33,11 +36,22 @@ const userSlice = createSlice({
       state.isLoading = false;
       state.error = payload;
     },
+    /* Logout */
+    logout: (state) => {
+      state.email = null;
+      state.error = null;
+      state.isLoading = false;
+
+      localStorage.clear();
+    },
+    /* Register */
     registerRequest: (state) => {
       state.isLoading = true;
       state.error = null;
     },
     registerSuccess: (state, { payload }: PayloadAction<string>) => {
+      localStorage.setItem('userEmail', payload);
+
       state.isLoading = false;
       state.error = null;
       state.email = payload;
@@ -51,7 +65,9 @@ const userSlice = createSlice({
 
 export default userSlice.reducer;
 export const userSelector = (state: RootState) => state.user;
-export const {
+export const { logout } = userSlice.actions;
+
+const {
   authFailure,
   authRequest,
   authSuccess,
