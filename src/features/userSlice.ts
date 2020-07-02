@@ -3,12 +3,11 @@ import { AppThunk, RootState } from '../app/store';
 import axios from 'axios';
 import { RegisterFormValues } from '../pages/register/Register';
 import { LoginFormValues } from '../pages/login/Login';
-
-type UserState = {
-  isLoading: boolean;
-  error: string | null;
-  email: string | null;
-};
+import {
+  FireBaseRegisterResponse,
+  FireBaseLoginResponse,
+  UserState,
+} from './sliceTypes';
 
 const initialState: UserState = {
   email: null,
@@ -76,13 +75,6 @@ const {
   registerSuccess,
 } = userSlice.actions;
 
-type FireBaseRegisterResponse = {
-  idToken: string;
-  email: string;
-  refreshToken: string;
-  expiresIn: string;
-  localId: string;
-};
 export const registerUser = (payload: RegisterFormValues): AppThunk => async (
   dispatch
 ) => {
@@ -103,14 +95,6 @@ export const registerUser = (payload: RegisterFormValues): AppThunk => async (
   }
 };
 
-type FireBaseLoginResponse = {
-  idToken: string;
-  email: string;
-  refreshToken: string;
-  expiresIn: string;
-  localId: string;
-  registered: boolean;
-};
 export const authUser = (payload: LoginFormValues): AppThunk => async (
   dispatch
 ) => {

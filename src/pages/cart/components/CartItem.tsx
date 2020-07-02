@@ -9,7 +9,7 @@ import {
   removeItemFromCart,
 } from '../../../features/cartSlice';
 import Spinner from '../../../components/ui/LoadingScreen/Spinner/Spinner';
-import { CartItem as CartItemProps } from '../../../features/cartSliceType';
+import { CartItem as CartItemProps } from '../../../features/sliceTypes';
 
 type Props = CartItemProps & {};
 

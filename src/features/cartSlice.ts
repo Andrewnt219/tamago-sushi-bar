@@ -16,7 +16,7 @@ import {
   DatabaseCart,
   CartState,
   CartItemsState,
-} from './cartSliceType';
+} from './sliceTypes';
 
 const initialState: CartState = {
   id: null,

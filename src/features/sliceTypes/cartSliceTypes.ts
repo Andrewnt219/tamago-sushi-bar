@@ -1,4 +1,4 @@
-import { UiState } from './uiTypes';
+import { UiState } from '../uiTypes';
 
 export type CartItem = {
   id: string;

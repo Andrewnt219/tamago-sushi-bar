@@ -4,7 +4,7 @@ import {
   CartState,
   CartItems,
   CartItemsState,
-} from '../features/cartSliceType';
+} from '../features/sliceTypes';
 import _ from 'lodash';
 import { UiState } from '../features/uiTypes';
 

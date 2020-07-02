@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components/macro';
 import { CartItem } from './CartItem';
-import { CartItemsState } from '../../../features/cartSliceType';
+import { CartItemsState } from '../../../features/sliceTypes';
 
 type Props = {
   cartItems: CartItemsState;
