@@ -19,6 +19,7 @@ declare module 'styled-components' {
     black: string;
     white: string;
     error: string;
+    formTheme: string;
     subtleBackground: string;
     strongBackground: string;
     blackBackground: string;

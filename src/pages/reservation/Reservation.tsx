@@ -96,7 +96,7 @@ const Reservation: React.FC<ReservationProps> = () => {
     <ThemeProvider
       theme={(defaultTheme: DefaultTheme) => ({
         ...defaultTheme,
-        primary: '#B04419',
+        primary: defaultTheme.formTheme,
       })}
     >
       <Container>

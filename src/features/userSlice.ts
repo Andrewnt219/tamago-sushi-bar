@@ -7,10 +7,21 @@ import {
   FireBaseRegisterResponse,
   FireBaseLoginResponse,
   UserState,
+  FireBaseRegisterRequest,
+  DatabaseUser,
+  FireBaseLoginRequest,
 } from './sliceTypes';
+import { firebaseApi } from '../apis/firebase';
+import { keyObjectToObjectWithKey } from '../helpers';
+import _ from 'lodash';
 
 const initialState: UserState = {
   email: null,
+  address: '',
+  joinDate: '',
+  phone: '',
+  preferredName: '',
+  totalTip: 0,
   isLoading: false,
   error: null,
 };
@@ -30,36 +41,39 @@ const userSlice = createSlice({
       state.isLoading = true;
       state.error = null;
     },
-    authSuccess: (state, { payload }: PayloadAction<string>) => {
-      localStorage.setItem('userEmail', payload);
+    authSuccess: (_, { payload }: PayloadAction<DatabaseUser>) => {
+      localStorage.setItem('userEmail', payload.email);
 
-      state.isLoading = false;
-      state.error = null;
-      state.email = payload;
+      return {
+        ...payload,
+        totalTip: +payload.totalTip,
+        isLoading: false,
+        error: null,
+      };
     },
     authFailure: (state, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = payload;
     },
     /* Logout */
-    logout: (state) => {
-      state.email = null;
-      state.error = null;
-      state.isLoading = false;
-
+    logout: (_) => {
       localStorage.clear();
+      return { ...initialState };
     },
     /* Register */
     registerRequest: (state) => {
       state.isLoading = true;
       state.error = null;
     },
-    registerSuccess: (state, { payload }: PayloadAction<string>) => {
-      localStorage.setItem('userEmail', payload);
+    registerSuccess: (_, { payload }: PayloadAction<DatabaseUser>) => {
+      localStorage.setItem('userEmail', payload.email);
 
-      state.isLoading = false;
-      state.error = null;
-      state.email = payload;
+      return {
+        ...payload,
+        totalTip: +payload.totalTip,
+        isLoading: false,
+        error: null,
+      };
     },
     registerFailure: (state, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
@@ -81,17 +95,38 @@ const {
   registerSuccess,
 } = userSlice.actions;
 
-export const registerUser = (payload: RegisterFormValues): AppThunk => async (
-  dispatch
-) => {
+export const registerUser = ({
+  address,
+  password,
+  preferredName,
+  phone,
+  email,
+}: RegisterFormValues): AppThunk => async (dispatch) => {
   dispatch(registerRequest());
 
   try {
-    const { data } = await axios.post<FireBaseRegisterResponse>(
+    const bodyRequest: FireBaseRegisterRequest = {
+      email,
+      password,
+      displayName: preferredName,
+      returnSecureToken: true,
+    };
+    await axios.post<FireBaseRegisterResponse>(
       `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE}`,
-      { ...payload, returnSecureToken: true }
+      bodyRequest
     );
-    dispatch(registerSuccess(data.email));
+
+    const newUser: DatabaseUser = {
+      email,
+      preferredName,
+      phone,
+      address,
+      joinDate: new Date().toDateString(),
+      totalTip: '0',
+    };
+
+    await firebaseApi.post('/users.json', newUser);
+    dispatch(registerSuccess(newUser));
   } catch (error) {
     dispatch(
       registerFailure(
@@ -101,17 +136,38 @@ export const registerUser = (payload: RegisterFormValues): AppThunk => async (
   }
 };
 
-export const authUser = (payload: LoginFormValues): AppThunk => async (
-  dispatch
-) => {
+export const authUser = ({
+  email,
+  password,
+}: LoginFormValues): AppThunk => async (dispatch) => {
   dispatch(authRequest());
 
   try {
-    const { data } = await axios.post<FireBaseLoginResponse>(
+    const bodyRequest: FireBaseLoginRequest = {
+      email,
+      password,
+      returnSecureToken: true,
+    };
+    await axios.post<FireBaseLoginResponse>(
       `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_FIREBASE}`,
-      { ...payload, returnSecureToken: true }
+      bodyRequest
     );
-    dispatch(authSuccess(data.email));
+
+    const { data } = await firebaseApi.get<Record<string, DatabaseUser> | {}>(
+      '/users.json',
+      {
+        params: {
+          orderBy: '"email"',
+          equalTo: `"${email}"`,
+        },
+      }
+    );
+
+    if (!_.isEmpty(data)) {
+      dispatch(authSuccess(keyObjectToObjectWithKey(data)));
+    } else {
+      dispatch(authFailure('Invalid Request'));
+    }
   } catch (error) {
     dispatch(
       authFailure(

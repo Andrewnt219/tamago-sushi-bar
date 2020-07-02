@@ -16,6 +16,7 @@ export const lightTheme: DefaultTheme = {
   grey: '#aaa',
   white: '#fff',
   error: '#f44336',
+  formTheme: '#B04419',
   subtleBackground: '#f7f7f7',
   strongBackground: '#f4f4f4',
   blackBackground: '#1b1f28',

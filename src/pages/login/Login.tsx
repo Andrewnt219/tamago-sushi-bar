@@ -45,7 +45,7 @@ function Login(props: Props): ReactElement {
   return email ? (
     <Redirect to="/me" />
   ) : (
-    <BaseForm onSubmit={onSubmit}>
+    <BaseForm onSubmit={onSubmit} noValidate>
       <TextField
         id="login-email"
         label="Email"
