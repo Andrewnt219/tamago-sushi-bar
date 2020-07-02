@@ -35,9 +35,8 @@ const cartSlice = createSlice({
   initialState: initialState,
   reducers: {
     /* createCart */
-    createCartRequest: (state) => {
-      state.isLoading = true;
-      state.error = null;
+    createCartRequest: () => {
+      return { ...initialState, isLoading: true };
     },
     createCartSuccess: (state, { payload }: PayloadAction<string>) => {
       state.id = payload;
@@ -48,9 +47,8 @@ const cartSlice = createSlice({
       state.error = payload;
     },
     /* fettchCar */
-    fetchCartRequest: (state) => {
-      state.isLoading = true;
-      state.error = null;
+    fetchCartRequest: () => {
+      return { ...initialState, isLoading: true };
     },
     fetchCartSuccess: (state, { payload }: PayloadAction<DatabaseCart>) => {
       state.items = payload.items
