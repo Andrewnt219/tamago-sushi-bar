@@ -11,7 +11,7 @@ function CartItems({ cartItems }: Props): ReactElement {
   return (
     <Container>
       {Object.values(cartItems).map((cartItem) => (
-        <CartItem key={cartItem.sku} {...cartItem} />
+        <CartItem key={cartItem.id} {...cartItem} />
       ))}
     </Container>
   );

@@ -16,6 +16,7 @@ import {
   DatabaseCart,
   CartState,
   CartItemsState,
+  CartItemState,
 } from './cartSliceType';
 
 const initialState: CartState = {
@@ -80,7 +81,8 @@ const cartSlice = createSlice({
       state.userEmail = payload.userEmail || '';
 
       if (payload.cartItemsState) {
-        state.items = { ...payload.cartItemsState, ...state.items };
+        state.items = _.merge({}, payload.cartItemsState, state.items);
+
         calculateCartOnSuccess(state);
       }
     },
@@ -281,7 +283,7 @@ export const syncCart = (): AppThunk => async (dispatch, getState) => {
   async function getWithId() {
     dispatch(syncCartRequest());
 
-    const cartId = getState().cart.id;
+    const localCartId = getState().cart.id;
     const userEmail = getState().user.email;
 
     const { data } = await firebaseApi.get<Record<string, DatabaseCart> | {}>(
@@ -302,11 +304,11 @@ export const syncCart = (): AppThunk => async (dispatch, getState) => {
       const cartItemsState = cartItemsToCartItemsState(databaseCart.items);
 
       // TODO separate to syncEmail and syncCart
-      await firebaseApi.patch(`/cart/${cartId}.json`, { userEmail });
+      await firebaseApi.patch(`/cart/${localCartId}.json`, { userEmail });
       dispatch(syncCartSuccess({ userEmail, cartItemsState }));
     } else {
       // TODO separate to syncEmail and syncCart
-      await firebaseApi.patch(`/cart/${cartId}.json`, { userEmail });
+      await firebaseApi.patch(`/cart/${localCartId}.json`, { userEmail });
       dispatch(syncCartSuccess({ userEmail }));
     }
   }
