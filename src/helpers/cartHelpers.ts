@@ -16,20 +16,19 @@ export const sumOfCartItems = (items: CartItems): number => {
   );
 };
 
-export const calculateCart = (cart: Cart): Cart => {
-  const calculatedCart = { ...cart };
-  calculatedCart.subtotal = sumOfCartItems(calculatedCart.items);
-  calculatedCart.total =
-    calculatedCart.shipping + calculatedCart.subtotal + calculatedCart.tip;
-  return calculatedCart;
-};
+// export const calculateCart = (cart: Cart): Cart => {
+//   const calculatedCart = { ...cart };
+//   calculatedCart.subtotal = sumOfCartItems(calculatedCart.items);
+//   calculatedCart.total =
+//     calculatedCart.shipping + calculatedCart.subtotal + calculatedCart.tip;
+//   return calculatedCart;
+// };
 
 /* mutating ON PURPOSE, utilize Immer in RTK */
 export const calculateCartOnSuccess = (cartState: CartState): void => {
   cartState.isLoading = false;
   cartState.error = null;
   cartState.subtotal = sumOfCartItems(cartState.items);
-
   cartState.shipping = cartState.subtotal > 35 ? 0 : 5;
 
   cartState.total = cartState.shipping + cartState.subtotal + cartState.tip;

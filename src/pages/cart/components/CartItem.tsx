@@ -28,6 +28,10 @@ function CartItem({ id, name, price, quantity, imgSrc }: Props): ReactElement {
     setCurrentQuantity((prev) => prev + 1);
   };
 
+  const onRemoveButtonClicked = () => {
+    dispatch(removeItemFromCart(id));
+  };
+
   useEffect(() => {
     let timerId: number;
     if (firstRender.current) {
@@ -60,18 +64,25 @@ function CartItem({ id, name, price, quantity, imgSrc }: Props): ReactElement {
       <SubContainer>
         <PrimaryText>{name}</PrimaryText>
         <QuantityContainer>
-          <Button
+          <QuantityButton
             disabled={currentQuantity === 0}
             onClick={onMinusButtonClicked}
           >
             <MdRemove />
-          </Button>
+          </QuantityButton>
           <Quantity>{currentQuantity}</Quantity>
-          <Button isLeftButton onClick={onAddButtonClicked}>
+          <QuantityButton isLeftButton onClick={onAddButtonClicked}>
             <MdAdd />
-          </Button>
-          {isLoading && <Spinner size="1rem" />}
+          </QuantityButton>
+          {isLoading && (
+            <SpinnerWrapper>
+              <Spinner size="1rem" />
+            </SpinnerWrapper>
+          )}
         </QuantityContainer>
+        <RemoveButton onClick={onRemoveButtonClicked}>
+          Remove item from cart
+        </RemoveButton>
       </SubContainer>
 
       <ProductPrice>
@@ -106,7 +117,7 @@ const Image = styled.img<ImageProps>`
 type SubContainerProps = {};
 const SubContainer = styled.div<SubContainerProps>`
   display: grid;
-  row-gap: 0.5rem;
+  row-gap: 0.8rem;
 `;
 
 type NameProps = {};
@@ -139,10 +150,12 @@ const Quantity = styled.span<QuantityProps>`
   border-radius: 4px;
 `;
 
-type ButtonProps = {
+type QuantityButtonProps = {
   isLeftButton?: boolean;
 };
-const Button = styled(BaseButton).attrs({ outlined: true })<ButtonProps>`
+const QuantityButton = styled(BaseButton).attrs({ outlined: true })<
+  QuantityButtonProps
+>`
   width: 2rem;
   height: 100%;
   padding: 0;
@@ -162,6 +175,32 @@ const Button = styled(BaseButton).attrs({ outlined: true })<ButtonProps>`
   &:active {
     transform: translate(${(p) => (p.isLeftButton ? '1px' : '-1px')}, 2px);
     box-shadow: none;
+  }
+`;
+
+const SpinnerWrapper = styled.span`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+type RemoveButtonProps = {};
+const RemoveButton = styled.button<RemoveButtonProps>`
+  padding: 0;
+  padding-bottom: 0.2rem;
+  justify-self: flex-start;
+  font-size: inherit;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid currentColor;
+  cursor: pointer;
+
+  color: ${(p) => p.theme.black};
+
+  transition: all 200ms ease;
+  :hover {
+    color: ${(p) => p.theme.primary};
+    border-bottom-color: ${(p) => p.theme.primary};
   }
 `;
 

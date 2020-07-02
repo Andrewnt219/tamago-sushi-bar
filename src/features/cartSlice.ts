@@ -78,6 +78,8 @@ const cartSlice = createSlice({
       }>
     ) => {
       state.userEmail = payload.userEmail || '';
+      state.isLoading = false;
+      state.error = null;
 
       if (payload.cartItemsState) {
         state.items = _.merge({}, payload.cartItemsState, state.items);
@@ -213,10 +215,10 @@ export const initCart = (): AppThunk => async (dispatch) => {
   const cartId = localStorage.getItem('cartId');
   const userEmail = localStorage.getItem('userEmail');
 
-  if (cartId) {
-    asyncDispatchWrapper(getWithId, dispatch, fetchCartFailure);
-  } else if (userEmail) {
+  if (userEmail) {
     asyncDispatchWrapper(getWithEmail, dispatch, fetchCartFailure);
+  } else if (cartId) {
+    asyncDispatchWrapper(getWithId, dispatch, fetchCartFailure);
   } else {
     asyncDispatchWrapper(postNewCart, dispatch, createCartFailure);
   }
@@ -241,14 +243,14 @@ export const initCart = (): AppThunk => async (dispatch) => {
   async function getWithEmail() {
     dispatch(fetchCartRequest());
 
-    const { data } = await firebaseApi.get<DatabaseCart | null>(`/cart.json`, {
+    const { data } = await firebaseApi.get<DatabaseCart | {}>(`/cart.json`, {
       params: {
         orderBy: '"userEmail"',
         equalTo: `"${userEmail}"`,
       },
     });
 
-    if (data) {
+    if (!_.isEmpty(data)) {
       dispatch(fetchCartSuccess(keyObjectToObjectWithKey(data)));
     } else {
       dispatch(fetchCartFailure('Invalid request'));
@@ -267,9 +269,11 @@ export const initCart = (): AppThunk => async (dispatch) => {
     );
 
     const cartId = data.name;
-    await firebaseApi.patch<DatabaseCart>(`/cart/${cartId}.json`, {
-      id: cartId,
-    });
+    const patchObject = { id: cartId };
+    await firebaseApi.patch<typeof patchObject>(
+      `/cart/${cartId}.json`,
+      patchObject
+    );
 
     localStorage.setItem('cartId', cartId);
     dispatch(createCartSuccess(cartId));
