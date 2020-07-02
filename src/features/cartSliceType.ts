@@ -20,16 +20,19 @@ export type Cart = {
   userEmail: string;
   tip: number;
   shipping: number;
-  items: Record<string, CartItemState>;
+  items: CartItemsState;
 };
 
-export type DatabaseCart = Omit<Cart, 'subtotal' | 'total'>;
+export type DatabaseCart = Omit<Cart, 'subtotal' | 'total' | 'items'> & {
+  items: Record<string, CartItem>;
+};
 
 export type CartState = Cart & UiState;
 
 export type IncreaseItemQuantityPayload = {
   itemId: string;
-  increaseAmount: number;
+  amount: number;
+  isIncrementAmount: boolean;
 };
 export type UpdateCartItemPayload = {
   itemId: string;

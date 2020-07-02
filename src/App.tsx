@@ -15,10 +15,11 @@ import Empty from './pages/empty/Empty';
 import { OrderDetail } from './pages/orderDetail/OrderDetail';
 import ProtectedRoute from './components/navigation/ProtectedRoute';
 import Login from './pages/login/Login';
-import { useDispatch } from 'react-redux';
-import { initCart } from './features/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { initCart, syncCart } from './features/cartSlice';
 import Register from './pages/register/Register';
 import { LoadingScreen } from './components/ui/LoadingScreen/LoadingScreen';
+import { userSelector } from './features/userSlice';
 
 const Menu = React.lazy(() => import('./pages/menu/Menu'));
 const Landing = React.lazy(() => import('./pages/landing/Landing'));
@@ -26,10 +27,16 @@ const Cart = React.lazy(() => import('./pages/cart/Cart'));
 
 function App() {
   const dispatch = useDispatch();
+  const { email } = useSelector(userSelector);
 
   useEffect(() => {
-    dispatch(initCart());
-  }, [dispatch]);
+    if (email) {
+      dispatch(syncCart());
+    } else {
+      dispatch(initCart());
+    }
+  }, [dispatch, email]);
+
   return (
     <ThemeProvider theme={lightTheme}>
       <GlobalStyle />

@@ -3,8 +3,10 @@ import {
   Cart,
   CartState,
   CartItems,
+  CartItemsState,
 } from '../features/cartSliceType';
 import _ from 'lodash';
+import { UiState } from '../features/uiTypes';
 
 /* ------------------------------ CART HELPERS ------------------------------ */
 export const sumOfCartItems = (items: CartItems): number => {
@@ -45,4 +47,19 @@ export const getCartItemIdByKey = (
 
 export const getCartItemById = (cart: Cart, itemId: string): CartItem => {
   return cart.items[itemId];
+};
+
+export const mergeWithUiState = <T extends object>(object: T): T & UiState => {
+  return { ...object, isLoading: false, error: null };
+};
+
+export const cartItemsToCartItemsState = (
+  cartItems: CartItems
+): CartItemsState => {
+  return _.transform<CartItem, CartItemsState>(
+    cartItems,
+    (cartItemsState, value, key) => {
+      return (cartItemsState[key] = mergeWithUiState(value));
+    }
+  );
 };

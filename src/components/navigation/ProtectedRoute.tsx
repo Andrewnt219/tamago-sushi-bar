@@ -1,11 +1,16 @@
 import React, { ReactElement } from 'react';
 import { RouteProps, Route, Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { userSelector } from '../../features/userSlice';
 
 type Props = RouteProps & {
   children: ReactElement;
 };
-const isAuthenticated = true;
+
 function ProtectedRoute({ children, ...routeProps }: Props): ReactElement {
+  const { email } = useSelector(userSelector);
+  const isAuthenticated = !!email;
+
   return (
     <Route
       {...routeProps}

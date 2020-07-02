@@ -8,13 +8,14 @@ import {
   keyObjectToObjectWithKey,
   calculateCartOnSuccess,
   getCartItemById,
+  cartItemsToCartItemsState,
 } from '../helpers';
 import {
-  Cart,
   CartItem,
   IncreaseItemQuantityPayload,
   DatabaseCart,
   CartState,
+  CartItemsState,
 } from './cartSliceType';
 
 const initialState: CartState = {
@@ -52,7 +53,9 @@ const cartSlice = createSlice({
       state.error = null;
     },
     fetchCartSuccess: (state, { payload }: PayloadAction<DatabaseCart>) => {
-      state.items = payload.items ? payload.items : {};
+      state.items = payload.items
+        ? cartItemsToCartItemsState(payload.items)
+        : {};
       state.id = payload.id;
       calculateCartOnSuccess(state);
     },
@@ -65,10 +68,21 @@ const cartSlice = createSlice({
       state.isLoading = true;
       state.error = null;
     },
-    syncCartSuccess: (state, { payload }: PayloadAction<DatabaseCart>) => {
-      state.userEmail = payload.userEmail;
-      state.items = { ...payload.items, ...state.items };
-      calculateCartOnSuccess(state);
+    syncCartSuccess: (
+      state,
+      {
+        payload,
+      }: PayloadAction<{
+        userEmail: string | null;
+        cartItemsState?: CartItemsState;
+      }>
+    ) => {
+      state.userEmail = payload.userEmail || '';
+
+      if (payload.cartItemsState) {
+        state.items = { ...payload.cartItemsState, ...state.items };
+        calculateCartOnSuccess(state);
+      }
     },
     syncCartFailure: (state, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
@@ -145,7 +159,9 @@ const cartSlice = createSlice({
       if (updatingItem) {
         updatingItem.isLoading = false;
         updatingItem.error = null;
-        updatingItem.quantity += payload.increaseAmount;
+        updatingItem.quantity = payload.isIncrementAmount
+          ? updatingItem.quantity + payload.amount
+          : payload.amount;
 
         calculateCartOnSuccess(state);
       }
@@ -265,27 +281,48 @@ export const syncCart = (): AppThunk => async (dispatch, getState) => {
   async function getWithId() {
     dispatch(syncCartRequest());
 
-    const { data } = await firebaseApi.get<Cart>(`/cart.json`, {
-      params: {
-        orderBy: '"userEmail"',
-        equalTo: `"${getState().user.email}"`,
-      },
-    });
+    const cartId = getState().cart.id;
+    const userEmail = getState().user.email;
 
-    dispatch(syncCartSuccess(keyObjectToObjectWithKey(data)));
+    const { data } = await firebaseApi.get<Record<string, DatabaseCart> | {}>(
+      `/cart.json`,
+      {
+        params: {
+          orderBy: '"userEmail"',
+          equalTo: `"${userEmail}"`,
+        },
+      }
+    );
+
+    if (!_.isEmpty(data)) {
+      const databaseCart = _.values(data)[0];
+
+      await firebaseApi.delete(`/cart/${databaseCart.id}.json`);
+
+      const cartItemsState = cartItemsToCartItemsState(databaseCart.items);
+
+      // TODO separate to syncEmail and syncCart
+      await firebaseApi.patch(`/cart/${cartId}.json`, { userEmail });
+      dispatch(syncCartSuccess({ userEmail, cartItemsState }));
+    } else {
+      // TODO separate to syncEmail and syncCart
+      await firebaseApi.patch(`/cart/${cartId}.json`, { userEmail });
+      dispatch(syncCartSuccess({ userEmail }));
+    }
   }
 };
 
 export const increaseItemQuantity = ({
   itemId,
-  increaseAmount,
+  amount,
+  isIncrementAmount,
 }: IncreaseItemQuantityPayload): AppThunk => async (dispatch, getState) => {
   const cart = getState().cart;
   if (cart.id) {
     dispatch(updateItemQuantityRequest(itemId));
 
     const item = getCartItemById(cart, itemId);
-    const newQuantity = item.quantity + increaseAmount;
+    const newQuantity = isIncrementAmount ? item.quantity + amount : amount;
 
     if (item) {
       try {
@@ -293,7 +330,9 @@ export const increaseItemQuantity = ({
           quantity: newQuantity,
         });
 
-        dispatch(updateItemQuantitySuccess({ itemId, increaseAmount }));
+        dispatch(
+          updateItemQuantitySuccess({ itemId, amount, isIncrementAmount })
+        );
       } catch (error) {
         dispatch(
           updateItemQuantityFailure({

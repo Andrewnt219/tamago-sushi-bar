@@ -40,7 +40,8 @@ function CartItem({ id, name, price, quantity, imgSrc }: Props): ReactElement {
           dispatch(
             increaseItemQuantity({
               itemId: id,
-              increaseAmount: currentQuantity - quantity,
+              amount: currentQuantity,
+              isIncrementAmount: false,
             })
           );
         }
@@ -50,7 +51,7 @@ function CartItem({ id, name, price, quantity, imgSrc }: Props): ReactElement {
     return () => {
       clearInterval(timerId);
     };
-  }, [currentQuantity, id, dispatch, quantity]);
+  }, [currentQuantity, id, dispatch]);
 
   return (
     <Container>

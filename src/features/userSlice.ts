@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk } from '../app/store';
+import { AppThunk, RootState } from '../app/store';
 import axios from 'axios';
 import { RegisterFormValues } from '../pages/register/Register';
 import { LoginFormValues } from '../pages/login/Login';
@@ -50,6 +50,7 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+export const userSelector = (state: RootState) => state.user;
 export const {
   authFailure,
   authRequest,
