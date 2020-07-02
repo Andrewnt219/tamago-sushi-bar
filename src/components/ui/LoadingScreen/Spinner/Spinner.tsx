@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import styled, { keyframes } from 'styled-components/macro';
-import './Spinner.css';
 
 interface SpinnerProps {
   readonly size?: string;

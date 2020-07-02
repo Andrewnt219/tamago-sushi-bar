@@ -19,6 +19,12 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    initUser: (state) => {
+      const userEmail = localStorage.getItem('userEmail');
+      if (userEmail) {
+        state.email = userEmail;
+      }
+    },
     /* Auth */
     authRequest: (state) => {
       state.isLoading = true;
@@ -64,7 +70,7 @@ const userSlice = createSlice({
 
 export default userSlice.reducer;
 export const userSelector = (state: RootState) => state.user;
-export const { logout } = userSlice.actions;
+export const { logout, initUser } = userSlice.actions;
 
 const {
   authFailure,

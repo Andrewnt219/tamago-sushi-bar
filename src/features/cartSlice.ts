@@ -212,12 +212,12 @@ const {
 } = cartSlice.actions;
 
 export const initCart = (): AppThunk => async (dispatch) => {
-  const cartId = localStorage.getItem('cartId');
+  const localCartId = localStorage.getItem('cartId');
   const userEmail = localStorage.getItem('userEmail');
 
   if (userEmail) {
     asyncDispatchWrapper(getWithEmail, dispatch, fetchCartFailure);
-  } else if (cartId) {
+  } else if (localCartId) {
     asyncDispatchWrapper(getWithId, dispatch, fetchCartFailure);
   } else {
     asyncDispatchWrapper(postNewCart, dispatch, createCartFailure);
@@ -227,7 +227,7 @@ export const initCart = (): AppThunk => async (dispatch) => {
     dispatch(fetchCartRequest());
 
     const { data } = await firebaseApi.get<DatabaseCart | null>(
-      `/cart/${cartId}.json`
+      `/cart/${localCartId}.json`
     );
 
     if (data) {
@@ -286,33 +286,40 @@ export const syncCart = (): AppThunk => async (dispatch, getState) => {
   async function getWithId() {
     dispatch(syncCartRequest());
 
-    const localCartId = getState().cart.id;
+    const stateCartId = getState().cart.id;
     const userEmail = getState().user.email;
 
-    const { data } = await firebaseApi.get<Record<string, DatabaseCart> | {}>(
-      `/cart.json`,
-      {
-        params: {
-          orderBy: '"userEmail"',
-          equalTo: `"${userEmail}"`,
-        },
-      }
-    );
-
-    if (!_.isEmpty(data)) {
-      const databaseCart = _.values(data)[0];
-
-      await firebaseApi.delete(`/cart/${databaseCart.id}.json`);
-
-      const cartItemsState = cartItemsToCartItemsState(databaseCart.items);
-
-      // TODO separate to syncEmail and syncCart
-      await firebaseApi.patch(`/cart/${localCartId}.json`, { userEmail });
-      dispatch(syncCartSuccess({ userEmail, cartItemsState }));
+    if (!userEmail || !stateCartId) {
+      throw new Error('userEmail or localCartId does not exist');
     } else {
-      // TODO separate to syncEmail and syncCart
-      await firebaseApi.patch(`/cart/${localCartId}.json`, { userEmail });
-      dispatch(syncCartSuccess({ userEmail }));
+      const { data } = await firebaseApi.get<Record<string, DatabaseCart> | {}>(
+        `/cart.json`,
+        {
+          params: {
+            orderBy: '"userEmail"',
+            equalTo: `"${userEmail}"`,
+          },
+        }
+      );
+
+      await firebaseApi.patch(`/cart/${stateCartId}.json`, { userEmail });
+
+      if (!_.isEmpty(data)) {
+        const databaseCart = _.values(data)[0];
+
+        await firebaseApi.patch(`/cart/${stateCartId}/items.json`, {
+          ...databaseCart.items,
+        });
+
+        const cartItemsState = cartItemsToCartItemsState(databaseCart.items);
+
+        if (stateCartId !== databaseCart.id) {
+          await firebaseApi.delete(`/cart/${databaseCart.id}.json`);
+        }
+        dispatch(syncCartSuccess({ userEmail, cartItemsState }));
+      } else {
+        dispatch(syncCartSuccess({ userEmail }));
+      }
     }
   }
 };

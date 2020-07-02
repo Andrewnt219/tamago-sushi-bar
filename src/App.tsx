@@ -16,10 +16,10 @@ import { OrderDetail } from './pages/orderDetail/OrderDetail';
 import ProtectedRoute from './components/navigation/ProtectedRoute';
 import Login from './pages/login/Login';
 import { useDispatch, useSelector } from 'react-redux';
-import { initCart, syncCart } from './features/cartSlice';
+import { initCart, cartSelector, syncCart } from './features/cartSlice';
+import { initUser, userSelector } from './features/userSlice';
 import Register from './pages/register/Register';
 import { LoadingScreen } from './components/ui/LoadingScreen/LoadingScreen';
-import { userSelector } from './features/userSlice';
 
 const Menu = React.lazy(() => import('./pages/menu/Menu'));
 const Landing = React.lazy(() => import('./pages/landing/Landing'));
@@ -27,15 +27,22 @@ const Cart = React.lazy(() => import('./pages/cart/Cart'));
 
 function App() {
   const dispatch = useDispatch();
+  const { id: cartId } = useSelector(cartSelector);
   const { email } = useSelector(userSelector);
 
   useEffect(() => {
-    if (email) {
+    dispatch(initUser());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(initCart());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (email && cartId) {
       dispatch(syncCart());
-    } else {
-      dispatch(initCart());
     }
-  }, [dispatch, email]);
+  }, [email, cartId, dispatch]);
 
   return (
     <ThemeProvider theme={lightTheme}>

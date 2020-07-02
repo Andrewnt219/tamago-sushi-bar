@@ -35,6 +35,9 @@ const Container = styled.li`
 
 const IconWrapper = styled.span`
   margin-right: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   svg {
     background-size: 1.6rem;

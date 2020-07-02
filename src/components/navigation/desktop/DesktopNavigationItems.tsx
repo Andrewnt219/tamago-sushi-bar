@@ -25,6 +25,8 @@ export const DesktopNavigationItems: React.FC<DesktopNavigationItemsProps> = () 
 
 interface StyledNavigationItemsProps {}
 const StyledNavigationItems = styled.ul<StyledNavigationItemsProps>`
+  position: relative;
+
   display: flex;
   justify-content: space-around;
   align-items: center;

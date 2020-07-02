@@ -1,12 +1,17 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components/macro';
-import { useLocation, RouteComponentProps, useHistory } from 'react-router-dom';
+import {
+  useLocation,
+  RouteComponentProps,
+  useHistory,
+  Redirect,
+} from 'react-router-dom';
 import { TextField } from '../../components/ui/form/TextField';
 import { BaseForm } from '../../components/ui/form/BaseForm';
 import { useForm } from 'react-hook-form';
 import { BaseButton } from '../../components/ui/BaseButton';
-import { useDispatch } from 'react-redux';
-import { authUser } from '../../features/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { authUser, userSelector } from '../../features/userSlice';
 
 type Props = {};
 
@@ -30,13 +35,16 @@ function Login(props: Props): ReactElement {
   });
 
   const dispatch = useDispatch();
+  const { email } = useSelector(userSelector);
 
   const onSubmit = handleSubmit((formData) => {
     dispatch(authUser(formData));
     history.push(pathname);
   });
 
-  return (
+  return email ? (
+    <Redirect to="/me" />
+  ) : (
     <BaseForm onSubmit={onSubmit}>
       <TextField
         id="login-email"
