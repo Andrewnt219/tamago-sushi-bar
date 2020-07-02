@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/tamago-sushi-bar/static/css/main.fe2941bd.chunk.css",
-    "main.js": "/tamago-sushi-bar/static/js/main.c52caae8.chunk.js",
-    "main.js.map": "/tamago-sushi-bar/static/js/main.c52caae8.chunk.js.map",
-    "runtime-main.js": "/tamago-sushi-bar/static/js/runtime-main.0147d02b.js",
-    "runtime-main.js.map": "/tamago-sushi-bar/static/js/runtime-main.0147d02b.js.map",
+    "main.js": "/tamago-sushi-bar/static/js/main.68833401.chunk.js",
+    "main.js.map": "/tamago-sushi-bar/static/js/main.68833401.chunk.js.map",
+    "runtime-main.js": "/tamago-sushi-bar/static/js/runtime-main.fa052815.js",
+    "runtime-main.js.map": "/tamago-sushi-bar/static/js/runtime-main.fa052815.js.map",
     "static/js/2.9009bff6.chunk.js": "/tamago-sushi-bar/static/js/2.9009bff6.chunk.js",
     "static/js/2.9009bff6.chunk.js.map": "/tamago-sushi-bar/static/js/2.9009bff6.chunk.js.map",
-    "static/js/3.dda640de.chunk.js": "/tamago-sushi-bar/static/js/3.dda640de.chunk.js",
-    "static/js/3.dda640de.chunk.js.map": "/tamago-sushi-bar/static/js/3.dda640de.chunk.js.map",
-    "static/js/4.c14aabb8.chunk.js": "/tamago-sushi-bar/static/js/4.c14aabb8.chunk.js",
-    "static/js/4.c14aabb8.chunk.js.map": "/tamago-sushi-bar/static/js/4.c14aabb8.chunk.js.map",
-    "static/js/5.b94eb130.chunk.js": "/tamago-sushi-bar/static/js/5.b94eb130.chunk.js",
-    "static/js/5.b94eb130.chunk.js.map": "/tamago-sushi-bar/static/js/5.b94eb130.chunk.js.map",
-    "static/js/6.a4355155.chunk.js": "/tamago-sushi-bar/static/js/6.a4355155.chunk.js",
-    "static/js/6.a4355155.chunk.js.map": "/tamago-sushi-bar/static/js/6.a4355155.chunk.js.map",
+    "static/js/3.f15d4610.chunk.js": "/tamago-sushi-bar/static/js/3.f15d4610.chunk.js",
+    "static/js/3.f15d4610.chunk.js.map": "/tamago-sushi-bar/static/js/3.f15d4610.chunk.js.map",
+    "static/js/4.cdecd482.chunk.js": "/tamago-sushi-bar/static/js/4.cdecd482.chunk.js",
+    "static/js/4.cdecd482.chunk.js.map": "/tamago-sushi-bar/static/js/4.cdecd482.chunk.js.map",
+    "static/js/5.1f7a2932.chunk.js": "/tamago-sushi-bar/static/js/5.1f7a2932.chunk.js",
+    "static/js/5.1f7a2932.chunk.js.map": "/tamago-sushi-bar/static/js/5.1f7a2932.chunk.js.map",
+    "static/js/6.46b25abf.chunk.js": "/tamago-sushi-bar/static/js/6.46b25abf.chunk.js",
+    "static/js/6.46b25abf.chunk.js.map": "/tamago-sushi-bar/static/js/6.46b25abf.chunk.js.map",
     "index.html": "/tamago-sushi-bar/index.html",
-    "precache-manifest.e89350d46260b372bd65fcbd72d72375.js": "/tamago-sushi-bar/precache-manifest.e89350d46260b372bd65fcbd72d72375.js",
+    "precache-manifest.98aa328d831a5f0582284657870457dc.js": "/tamago-sushi-bar/precache-manifest.98aa328d831a5f0582284657870457dc.js",
     "service-worker.js": "/tamago-sushi-bar/service-worker.js",
     "static/css/main.fe2941bd.chunk.css.map": "/tamago-sushi-bar/static/css/main.fe2941bd.chunk.css.map",
-    "static/js/3.dda640de.chunk.js.LICENSE.txt": "/tamago-sushi-bar/static/js/3.dda640de.chunk.js.LICENSE.txt",
+    "static/js/3.f15d4610.chunk.js.LICENSE.txt": "/tamago-sushi-bar/static/js/3.f15d4610.chunk.js.LICENSE.txt",
     "static/media/better.svg": "/tamago-sushi-bar/static/media/better.146e94df.svg",
     "static/media/family.svg": "/tamago-sushi-bar/static/media/family.186a8888.svg",
     "static/media/fresh.svg": "/tamago-sushi-bar/static/media/fresh.a6cd9628.svg",
@@ -27,9 +27,9 @@
     "static/media/textLogo.svg": "/tamago-sushi-bar/static/media/textLogo.c755c9aa.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.0147d02b.js",
-    "static/js/3.dda640de.chunk.js",
+    "static/js/runtime-main.fa052815.js",
+    "static/js/3.f15d4610.chunk.js",
     "static/css/main.fe2941bd.chunk.css",
-    "static/js/main.c52caae8.chunk.js"
+    "static/js/main.68833401.chunk.js"
   ]
 }
