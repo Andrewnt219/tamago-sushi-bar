@@ -4,9 +4,9 @@ import { SocialMediaIcons } from './SocialMediaIcons';
 import { BaseLogo } from '../../ui/BaseLogo';
 
 interface FooterProps {}
-export const Footer: React.FC<FooterProps> = () => {
+export const Footer: React.FC<FooterProps & ContainerProps> = ({ height }) => {
   return (
-    <Container>
+    <Container height={height}>
       <Logo />
 
       <SocialMediaIcons />
@@ -20,10 +20,18 @@ export const Footer: React.FC<FooterProps> = () => {
   );
 };
 
-interface ContainerProps {}
+interface ContainerProps {
+  height: string;
+}
 const Container = styled.footer<ContainerProps>`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  height: ${(p) => p.height};
+  width: 100vw;
   background: ${(p) => p.theme.blackBackground};
-  margin-top: 10vh;
+
   padding: 10vh 5vw;
   display: grid;
   grid-template-columns: 1fr 1fr;

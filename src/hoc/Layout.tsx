@@ -10,18 +10,20 @@ interface LayoutProps {}
 interface MainProps {}
 
 const APPBAR_HEIGHT = '8rem';
+const FOOTER_HEIGHT = '40vh';
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <CssContext.Provider value={{ appbarHeight: APPBAR_HEIGHT }}>
       <AppBar height={APPBAR_HEIGHT} />
       <Hamburger />
       <Main>{children}</Main>
-      <Footer />
+      <Footer height={FOOTER_HEIGHT} />
     </CssContext.Provider>
   );
 };
 
 const Main = styled.main<MainProps>`
-  /* Compatible with Footer height */
   max-width: 100vw;
+
+  padding-bottom: calc(${FOOTER_HEIGHT} + 10vh);
 `;

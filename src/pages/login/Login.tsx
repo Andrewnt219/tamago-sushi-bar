@@ -24,6 +24,7 @@ export type LoginFormValues = {
 function Login(props: Props): ReactElement {
   useTitle('Login');
   useScrollToTop();
+
   // note the undefined
   const { state } = useLocation<
     { from?: RouteComponentProps['location'] } | undefined
