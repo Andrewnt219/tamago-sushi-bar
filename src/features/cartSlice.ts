@@ -8,7 +8,7 @@ import {
   keyObjectToObjectWithKey,
   calculateCartOnSuccess,
   getCartItemById,
-  cartItemsToCartItemsState,
+  itemsToItemsState,
 } from '../helpers';
 import {
   CartItem,
@@ -53,9 +53,7 @@ const cartSlice = createSlice({
       return { ...initialState, isLoading: true };
     },
     fetchCartSuccess: (state, { payload }: PayloadAction<DatabaseCart>) => {
-      state.items = payload.items
-        ? cartItemsToCartItemsState(payload.items)
-        : {};
+      state.items = payload.items ? itemsToItemsState(payload.items) : {};
       state.id = payload.id;
       calculateCartOnSuccess(state);
     },
@@ -346,7 +344,7 @@ export const syncCart = (): AppThunk => async (dispatch, getState) => {
           ...databaseCart.items,
         });
 
-        const cartItemsState = cartItemsToCartItemsState(databaseCart.items);
+        const cartItemsState = itemsToItemsState(databaseCart.items);
 
         if (stateCartId !== databaseCart.id) {
           await firebaseApi.delete(`/cart/${databaseCart.id}.json`);

@@ -51,13 +51,14 @@ export const mergeWithUiState = <T extends object>(object: T): T & UiState => {
   return { ...object, isLoading: false, error: null };
 };
 
-export const cartItemsToCartItemsState = (
-  cartItems: CartItems
-): CartItemsState => {
-  return _.transform<CartItem, CartItemsState>(
+export const itemsToItemsState = <T extends object>(
+  cartItems: Record<string, T>
+): Record<string, T & UiState> => {
+  return _.transform<T, Record<string, T & UiState>>(
     cartItems,
     (cartItemsState, value, key) => {
       return (cartItemsState[key] = mergeWithUiState(value));
-    }
+    },
+    {}
   );
 };

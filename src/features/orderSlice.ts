@@ -3,7 +3,10 @@ import { OrderState, Order, DatabaseOrder } from './sliceTypes';
 import { AppThunk, RootState } from '../app/store';
 import { firebaseApi } from '../apis/firebase';
 import _ from 'lodash';
-import { asyncDispatchWrapper, keyObjectToObjectWithKey } from '../helpers';
+import {
+  asyncDispatchWrapper,
+  recursiveKeyObjectToObjectWithKey,
+} from '../helpers';
 import { clearCart } from './cartSlice';
 import { CheckoutFormValues } from '../pages/cart/components/Checkout';
 
@@ -22,12 +25,11 @@ const orderSlice = createSlice({
     },
     fetchOrdersSuccess: (
       state,
-      { payload }: PayloadAction<Record<string, Order>>
+      { payload }: PayloadAction<Record<string, DatabaseOrder>>
     ) => {
-      debugger;
       state.isLoading = false;
       state.error = null;
-      state.orders = payload;
+      state.orders = recursiveKeyObjectToObjectWithKey(payload);
     },
     fetchOrdersFailure: (state, { payload }: PayloadAction<string>) => {
       state.isLoading = false;

@@ -3,25 +3,36 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { Orders } from './components/Orders';
 import { UserProfile } from './components/UserProfile';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../features/userSlice';
 import { initCart } from '../../features/cartSlice';
+import { orderSelector } from '../../features/orderSlice';
+import { Order as OrderObject } from '../../features/sliceTypes';
 
 interface UserDashboardProps {}
 
 const UserDashboard: React.FC<UserDashboardProps> = () => {
   const dispatch = useDispatch();
+  const { orders } = useSelector(orderSelector);
+  const ordersArray: OrderObject[] = orders ? Object.values(orders) : [];
 
   const onLogoutButtonClicked = () => {
     dispatch(logout());
     dispatch(initCart());
   };
+
   return (
     <Container>
       <UserProfile />
       <button onClick={onLogoutButtonClicked}>Logout</button>
-      <Header>Past Orders (20)</Header>
-      <Orders />
+      <Header>
+        Past Orders (
+        {ordersArray.length < 10
+          ? '0' + ordersArray.length
+          : ordersArray.length}
+        )
+      </Header>
+      <Orders orders={ordersArray} />
     </Container>
   );
 };
