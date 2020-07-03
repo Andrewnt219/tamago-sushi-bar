@@ -31,7 +31,10 @@ function App() {
   const { email } = useSelector(userSelector);
 
   useEffect(() => {
-    dispatch(initUser());
+    const userEmail = localStorage.getItem('userEmail');
+    if (userEmail) {
+      dispatch(initUser(userEmail));
+    }
   }, [dispatch]);
 
   useEffect(() => {

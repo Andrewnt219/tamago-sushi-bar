@@ -12,7 +12,7 @@ import {
   FireBaseLoginRequest,
 } from './sliceTypes';
 import { firebaseApi } from '../apis/firebase';
-import { keyObjectToObjectWithKey } from '../helpers';
+import { keyObjectToObjectWithKey, asyncDispatchWrapper } from '../helpers';
 import _ from 'lodash';
 
 const initialState: UserState = {
@@ -30,11 +30,21 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    initUser: (state) => {
-      const userEmail = localStorage.getItem('userEmail');
-      if (userEmail) {
-        state.email = userEmail;
-      }
+    /* initUser */
+    initUserRequest: (_) => {
+      return { ...initialState, isLoading: true, error: null };
+    },
+    initUserSuccess: (_, { payload }: PayloadAction<DatabaseUser>) => {
+      return {
+        ...payload,
+        totalTip: +payload.totalTip,
+        isLoading: false,
+        error: null,
+      };
+    },
+    initUserFailed: (state, { payload }: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = payload;
     },
     /* Auth */
     authRequest: (state) => {
@@ -84,7 +94,7 @@ const userSlice = createSlice({
 
 export default userSlice.reducer;
 export const userSelector = (state: RootState) => state.user;
-export const { logout, initUser } = userSlice.actions;
+export const { logout } = userSlice.actions;
 
 const {
   authFailure,
@@ -93,7 +103,34 @@ const {
   registerFailure,
   registerRequest,
   registerSuccess,
+  initUserFailed,
+  initUserRequest,
+  initUserSuccess,
 } = userSlice.actions;
+
+export const initUser = (userEmail: string): AppThunk => async (dispatch) => {
+  asyncDispatchWrapper(getUserByEmail, dispatch, initUserFailed);
+
+  async function getUserByEmail() {
+    dispatch(initUserRequest());
+
+    const { data } = await firebaseApi.get<Record<string, DatabaseUser> | {}>(
+      '/users.json',
+      {
+        params: {
+          orderBy: '"email"',
+          equalTo: `"${userEmail}"`,
+        },
+      }
+    );
+
+    if (!_.isEmpty(data)) {
+      dispatch(initUserSuccess(keyObjectToObjectWithKey(data)));
+    } else {
+      dispatch(initUserFailed('Invalid request'));
+    }
+  }
+};
 
 export const registerUser = ({
   address,
