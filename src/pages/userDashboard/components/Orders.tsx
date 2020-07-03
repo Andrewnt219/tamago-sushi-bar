@@ -1,17 +1,26 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components/macro';
 import Order from './Order';
+import { useSelector } from 'react-redux';
+import { orderSelector } from '../../../features/orderSlice';
 
 type Props = {};
 
 function Orders(props: Props): ReactElement {
+  const { orders } = useSelector(orderSelector);
+
   return (
     <Container>
-      <Order orderId="1" type="inStore" price={2.5} date="July 2nd, 2020" />
-      <Order orderId="2" type="inStore" price={2.5} date="July 2nd, 2020" />
-      <Order orderId="3" type="online" price={10.21} date="July 12th, 2020" />
-      <Order orderId="4" type="inStore" price={99.121} date="July 2nd, 2020" />
-      <Order orderId="5" type="online" price={0.2} date="July 31st, 2020" />
+      {orders &&
+        Object.values(orders).map(({ id, createdDate, total }) => (
+          <Order
+            key={id}
+            orderId={id}
+            type={Math.round(Math.random()) === 1 ? 'inStore' : 'online'}
+            date={createdDate}
+            price={total}
+          />
+        ))}
     </Container>
   );
 }

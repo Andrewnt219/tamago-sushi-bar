@@ -20,6 +20,7 @@ import { initCart, cartSelector, syncCart } from './features/cartSlice';
 import { initUser, userSelector } from './features/userSlice';
 import Register from './pages/register/Register';
 import { LoadingScreen } from './components/ui/LoadingScreen/LoadingScreen';
+import { fetchOrders } from './features/orderSlice';
 
 const Menu = React.lazy(() => import('./pages/menu/Menu'));
 const Landing = React.lazy(() => import('./pages/landing/Landing'));
@@ -34,6 +35,7 @@ function App() {
     const userEmail = localStorage.getItem('userEmail');
     if (userEmail) {
       dispatch(initUser(userEmail));
+      dispatch(fetchOrders({ userEmail }));
     }
   }, [dispatch]);
 

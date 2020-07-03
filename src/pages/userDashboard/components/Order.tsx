@@ -8,6 +8,7 @@ import {
 } from 'react-icons/md';
 import { StyledLink } from '../../../components/navigation/StyledLink';
 import { rgba } from 'polished';
+import { format } from 'date-fns';
 
 type Props = {
   type: 'online' | 'inStore';
@@ -26,7 +27,7 @@ function Order({ type, date, price, orderId }: Props): ReactElement {
       </Logo>
 
       <Details>
-        <Date>{date}</Date>
+        <DateText>{format(new Date(date), 'MMMM do, yyyy')}</DateText>
 
         <Price>
           <PriceText>${price.toFixed(2)}</PriceText>
@@ -83,8 +84,8 @@ const Details = styled.div<DetailsProps>`
   row-gap: 0.5rem;
 `;
 
-type DateProps = {};
-const Date = styled.h3<DateProps>`
+type DateTextProps = {};
+const DateText = styled.h3<DateTextProps>`
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   font-size: 1.5rem;

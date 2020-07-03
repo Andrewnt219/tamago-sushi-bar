@@ -9,6 +9,7 @@ export const asyncDispatchWrapper = async (
     await callback();
   } catch (error) {
     console.log(error);
+
     actionFailure &&
       dispatch(
         actionFailure(error?.response?.data?.error ?? 'Something went wrong')

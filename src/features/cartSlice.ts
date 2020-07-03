@@ -275,12 +275,15 @@ export const initCart = (): AppThunk => async (dispatch) => {
   async function getWithEmail() {
     dispatch(fetchCartRequest());
 
-    const { data } = await firebaseApi.get<DatabaseCart | {}>(`/cart.json`, {
-      params: {
-        orderBy: '"userEmail"',
-        equalTo: `"${userEmail}"`,
-      },
-    });
+    const { data } = await firebaseApi.get<Record<string, DatabaseCart> | {}>(
+      `/cart.json`,
+      {
+        params: {
+          orderBy: '"userEmail"',
+          equalTo: `"${userEmail}"`,
+        },
+      }
+    );
 
     if (!_.isEmpty(data)) {
       dispatch(fetchCartSuccess(keyObjectToObjectWithKey(data)));
