@@ -38,3 +38,5 @@ export type UpdateCartItemPayload = {
   itemId: string;
   newQuantity: number;
 };
+
+export type UpdateCartPayload = Partial<Cart> & { id: string };

@@ -30,7 +30,6 @@ export const calculateCartOnSuccess = (cartState: CartState): void => {
   cartState.error = null;
   cartState.subtotal = sumOfCartItems(cartState.items);
   cartState.shipping = cartState.subtotal > 35 ? 0 : 5;
-
   cartState.total = cartState.shipping + cartState.subtotal + cartState.tip;
 };
 

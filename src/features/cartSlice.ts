@@ -16,6 +16,8 @@ import {
   DatabaseCart,
   CartState,
   CartItemsState,
+  Cart,
+  UpdateCartPayload,
 } from './sliceTypes';
 
 const initialState: CartState = {
@@ -88,6 +90,20 @@ const cartSlice = createSlice({
     syncCartFailure: (state, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = payload;
+    },
+    /* updateCart */
+    updateCartRequest: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    updateCartSuccess: (state, { payload }: PayloadAction<Partial<Cart>>) => {
+      state = { ...state, ...payload };
+      calculateCartOnSuccess(state);
+      return state;
+    },
+    updateCartFailure: (state, { payload }: PayloadAction<string>) => {
+      state.error = payload;
+      state.isLoading = false;
     },
     /* addItem */
     addItemRequest: (state) => {
@@ -207,6 +223,9 @@ const {
   syncCartFailure,
   syncCartRequest,
   syncCartSuccess,
+  updateCartFailure,
+  updateCartRequest,
+  updateCartSuccess,
 } = cartSlice.actions;
 
 export const initCart = (): AppThunk => async (dispatch) => {
@@ -400,4 +419,19 @@ export const removeItemFromCart = (itemId: string): AppThunk => async (
       );
     }
   } else throw new Error('Cart ID not found!');
+};
+
+export const updateCart = (payload: UpdateCartPayload): AppThunk => async (
+  dispatch
+) => {
+  asyncDispatchWrapper(patchCart, dispatch, updateItemQuantityFailure);
+
+  async function patchCart() {
+    dispatch(updateCartRequest());
+
+    await firebaseApi.patch<UpdateCartPayload>(`/cart/${payload.id}.json`, {
+      ...payload,
+    });
+    dispatch(updateCartSuccess(payload));
+  }
 };

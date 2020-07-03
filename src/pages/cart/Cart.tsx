@@ -2,8 +2,8 @@ import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components/macro';
 import { CartItems } from './components/CartItems';
 import { BaseButton } from '../../components/ui/BaseButton';
-import { cartSelector } from '../../features/cartSlice';
-import { useSelector } from 'react-redux';
+import { cartSelector, updateCart } from '../../features/cartSlice';
+import { useSelector, useDispatch } from 'react-redux';
 import Spinner from '../../components/ui/LoadingScreen/Spinner/Spinner';
 import { Checkout } from './components/Checkout';
 
@@ -12,6 +12,18 @@ type Props = {};
 function Cart(): ReactElement {
   const cart = useSelector(cartSelector);
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
+  const [tip, setTip] = useState<string>('');
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    const timerId = setTimeout(() => {
+      if (cart.id && +tip >= 0) {
+        dispatch(updateCart({ id: cart.id, tip: +tip }));
+      }
+    }, 200);
+
+    return () => clearTimeout(timerId);
+  }, [tip, dispatch, cart.id]);
 
   return (
     <Container>
@@ -30,8 +42,16 @@ function Cart(): ReactElement {
         <SubField>
           Tip
           <InputContainer>
-            <TipInput type="number" placeholder="0.00" min="0" />
-            <TipMessage>Thank you!</TipMessage>
+            <TipInput
+              type="number"
+              placeholder="0.00"
+              min="0"
+              value={tip}
+              onChange={(e) => setTip(e.target.value)}
+            />
+            <TipMessage>
+              {+tip >= 0 ? 'Thank you!' : 'Great advice!'}
+            </TipMessage>
           </InputContainer>
         </SubField>
 
