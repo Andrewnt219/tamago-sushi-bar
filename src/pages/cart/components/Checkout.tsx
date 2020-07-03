@@ -16,7 +16,7 @@ export type CheckoutFormValues = {
   address: string;
 };
 
-function Checkout({}: Props): ReactElement {
+function Checkout(props: Props): ReactElement {
   const { email, address } = useSelector(userSelector);
   const { isLoading } = useSelector(ordersSelector);
   const dispatch = useDispatch();

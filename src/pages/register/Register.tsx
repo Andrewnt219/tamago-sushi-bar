@@ -6,6 +6,7 @@ import { TextField } from '../../components/ui/form/TextField';
 import { BaseButton } from '../../components/ui/BaseButton';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../features/userSlice';
+import { useTitle, useScrollToTop } from '../../hook';
 
 type Props = {
   className?: string;
@@ -23,6 +24,8 @@ export type RegisterFormValues = {
 
 function Register({ className, defaultValues }: Props): ReactElement {
   const dispatch = useDispatch();
+  useTitle('Sign up');
+  useScrollToTop();
 
   const { register, handleSubmit, errors, getValues, formState } = useForm<
     RegisterFormValues

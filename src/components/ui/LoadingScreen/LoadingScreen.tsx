@@ -11,6 +11,7 @@ const Container = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  z-index: ${(p) => p.theme.zIndex.top};
 `;
 
 const SpinnerContainer = styled.div`

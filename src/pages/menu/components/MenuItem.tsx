@@ -39,6 +39,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
 
   const onAddItem = () => {
     const itemId = getCartItemIdByKey(cart, 'name', name);
+
     if (itemId) {
       dispatch(
         increaseItemQuantity({ itemId, amount: 1, isIncrementAmount: true })

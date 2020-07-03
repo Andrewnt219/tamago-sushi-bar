@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { HeroImage, Features, LandingMenu, Testimonial } from './components';
 import { LoadingScreen } from '../../components/ui/LoadingScreen/LoadingScreen';
+import { useScrollToTop, useTitle } from '../../hook';
 
 interface LandingProps {}
 
@@ -11,6 +12,8 @@ interface SectionLandingProps {}
  */
 const Landing: React.FC<LandingProps> = () => {
   const [isLoading, setIsLoading] = useState(true);
+  useScrollToTop();
+  useTitle('Welcome');
 
   return (
     <>

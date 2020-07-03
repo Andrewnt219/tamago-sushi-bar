@@ -5,13 +5,9 @@ import { GlobalStyle } from './theme/GlobalStyle';
 import { Switch, Route } from 'react-router-dom';
 
 import { Layout } from './hoc/Layout';
-import About from './pages/about/About';
 import UserDashboard from './pages/userDashboard/UserDashboard';
 import Reservation from './pages/reservation/Reservation';
 import Empty from './pages/empty/Empty';
-// import Landing from './pages/landing/Landing';
-// import Menu from './pages/menu/Menu';
-// import Cart from './pages/cart/Cart';
 import { OrderDetail } from './pages/orderDetail/OrderDetail';
 import ProtectedRoute from './components/navigation/ProtectedRoute';
 import Login from './pages/login/Login';
@@ -61,7 +57,6 @@ function App() {
           </ProtectedRoute>
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
-          <Route path="/about" component={About} />
           <Route path="/reservation" component={Reservation} />
 
           <React.Suspense fallback={<LoadingScreen />}>

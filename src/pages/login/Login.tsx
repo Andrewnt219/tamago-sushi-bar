@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import { BaseButton } from '../../components/ui/BaseButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { authUser, userSelector } from '../../features/userSlice';
+import { useTitle, useScrollToTop } from '../../hook';
 
 type Props = {};
 
@@ -21,6 +22,8 @@ export type LoginFormValues = {
 };
 
 function Login(props: Props): ReactElement {
+  useTitle('Login');
+  useScrollToTop();
   // note the undefined
   const { state } = useLocation<
     { from?: RouteComponentProps['location'] } | undefined
@@ -45,7 +48,8 @@ function Login(props: Props): ReactElement {
   return email ? (
     <Redirect to="/me" />
   ) : (
-    <BaseForm onSubmit={onSubmit} noValidate>
+    <Form onSubmit={onSubmit} noValidate>
+      <FormTitle>Login</FormTitle>
       <TextField
         id="login-email"
         label="Email"
@@ -73,13 +77,21 @@ function Login(props: Props): ReactElement {
       <SubmitButton disabled={!formState.isValid} type="submit">
         Login
       </SubmitButton>
-    </BaseForm>
+    </Form>
   );
 }
+
+type FormProps = {};
+const Form = styled(BaseForm)<FormProps>`
+  margin: 2rem;
+`;
 
 type SubmitButtonProps = {};
 const SubmitButton = styled(BaseButton).attrs({ outlined: true })<
   SubmitButtonProps
 >``;
+
+type FormTitleProps = {};
+const FormTitle = styled.h2<FormTitleProps>``;
 
 export default Login;

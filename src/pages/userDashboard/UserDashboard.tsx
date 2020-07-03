@@ -8,10 +8,14 @@ import { logout } from '../../features/userSlice';
 import { initCart } from '../../features/cartSlice';
 import { ordersSelector } from '../../features/orderSlice';
 import { Order as OrderObject } from '../../features/sliceTypes';
+import { useTitle, useScrollToTop } from '../../hook';
 
 interface UserDashboardProps {}
 
 const UserDashboard: React.FC<UserDashboardProps> = () => {
+  useTitle('Your Profile');
+  useScrollToTop();
+
   const dispatch = useDispatch();
   const { orders } = useSelector(ordersSelector);
   const ordersArray: OrderObject[] = orders ? Object.values(orders) : [];

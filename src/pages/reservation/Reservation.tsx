@@ -5,7 +5,7 @@ import styled, {
   css,
 } from 'styled-components/macro';
 import { ReservationForm1 } from './components/ReservationForm1';
-import { useFormStep } from '../../hook';
+import { useFormStep, useScrollToTop, useTitle } from '../../hook';
 
 import ReservationForm2 from './components/ReservationForm2';
 import { rgba } from 'polished';
@@ -26,6 +26,9 @@ interface FormValues {
 
 const NUMBER_OF_STEP = 2;
 const Reservation: React.FC<ReservationProps> = () => {
+  useTitle('Reservation');
+  useScrollToTop();
+
   const [currentStep, nextStep, , jumpToStep] = useFormStep(NUMBER_OF_STEP);
   const [completedStep, setCompletedStep] = useState(-1);
 

@@ -1,10 +1,4 @@
-import {
-  CartItem,
-  Cart,
-  CartState,
-  CartItems,
-  CartItemsState,
-} from '../features/sliceTypes';
+import { CartItem, Cart, CartState, CartItems } from '../features/sliceTypes';
 import _ from 'lodash';
 import { UiState } from '../features/uiTypes';
 

@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { ItemDetail } from './components/ItemDetail';
 import { ItemDetailsHeader } from './components/ItemDetailsHeader';
@@ -7,10 +7,13 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { displayedOrderSelector, fetchOrder } from '../../features/orderSlice';
 import { format } from 'date-fns';
+import { useTitle, useScrollToTop } from '../../hook';
 
 type Props = {};
 
 function OrderDetail(): ReactElement {
+  useTitle('Order Detail');
+  useScrollToTop();
   const { orderId } = useParams<{ orderId: string | undefined }>();
   const dispatch = useDispatch();
   const order = useSelector(displayedOrderSelector);

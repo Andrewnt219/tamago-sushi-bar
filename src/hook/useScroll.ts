@@ -12,6 +12,8 @@ export const useScroll = (): void => {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         // element.scrollTo({ behavior: 'smooth', top: 0 });
       }
+    } else {
+      window.scroll(0, 0);
     }
   }, [hash]);
 };

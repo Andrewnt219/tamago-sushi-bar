@@ -6,10 +6,14 @@ import { cartSelector, updateCart } from '../../features/cartSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import Spinner from '../../components/ui/LoadingScreen/Spinner/Spinner';
 import { Checkout } from './components/Checkout';
+import { useScrollToTop, useTitle } from '../../hook';
 
 type Props = {};
 
 function Cart(): ReactElement {
+  useTitle('Cart');
+  useScrollToTop();
+
   const cart = useSelector(cartSelector);
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [tip, setTip] = useState<string>('');

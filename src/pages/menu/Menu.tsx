@@ -5,7 +5,8 @@ import {
   CategoryRice,
   CategorySushi,
 } from './components';
-import { useScroll } from '../../hook/useScroll';
+
+import { useTitle, useScroll } from '../../hook';
 
 interface MenuProps {}
 
@@ -14,6 +15,7 @@ interface MenuProps {}
  */
 const Menu: React.FC<MenuProps> = () => {
   useScroll();
+  useTitle('Menu');
 
   return (
     <>
