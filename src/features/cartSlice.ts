@@ -91,6 +91,18 @@ const cartSlice = createSlice({
       state.isLoading = false;
       state.error = payload;
     },
+    /* clearCart */
+    clearCartRequest: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    clearCartSuccess: (state) => {
+      return { ...initialState, userEmail: state.userEmail };
+    },
+    clearCartFailure: (state, { payload }: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = payload;
+    },
     /* updateCart */
     updateCartRequest: (state) => {
       state.isLoading = true;
@@ -226,6 +238,9 @@ const {
   updateCartFailure,
   updateCartRequest,
   updateCartSuccess,
+  clearCartFailure,
+  clearCartRequest,
+  clearCartSuccess,
 } = cartSlice.actions;
 
 export const initCart = (): AppThunk => async (dispatch) => {
@@ -424,7 +439,7 @@ export const removeItemFromCart = (itemId: string): AppThunk => async (
 export const updateCart = (payload: UpdateCartPayload): AppThunk => async (
   dispatch
 ) => {
-  asyncDispatchWrapper(patchCart, dispatch, updateItemQuantityFailure);
+  asyncDispatchWrapper(patchCart, dispatch, updateCartFailure);
 
   async function patchCart() {
     dispatch(updateCartRequest());
@@ -433,5 +448,18 @@ export const updateCart = (payload: UpdateCartPayload): AppThunk => async (
       ...payload,
     });
     dispatch(updateCartSuccess(payload));
+  }
+};
+
+export const clearCart = ({ cartId }: { cartId: string }): AppThunk => async (
+  dispatch
+) => {
+  asyncDispatchWrapper(deleteCart, dispatch, clearCartFailure);
+
+  async function deleteCart() {
+    dispatch(clearCartRequest());
+
+    await firebaseApi.delete(`/cart/${cartId}.json`);
+    dispatch(clearCartSuccess());
   }
 };

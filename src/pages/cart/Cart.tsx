@@ -57,7 +57,7 @@ function Cart(): ReactElement {
 
         <Field>Total{renderValue(cart.total, cart.isLoading)}</Field>
 
-        {!showCheckoutForm ? (
+        {!showCheckoutForm && cart.subtotal !== 0 ? (
           <Button
             disabled={cart.isLoading || cart.subtotal === 0}
             onClick={() => setShowCheckoutForm(true)}

@@ -4,27 +4,31 @@ import { useForm } from 'react-hook-form';
 import { BaseForm } from '../../../components/ui/form/BaseForm';
 import { TextField } from '../../../components/ui/form/TextField';
 import { BaseButton } from '../../../components/ui/BaseButton';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { userSelector } from '../../../features/userSlice';
+import { generateOrder, orderSelector } from '../../../features/orderSlice';
+import Spinner from '../../../components/ui/LoadingScreen/Spinner/Spinner';
 
 type Props = {};
 
-type FormValues = {
+export type CheckoutFormValues = {
   email: string;
   address: string;
 };
 
 function Checkout({}: Props): ReactElement {
   const { email, address } = useSelector(userSelector);
+  const { isLoading } = useSelector(orderSelector);
+  const dispatch = useDispatch();
 
-  const { handleSubmit, register, errors } = useForm<FormValues>({
+  const { handleSubmit, register, errors } = useForm<CheckoutFormValues>({
     validateCriteriaMode: 'all',
     mode: 'onChange',
     defaultValues: { email: email ?? '', address },
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    dispatch(generateOrder(data));
   });
 
   return (
@@ -55,7 +59,15 @@ function Checkout({}: Props): ReactElement {
         register={register({ required: 'Address is required' })}
       />
 
-      <SubmitButton type="submit">ORDER</SubmitButton>
+      <SubmitButton type="submit">
+        {isLoading ? (
+          <SpinnerWrapper>
+            <Spinner />
+          </SpinnerWrapper>
+        ) : (
+          'ORDER'
+        )}
+      </SubmitButton>
     </Form>
   );
 }
@@ -69,4 +81,6 @@ const SubmitButton = styled(BaseButton).attrs({ contained: true })`
   align-items: center;
   width: 100%;
 `;
+
+const SpinnerWrapper = styled.span``;
 export { Checkout };
