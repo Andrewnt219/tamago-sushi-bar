@@ -22,7 +22,6 @@ interface FormValues {
   date: string;
   time: string;
   guests: '1' | '2-4' | '4-8';
-  createAccount: 'yes' | 'no';
 }
 
 const NUMBER_OF_STEP = 2;
@@ -49,7 +48,6 @@ const Reservation: React.FC<ReservationProps> = () => {
     date: add(new Date(), { days: 1 }).toDateString(),
     time: roundToNearestMinutes(new Date(), { nearestTo: 15 }).toString(),
     guests: '1',
-    createAccount: 'no',
   });
 
   const onSubmitStep1 = handleSubmit((_, __) => {

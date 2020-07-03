@@ -7,7 +7,10 @@ import { BaseButton } from '../../components/ui/BaseButton';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../features/userSlice';
 
-type Props = {};
+type Props = {
+  className?: string;
+  defaultValues?: Partial<RegisterFormValues>;
+};
 
 export type RegisterFormValues = {
   email: string;
@@ -18,7 +21,7 @@ export type RegisterFormValues = {
   phone: string;
 };
 
-function Register(props: Props): ReactElement {
+function Register({ className, defaultValues }: Props): ReactElement {
   const dispatch = useDispatch();
 
   const { register, handleSubmit, errors, getValues, formState } = useForm<
@@ -26,6 +29,9 @@ function Register(props: Props): ReactElement {
   >({
     mode: 'onChange',
     validateCriteriaMode: 'all',
+    defaultValues: {
+      ...defaultValues,
+    },
   });
 
   const onSubmit = handleSubmit((data) => {
@@ -36,17 +42,25 @@ function Register(props: Props): ReactElement {
     <ThemeProvider
       theme={(theme): DefaultTheme => ({ ...theme, primary: theme.formTheme })}
     >
-      <BaseForm onSubmit={onSubmit} noValidate>
+      <BaseForm onSubmit={onSubmit} noValidate className={className}>
         <TextField
+          required
           id="register-email"
           name="email"
           label="Email"
           type="email"
           errors={errors}
-          register={register({ required: 'Email is required' })}
+          register={register({
+            required: 'Email is required',
+            pattern: {
+              value: /.*@.*\..+/,
+              message: 'Not a valid email',
+            },
+          })}
         />
 
         <TextField
+          required
           id="register-password"
           type="password"
           name="password"
@@ -56,6 +70,7 @@ function Register(props: Props): ReactElement {
         />
 
         <TextField
+          required
           id="register-confirmPassword"
           type="password"
           name="confirmPassword"
@@ -68,6 +83,7 @@ function Register(props: Props): ReactElement {
         />
 
         <TextField
+          required
           id="register-preferredName"
           name="preferredName"
           label="Preferred Name"
@@ -77,6 +93,7 @@ function Register(props: Props): ReactElement {
         />
 
         <TextField
+          required
           id="register-address"
           type="text"
           name="address"

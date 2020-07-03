@@ -1,17 +1,17 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components/macro';
 import { CartItems } from './components/CartItems';
 import { BaseButton } from '../../components/ui/BaseButton';
-import { MdLock } from 'react-icons/md';
-import { StyledLink } from '../../components/navigation/StyledLink';
 import { cartSelector } from '../../features/cartSlice';
 import { useSelector } from 'react-redux';
 import Spinner from '../../components/ui/LoadingScreen/Spinner/Spinner';
+import { Checkout } from './components/Checkout';
 
 type Props = {};
 
-function Cart(props: Props): ReactElement {
+function Cart(): ReactElement {
   const cart = useSelector(cartSelector);
+  const [showCheckoutForm, setShowCheckoutForm] = useState(false);
 
   return (
     <Container>
@@ -37,18 +37,16 @@ function Cart(props: Props): ReactElement {
 
         <Field>Total{renderValue(cart.total, cart.isLoading)}</Field>
 
-        <StyledLink to="/checkout">
-          <Button disabled={cart.isLoading || cart.subtotal === 0}>
-            {cart.subtotal === 0 ? (
-              'YOUR CART IS EMPTY'
-            ) : (
-              <>
-                <MdLock />
-                PROCEED TO CHECKOUT
-              </>
-            )}
+        {!showCheckoutForm ? (
+          <Button
+            disabled={cart.isLoading || cart.subtotal === 0}
+            onClick={() => setShowCheckoutForm(true)}
+          >
+            {cart.subtotal === 0 ? 'YOUR CART IS EMPTY' : 'PROCEED TO SHIPPING'}
           </Button>
-        </StyledLink>
+        ) : (
+          <Checkout />
+        )}
       </Summary>
       <CartItems cartItems={cart.items} />
     </Container>
@@ -65,6 +63,8 @@ function renderValue(value: number, isLoading: boolean) {
 
 type ContainerProps = {};
 const Container = styled.div<ContainerProps>`
+  position: relative;
+
   margin: 2rem;
   display: grid;
   row-gap: 2rem;

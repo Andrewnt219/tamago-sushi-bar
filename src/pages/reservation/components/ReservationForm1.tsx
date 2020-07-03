@@ -17,7 +17,6 @@ type FormValues = {
   preferredName: string;
   prefix: 'mr' | 'mrs' | 'ms' | 'name';
   email: string;
-  createAccount: 'yes' | 'no';
 };
 
 function ReservationForm1({
@@ -52,18 +51,6 @@ function ReservationForm1({
       label: 'By name',
       register: register(),
       value: 'name',
-    },
-  ];
-
-  const checkboxes: ControllerObject<
-    FormValues,
-    typeof formValues['createAccount']
-  >[] = [
-    {
-      id: 'create-account-yes',
-      label: 'Yes, remember me',
-      register: register(),
-      value: 'yes',
     },
   ];
 
@@ -107,15 +94,6 @@ function ReservationForm1({
         defaultCheckedValue={formValues.prefix}
         name="prefix"
         controllers={radios}
-        handleChange={handleChange}
-      />
-
-      <ControllerInputsGroup
-        type="checkbox"
-        label="Create an account with these info?"
-        errors={errors}
-        name="createAccount"
-        controllers={checkboxes}
         handleChange={handleChange}
       />
 

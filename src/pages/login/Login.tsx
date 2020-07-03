@@ -52,7 +52,13 @@ function Login(props: Props): ReactElement {
         name="email"
         type="email"
         errors={errors}
-        register={register({ required: 'Email is required' })}
+        register={register({
+          required: 'Email is required',
+          pattern: {
+            value: /.*@.*\..+/,
+            message: 'Not a valid email',
+          },
+        })}
       />
 
       <TextField
