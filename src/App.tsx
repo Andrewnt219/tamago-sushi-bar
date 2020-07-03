@@ -54,7 +54,7 @@ function App() {
       <GlobalStyle />
       <Layout>
         <Switch>
-          <Route path="/orders/:id" component={OrderDetail} />
+          <Route path="/orders/:orderId" component={OrderDetail} />
 
           <ProtectedRoute path="/me">
             <UserDashboard />

@@ -14,11 +14,13 @@ const initialState: OrderState = {
   error: null,
   isLoading: false,
   orders: null,
+  displayedOrder: null,
 };
 const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
+    /* fetchOrders */
     fetchOrdersRequest: (state) => {
       state.isLoading = true;
       state.error = null;
@@ -35,6 +37,20 @@ const orderSlice = createSlice({
       state.isLoading = false;
       state.error = payload;
     },
+    /* fetchOrder */
+    fetchOrderRequest: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    fetchOrderSuccess: (state, { payload }: PayloadAction<Order>) => {
+      state.isLoading = false;
+      state.error = null;
+      state.displayedOrder = payload;
+    },
+    fetchOrderFailure: (state, { payload }: PayloadAction<string>) => {
+      state.error = payload;
+      state.isLoading = false;
+    },
     generateOrderRequest: (state) => {
       state.isLoading = false;
       state.error = null;
@@ -50,7 +66,10 @@ const orderSlice = createSlice({
 });
 
 export default orderSlice.reducer;
-export const orderSelector = (state: RootState) => state.orders;
+export const ordersSelector = (state: RootState) => state.orders;
+export const displayedOrderSelector = (state: RootState) =>
+  state.orders.displayedOrder;
+
 const {
   generateOrderFailure,
   generateOrderRequest,
@@ -58,6 +77,9 @@ const {
   fetchOrdersFailure,
   fetchOrdersRequest,
   fetchOrdersSuccess,
+  fetchOrderFailure,
+  fetchOrderRequest,
+  fetchOrderSuccess,
 } = orderSlice.actions;
 
 export const generateOrder = (payload: CheckoutFormValues): AppThunk => async (
@@ -109,6 +131,26 @@ export const fetchOrders = ({
       dispatch(fetchOrdersSuccess(data));
     } else {
       dispatch(fetchOrdersFailure('Invalid request'));
+    }
+  }
+};
+
+export const fetchOrder = ({
+  orderId,
+}: {
+  orderId: string;
+}): AppThunk => async (dispatch) => {
+  asyncDispatchWrapper(getOrder, dispatch, fetchOrderFailure);
+
+  async function getOrder() {
+    dispatch(fetchOrderRequest());
+    const { data } = await firebaseApi.get<Order | null>(
+      `/orders/${orderId}.json`
+    );
+    if (data) {
+      dispatch(fetchOrderSuccess(data));
+    } else {
+      dispatch(fetchOrderFailure('Invalid request'));
     }
   }
 };

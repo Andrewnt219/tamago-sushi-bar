@@ -6,7 +6,7 @@ import { TextField } from '../../../components/ui/form/TextField';
 import { BaseButton } from '../../../components/ui/BaseButton';
 import { useSelector, useDispatch } from 'react-redux';
 import { userSelector } from '../../../features/userSlice';
-import { generateOrder, orderSelector } from '../../../features/orderSlice';
+import { generateOrder, ordersSelector } from '../../../features/orderSlice';
 import Spinner from '../../../components/ui/LoadingScreen/Spinner/Spinner';
 
 type Props = {};
@@ -18,7 +18,7 @@ export type CheckoutFormValues = {
 
 function Checkout({}: Props): ReactElement {
   const { email, address } = useSelector(userSelector);
-  const { isLoading } = useSelector(orderSelector);
+  const { isLoading } = useSelector(ordersSelector);
   const dispatch = useDispatch();
 
   const { handleSubmit, register, errors } = useForm<CheckoutFormValues>({

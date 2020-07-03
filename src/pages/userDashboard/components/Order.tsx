@@ -9,17 +9,18 @@ import {
 import { StyledLink } from '../../../components/navigation/StyledLink';
 import { rgba } from 'polished';
 import { format } from 'date-fns';
+import { Order as OrderObject } from '../../../features/sliceTypes';
 
 type Props = {
   type: 'online' | 'inStore';
-  date: string;
-  price: number;
-  orderId: string;
+  order: OrderObject;
 };
 
-function Order({ type, date, price, orderId }: Props): ReactElement {
+function Order({ type, order }: Props): ReactElement {
+  const { id, createdDate, total } = order;
+
   return (
-    <Container to={`/orders/${orderId}`}>
+    <Container to={{ pathname: `/orders/${id}` }}>
       <Logo>
         <LogoWrapper>
           <BaseLogo withText />
@@ -27,10 +28,10 @@ function Order({ type, date, price, orderId }: Props): ReactElement {
       </Logo>
 
       <Details>
-        <DateText>{format(new Date(date), 'MMMM do, yyyy')}</DateText>
+        <DateText>{format(new Date(createdDate), 'MMMM do, yyyy')}</DateText>
 
         <Price>
-          <PriceText>${price.toFixed(2)}</PriceText>
+          <PriceText>${total.toFixed(2)}</PriceText>
           <MdKeyboardArrowRight />
         </Price>
 

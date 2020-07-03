@@ -6,14 +6,14 @@ import { UserProfile } from './components/UserProfile';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../features/userSlice';
 import { initCart } from '../../features/cartSlice';
-import { orderSelector } from '../../features/orderSlice';
+import { ordersSelector } from '../../features/orderSlice';
 import { Order as OrderObject } from '../../features/sliceTypes';
 
 interface UserDashboardProps {}
 
 const UserDashboard: React.FC<UserDashboardProps> = () => {
   const dispatch = useDispatch();
-  const { orders } = useSelector(orderSelector);
+  const { orders } = useSelector(ordersSelector);
   const ordersArray: OrderObject[] = orders ? Object.values(orders) : [];
 
   const onLogoutButtonClicked = () => {

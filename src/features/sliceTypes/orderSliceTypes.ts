@@ -8,6 +8,7 @@ export type DatabaseOrder = Omit<Cart, 'id' | 'userEmail'> & {
 
 export type OrderState = UiState & {
   orders: Record<string, Order> | null;
+  displayedOrder: Order | null;
 };
 
 export type Order = DatabaseOrder & { id: string };

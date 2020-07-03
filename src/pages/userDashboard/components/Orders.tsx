@@ -8,16 +8,13 @@ type Props = {
 };
 
 function Orders({ orders }: Props): ReactElement {
-  debugger;
   return (
     <Container>
-      {orders.map(({ id, createdDate, total }) => (
+      {orders.map((order) => (
         <Order
-          key={id}
-          orderId={id}
+          key={order.id}
+          order={order}
           type={Math.round(Math.random()) === 1 ? 'inStore' : 'online'}
-          date={createdDate}
-          price={total}
         />
       ))}
     </Container>

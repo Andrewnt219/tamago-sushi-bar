@@ -1,33 +1,58 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useRef, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { ItemDetail } from './components/ItemDetail';
 import { ItemDetailsHeader } from './components/ItemDetailsHeader';
 import { ItemDetailsFooter } from './components/ItemDetailsFooter';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { displayedOrderSelector, fetchOrder } from '../../features/orderSlice';
+import { format } from 'date-fns';
 
 type Props = {};
 
-function OrderDetail(props: Props): ReactElement {
+function OrderDetail(): ReactElement {
+  const { orderId } = useParams<{ orderId: string | undefined }>();
+  const dispatch = useDispatch();
+  const order = useSelector(displayedOrderSelector);
+
+  useEffect(() => {
+    if (orderId) dispatch(fetchOrder({ orderId }));
+  }, [dispatch, orderId]);
+
   return (
     <Container>
-      <Header>Order #01</Header>
-      <SubHeader>July 2nd, 2020</SubHeader>
+      <Header>Order's Detail</Header>
+      {order ? (
+        <>
+          <SubHeader>
+            {format(new Date(order.createdDate), 'MMMM do, yyyy')}
+          </SubHeader>
 
-      <ItemDetails>
-        <ItemDetailsHeader />
-        <ItemDetail name="Kinda Long Name" price={2.5} quantity={2} />
-        <ItemDetail name="Super duper long name" price={1.25} quantity={5} />
-        <ItemDetail name="Shortname" price={3.75} quantity={8} />
-        <ItemDetail name="Normal name" price={4.99} quantity={1} />
-        <ItemDetail name="Short" price={0} quantity={6} />
-        <ItemDetailsFooter />
-      </ItemDetails>
+          <ItemDetails>
+            <ItemDetailsHeader />
+            {Object.values(order.items).map(({ name, quantity, price, id }) => (
+              <ItemDetail
+                key={id}
+                name={name}
+                quantity={quantity}
+                price={price}
+              />
+            ))}
+            <ItemDetailsFooter />
+          </ItemDetails>
+        </>
+      ) : (
+        'Order not found'
+      )}
     </Container>
   );
 }
 
 type ContainerProps = {};
 const Container = styled.div<ContainerProps>`
-  margin: 2rem;
+  max-width: 50rem;
+  margin-right: auto;
+  padding: 2rem;
 `;
 
 type HeaderProps = {};
