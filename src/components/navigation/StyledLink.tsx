@@ -2,24 +2,27 @@ import React, { forwardRef } from 'react';
 import styled from 'styled-components/macro';
 import { Link as RRLink, LinkProps } from 'react-router-dom';
 
-type LinkRef = HTMLAnchorElement;
+// type LinkRef = HTMLAnchorElement;
 
-const Link = forwardRef<LinkRef, LinkProps>(({ children, ...props }, ref) => {
-  return (
-    <RRLink ref={ref} {...props}>
-      {children}
-    </RRLink>
-  );
-});
+// type Props = LinkProps & {
+//   className: string;
+// };
 
-/**
- * @param children the text of NavLink
- * @param props props of NavLink from React Router
- * @param ref HTMLAnchorElement
- */
-export const StyledLink = styled(Link)`
-  &:link,
-  &:visited {
-    color: currentColor;
-  }
-`;
+// const Link = forwardRef<LinkRef, Props>(
+//   ({ className, children, ...props }, ref) => {
+//     return (
+//       <RRLink ref={ref} {...props} className={className}>
+//         {children}
+//       </RRLink>
+//     );
+//   }
+// );
+
+// export const StyledLink = styled(RRLink)`
+//   &:link,
+//   &:visited {
+//     color: currentColor;
+//   }
+// `;
+
+export { RRLink as StyledLink };
