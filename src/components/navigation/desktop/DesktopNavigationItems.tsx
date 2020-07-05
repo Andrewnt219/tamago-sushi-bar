@@ -31,6 +31,14 @@ const StyledNavigationItems = styled.ul<StyledNavigationItemsProps>`
   justify-content: space-around;
   align-items: center;
 
-  width: 60%;
+  width: 100%;
   height: 100%;
+
+  font-size: 1.8rem;
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
+    width: max-content;
+    padding-left: 5rem;
+    font-size: 2rem;
+  }
 `;

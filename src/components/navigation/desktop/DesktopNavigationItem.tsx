@@ -25,7 +25,6 @@ const StyledLi = styled.li<StyledLiProps>`
   padding: 0 1rem 1rem 1rem;
   color: inherit;
   font-weight: 300;
-  font-size: 2rem;
   border-bottom: 0.1rem solid transparent;
 
   transition: all ${(p) => p.theme.transitionSpeed.subtle} ease;
