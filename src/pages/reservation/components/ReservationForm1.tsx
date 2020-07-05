@@ -15,7 +15,7 @@ type Props<FormValues> = Required<FormProps<FormValues>> & {};
 
 type FormValues = {
   preferredName: string;
-  prefix: 'mr' | 'mrs' | 'ms' | 'name';
+  prefix: 'Mr.' | 'Mrs.' | 'Ms.' | 'name';
   email: string;
 };
 
@@ -32,19 +32,19 @@ function ReservationForm1({
       id: 'address--mr',
       label: 'Mr.',
       register: register(),
-      value: 'mr',
+      value: 'Mr.',
     },
     {
       id: 'address--ms',
       label: 'Ms.',
       register: register(),
-      value: 'ms',
+      value: 'Ms.',
     },
     {
       id: 'address--mrs',
       label: 'Mrs.',
       register: register(),
-      value: 'mrs',
+      value: 'Mrs.',
     },
     {
       id: 'address--none',

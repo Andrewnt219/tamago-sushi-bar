@@ -13,11 +13,13 @@ import { useForm } from 'react-hook-form';
 import { useFormState } from '../../hook/useFormState';
 import { roundToNearestMinutes } from 'date-fns/esm';
 import { add } from 'date-fns';
+import { ConfirmModal } from './components/ConfirmModal';
+import { useHistory } from 'react-router-dom';
 
 interface ReservationProps {}
-interface FormValues {
+export interface ReservationFormValues {
   preferredName: string;
-  prefix: 'mr' | 'mrs' | 'ms' | 'name';
+  prefix: 'Mr.' | 'Mrs.' | 'Ms.' | 'name';
   email: string;
   date: string;
   time: string;
@@ -28,16 +30,20 @@ const NUMBER_OF_STEP = 2;
 const Reservation: React.FC<ReservationProps> = () => {
   useTitle('Reservation');
   useScrollToTop();
+  const history = useHistory();
 
   const { currentStep, nextStep, jumpToStep } = useFormStep(NUMBER_OF_STEP);
   const [completedStep, setCompletedStep] = useState(-1);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-  const { handleSubmit, errors, register, formState } = useForm<FormValues>({
+  const { handleSubmit, errors, register, formState } = useForm<
+    ReservationFormValues
+  >({
     mode: 'onChange',
     validateCriteriaMode: 'all',
   });
 
-  const [formValues, handleChange] = useFormState<FormValues>({
+  const [formValues, handleChange] = useFormState<ReservationFormValues>({
     preferredName: '',
     prefix: 'name',
 
@@ -53,7 +59,17 @@ const Reservation: React.FC<ReservationProps> = () => {
   });
   const onSubmitStep2 = handleSubmit((_, __) => {
     setCompletedStep(2);
+    setShowConfirmModal(true);
   });
+
+  const onConfirm = () => {
+    setShowConfirmModal(false);
+    history.push('/');
+  };
+
+  const onCancel = () => {
+    setShowConfirmModal(false);
+  };
 
   let form;
   switch (currentStep) {
@@ -98,6 +114,13 @@ const Reservation: React.FC<ReservationProps> = () => {
       })}
     >
       <Container>
+        {showConfirmModal && (
+          <ConfirmModal
+            data={formValues}
+            onCancel={onCancel}
+            onConfirm={onConfirm}
+          />
+        )}
         <FormContainer>
           <FormHeader>
             <Header>Reservation</Header>
