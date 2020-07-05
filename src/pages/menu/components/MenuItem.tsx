@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components/macro';
+import styled, { useTheme } from 'styled-components/macro';
 import { BaseButton } from '../../../components/ui/BaseButton';
 import Spinner from '../../../components/ui/LoadingScreen/Spinner/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,9 +7,11 @@ import {
   addItemToCart,
   cartSelector,
   increaseItemQuantity,
+  cartItemSelector,
 } from '../../../features/cartSlice';
 import { getCartItemIdByKey } from '../../../helpers';
-
+import tamagoSVG from '../../../asset/tamago.svg';
+import { MdAddShoppingCart } from 'react-icons/md';
 export interface MenuItemProps {
   name: string;
   price: number;
@@ -36,6 +38,8 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const cart = useSelector(cartSelector);
+  const itemInCart = useSelector(cartItemSelector(name));
+  const theme = useTheme();
 
   const onAddItem = () => {
     const itemId = getCartItemIdByKey(cart, 'name', name);
@@ -74,9 +78,19 @@ export const MenuItem: React.FC<MenuItemProps> = ({
       <ItemName>{name}</ItemName>
       <ItemPrice>{price.toFixed(2)}</ItemPrice>
       <ItemDescription>{description}</ItemDescription>
-      <Button outlined onClick={onAddItem}>
-        +
-      </Button>
+      <InCartQuantity>
+        <TamagoSVG src={tamagoSVG} />x{itemInCart ? itemInCart.quantity : 0}
+      </InCartQuantity>
+
+      {cart.isLoading ? (
+        <AddSpinnerWrapper>
+          <Spinner color={theme.primary} size="1rem" />
+        </AddSpinnerWrapper>
+      ) : (
+        <Button outlined onClick={onAddItem}>
+          {itemInCart ? '+' : <MdAddShoppingCart />}
+        </Button>
+      )}
     </Container>
   );
 };
@@ -133,9 +147,31 @@ const ItemImg = styled.img`
   border-radius: 4px;
 `;
 
-const Button = styled(BaseButton)`
-  grid-column: 1/-1;
+const InCartQuantity = styled.span`
+  display: inline-flex;
+  align-items: center;
+  font-size: 1rem;
+`;
+const TamagoSVG = styled.img`
+  height: 2em;
+`;
+
+const AddSpinnerWrapper = styled.span`
   justify-self: flex-end;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 3rem;
+`;
+
+const Button = styled(BaseButton)`
+  justify-self: flex-end;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   height: 3rem;
   width: 3rem;

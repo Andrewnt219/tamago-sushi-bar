@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import { firebaseApi } from '../apis/firebase';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { checkIfLoading } from './loadingSlice';
 import { AppThunk, RootState } from '../app/store';
 import { asyncDispatchWrapper } from '../helpers/redux-helpers';
 import {
@@ -9,6 +8,7 @@ import {
   calculateCartOnSuccess,
   getCartItemById,
   itemsToItemsState,
+  getCartItemIdByKey,
 } from '../helpers';
 import {
   CartItem,
@@ -168,8 +168,8 @@ const cartSlice = createSlice({
       state,
       { payload: itemId }: PayloadAction<string>
     ) => {
-      state.isLoading = true;
-      state.error = null;
+      // state.isLoading = true;
+      // state.error = null;
       const updatingItem = state.items[itemId];
 
       if (updatingItem) {
@@ -213,7 +213,11 @@ export const itemIsLoadingSelector = (itemId: string) => (
   state: RootState
 ): boolean | undefined => state.cart.items[itemId]?.isLoading;
 export const cartItemsSelector = (state: RootState) => state.cart.items;
-export const cartIsLoadingSelector = checkIfLoading('cart');
+export const cartItemSelector = (itemName: string) => (state: RootState) => {
+  const itemId = getCartItemIdByKey(state.cart, 'name', itemName);
+  return itemId ? state.cart.items[itemId] : undefined;
+};
+
 const {
   updateItemQuantityRequest,
   updateItemQuantitySuccess,

@@ -9,14 +9,16 @@ import { userSelector } from '../../../features/userSlice';
 import { generateOrder, ordersSelector } from '../../../features/orderSlice';
 import Spinner from '../../../components/ui/LoadingScreen/Spinner/Spinner';
 
-type Props = {};
+type Props = {
+  onFormSubmitted?: () => void;
+};
 
 export type CheckoutFormValues = {
   email: string;
   address: string;
 };
 
-function Checkout(props: Props): ReactElement {
+function Checkout({ onFormSubmitted }: Props): ReactElement {
   const { email, address } = useSelector(userSelector);
   const { isLoading } = useSelector(ordersSelector);
   const dispatch = useDispatch();
@@ -29,6 +31,7 @@ function Checkout(props: Props): ReactElement {
 
   const onSubmit = handleSubmit((data) => {
     dispatch(generateOrder(data));
+    onFormSubmitted && onFormSubmitted();
   });
 
   return (

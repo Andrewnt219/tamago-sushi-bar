@@ -37,6 +37,17 @@ export const getCartItemIdByKey = (
   });
 };
 
+export const getCartItemByItemName = (
+  cart: Cart,
+  itemName: string
+): CartItem | undefined => {
+  const itemId = _.findKey(cart.items, (obj: CartItem) => {
+    return obj.name === itemName;
+  });
+
+  return itemId ? cart.items[itemId] : undefined;
+};
+
 export const getCartItemById = (cart: Cart, itemId: string): CartItem => {
   return cart.items[itemId];
 };

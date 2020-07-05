@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Spinner from '../../components/ui/LoadingScreen/Spinner/Spinner';
 import { Checkout } from './components/Checkout';
 import { useScrollToTop, useTitle } from '../../hook';
+import { StyledLink } from '../../components/navigation/StyledLink';
 
 type Props = {};
 
@@ -16,6 +17,7 @@ function Cart(): ReactElement {
 
   const cart = useSelector(cartSelector);
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
+  debugger;
   const [tip, setTip] = useState<string>('');
   const dispatch = useDispatch();
 
@@ -61,7 +63,7 @@ function Cart(): ReactElement {
 
         <Field>Total{renderValue(cart.total, cart.isLoading)}</Field>
 
-        {!showCheckoutForm && cart.subtotal !== 0 ? (
+        {!showCheckoutForm ? (
           <Button
             disabled={cart.isLoading || cart.subtotal === 0}
             onClick={() => setShowCheckoutForm(true)}
@@ -69,10 +71,16 @@ function Cart(): ReactElement {
             {cart.subtotal === 0 ? 'YOUR CART IS EMPTY' : 'PROCEED TO SHIPPING'}
           </Button>
         ) : (
-          <Checkout />
+          <Checkout onFormSubmitted={() => setShowCheckoutForm(false)} />
         )}
       </Summary>
-      <CartItems cartItems={cart.items} />
+      {cart.subtotal === 0 ? (
+        <EmptyCartText>
+          Add delicious dish from <StyledLink to="/menu">Menu</StyledLink>
+        </EmptyCartText>
+      ) : (
+        <CartItems cartItems={cart.items} />
+      )}
     </Container>
   );
 }
@@ -104,6 +112,12 @@ const Container = styled.div<ContainerProps>`
     grid-template-columns: 1fr max-content;
     align-items: flex-start;
     column-gap: 3rem;
+  }
+`;
+
+const EmptyCartText = styled.p`
+  a {
+    color: ${(p) => p.theme.primary};
   }
 `;
 
