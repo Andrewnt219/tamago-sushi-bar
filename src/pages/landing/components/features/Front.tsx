@@ -92,13 +92,13 @@ const Content = styled.div`
   word-wrap: break-word;
 
   /* gradient-text */
-  background-image: ${(p) =>
+  /* background-image: ${(p) =>
     linearGradient({
       toDirection: 'to right bottom',
       colorStops: [`${lighten(0.1, p.theme.primary)}`, `${p.theme.primary}`],
     })};
-  background-clip: text;
-  color: transparent;
+  background-clip: text; */
+  color: ${(p) => p.theme.primary};
 `;
 
 const Heading = styled.h2`
