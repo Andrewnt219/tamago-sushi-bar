@@ -11,7 +11,7 @@ import {
   BaseReservationForm as Form,
 } from './ReservationUIComponents';
 
-type Props<FormValues> = FormProps<FormValues> & {};
+type Props<FormValues> = Required<FormProps<FormValues>> & {};
 
 type FormValues = {
   preferredName: string;

@@ -20,7 +20,7 @@ import {
   SubmitButton,
 } from './ReservationUIComponents';
 
-type Props<FormValues> = FormProps<FormValues> & {
+type Props<FormValues> = Required<FormProps<FormValues>> & {
   children?: never;
 };
 

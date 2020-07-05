@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import styled from 'styled-components/macro';
+import styled, { ThemeProvider, DefaultTheme } from 'styled-components/macro';
 import {
   useLocation,
   RouteComponentProps,
@@ -51,46 +51,50 @@ function Login(props: Props): ReactElement {
   return email ? (
     <Redirect to="/me" />
   ) : (
-    <Container>
-      <HeaderContainer>
-        <Logo />
-        <Header>Welcome Back</Header>
-        <Subheader>Sign in to get the best experience</Subheader>
-      </HeaderContainer>
+    <ThemeProvider
+      theme={(theme): DefaultTheme => ({ ...theme, primary: theme.formTheme })}
+    >
+      <Container>
+        <HeaderContainer>
+          <Logo />
+          <Header>Welcome Back</Header>
+          <Subheader>Sign in to get the best experience</Subheader>
+        </HeaderContainer>
 
-      <Form onSubmit={onSubmit} noValidate>
-        <TextField
-          id="login-email"
-          label="Email"
-          name="email"
-          type="email"
-          errors={errors}
-          register={register({
-            required: 'Email is required',
-            pattern: {
-              value: /.*@.*\..+/,
-              message: 'Not a valid email',
-            },
-          })}
-        />
+        <Form onSubmit={onSubmit} noValidate>
+          <TextField
+            id="login-email"
+            label="Email"
+            name="email"
+            type="email"
+            errors={errors}
+            register={register({
+              required: 'Email is required',
+              pattern: {
+                value: /.*@.*\..+/,
+                message: 'Not a valid email',
+              },
+            })}
+          />
 
-        <TextField
-          id="login-password"
-          label="Password"
-          name="password"
-          type="password"
-          errors={errors}
-          register={register({ required: 'Password is required' })}
-        />
+          <TextField
+            id="login-password"
+            label="Password"
+            name="password"
+            type="password"
+            errors={errors}
+            register={register({ required: 'Password is required' })}
+          />
 
-        <SubmitButton contained disabled={!formState.isValid} type="submit">
-          Login
-        </SubmitButton>
-        <StyledSpan>
-          Don't have an account? <Link to="/register">Sign up</Link>
-        </StyledSpan>
-      </Form>
-    </Container>
+          <SubmitButton contained disabled={!formState.isValid} type="submit">
+            Login
+          </SubmitButton>
+          <StyledSpan>
+            Don't have an account? <Link to="/register">Sign up</Link>
+          </StyledSpan>
+        </Form>
+      </Container>
+    </ThemeProvider>
   );
 }
 
@@ -107,6 +111,7 @@ const Container = styled.section<ContainerProps>`
     row-gap: initial;
     grid-template-columns: 1fr 2fr;
     column-gap: 2rem;
+    position: relative;
   }
 `;
 
@@ -132,6 +137,14 @@ const HeaderContainer = styled.aside<HeaderContainerProps>`
 type LogoProps = {};
 const Logo = styled(BaseLogo)<LogoProps>`
   width: 7rem;
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
+    width: auto;
+    height: 3rem;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+  }
 `;
 
 type HeaderProps = {};

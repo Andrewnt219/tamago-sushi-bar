@@ -29,16 +29,10 @@ const Reservation: React.FC<ReservationProps> = () => {
   useTitle('Reservation');
   useScrollToTop();
 
-  const [currentStep, nextStep, , jumpToStep] = useFormStep(NUMBER_OF_STEP);
+  const { currentStep, nextStep, jumpToStep } = useFormStep(NUMBER_OF_STEP);
   const [completedStep, setCompletedStep] = useState(-1);
 
-  const {
-    handleSubmit,
-    errors,
-    register,
-    formState,
-    triggerValidation,
-  } = useForm<FormValues>({
+  const { handleSubmit, errors, register, formState } = useForm<FormValues>({
     mode: 'onChange',
     validateCriteriaMode: 'all',
   });
@@ -72,6 +66,8 @@ const Reservation: React.FC<ReservationProps> = () => {
           errors={errors}
           handleChange={handleChange}
           onSubmit={onSubmitStep1}
+          //! dirty
+          isSubmitting={false}
         />
       );
       break;
@@ -84,7 +80,8 @@ const Reservation: React.FC<ReservationProps> = () => {
           errors={errors}
           handleChange={handleChange}
           onSubmit={onSubmitStep2}
-          triggerValidation={triggerValidation}
+          //! dirty
+          isSubmitting={false}
         />
       );
       break;

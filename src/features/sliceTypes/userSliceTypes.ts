@@ -3,6 +3,8 @@ export type UserState = Omit<DatabaseUser, 'email' | 'totalTip'> & {
   error: string | null;
   email: string | null;
   totalTip: number;
+  firebaseIsRegistered: boolean | null;
+  userIsStored: boolean | null;
 };
 
 export type FireBaseLoginResponse = {
@@ -26,7 +28,7 @@ export type FireBaseRegisterRequest = {
   email: string;
   password: string;
   returnSecureToken: true;
-  displayName: string;
+  displayName?: string;
 };
 
 export type FireBaseLoginRequest = Omit<FireBaseRegisterRequest, 'displayName'>;

@@ -14,6 +14,7 @@ import {
 import { firebaseApi } from '../apis/firebase';
 import { keyObjectToObjectWithKey, asyncDispatchWrapper } from '../helpers';
 import _ from 'lodash';
+import { RegisterFormValues1 } from '../pages/register/components/RegisterForm1';
 
 const initialState: UserState = {
   email: null,
@@ -24,6 +25,8 @@ const initialState: UserState = {
   totalTip: 0,
   isLoading: false,
   error: null,
+  firebaseIsRegistered: null,
+  userIsStored: null,
 };
 
 const userSlice = createSlice({
@@ -40,6 +43,8 @@ const userSlice = createSlice({
         totalTip: +payload.totalTip,
         isLoading: false,
         error: null,
+        firebaseIsRegistered: null,
+        userIsStored: null,
       };
     },
     initUserFailed: (state, { payload }: PayloadAction<string>) => {
@@ -59,6 +64,8 @@ const userSlice = createSlice({
         totalTip: +payload.totalTip,
         isLoading: false,
         error: null,
+        firebaseIsRegistered: null,
+        userIsStored: null,
       };
     },
     authFailure: (state, { payload }: PayloadAction<string>) => {
@@ -71,11 +78,26 @@ const userSlice = createSlice({
       return { ...initialState };
     },
     /* Register */
-    registerRequest: (state) => {
+    registerFireBaseRequest: (state) => {
+      state.isLoading = true;
+      state.error = null;
+      state.firebaseIsRegistered = null;
+    },
+    registerFireBaseSuccess: (state) => {
+      state.isLoading = false;
+      state.error = null;
+      state.firebaseIsRegistered = true;
+    },
+    registerFireBaseFailure: (state, { payload }: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = payload;
+      state.firebaseIsRegistered = false;
+    },
+    storeUserRequest: (state) => {
       state.isLoading = true;
       state.error = null;
     },
-    registerSuccess: (_, { payload }: PayloadAction<DatabaseUser>) => {
+    storeUserSuccess: (_, { payload }: PayloadAction<DatabaseUser>) => {
       localStorage.setItem('userEmail', payload.email);
 
       return {
@@ -83,10 +105,13 @@ const userSlice = createSlice({
         totalTip: +payload.totalTip,
         isLoading: false,
         error: null,
+        firebaseIsRegistered: null,
+        userIsStored: true,
       };
     },
-    registerFailure: (state, { payload }: PayloadAction<string>) => {
+    storeUserFailure: (state, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
+      state.userIsStored = false;
       state.error = payload;
     },
   },
@@ -100,12 +125,15 @@ const {
   authFailure,
   authRequest,
   authSuccess,
-  registerFailure,
-  registerRequest,
-  registerSuccess,
+  registerFireBaseFailure,
+  registerFireBaseRequest,
+  registerFireBaseSuccess,
   initUserFailed,
   initUserRequest,
   initUserSuccess,
+  storeUserRequest,
+  storeUserSuccess,
+  storeUserFailure,
 } = userSlice.actions;
 
 export const initUser = (userEmail: string): AppThunk => async (dispatch) => {
@@ -132,26 +160,44 @@ export const initUser = (userEmail: string): AppThunk => async (dispatch) => {
   }
 };
 
-export const registerUser = ({
-  address,
+// TODO merge register and storeuser
+export const registerFireBase = ({
   password,
-  preferredName,
-  phone,
   email,
-}: RegisterFormValues): AppThunk => async (dispatch) => {
-  dispatch(registerRequest());
+}: RegisterFormValues1): AppThunk => async (dispatch) => {
+  dispatch(registerFireBaseRequest());
 
   try {
     const bodyRequest: FireBaseRegisterRequest = {
       email,
       password,
-      displayName: preferredName,
       returnSecureToken: true,
     };
     await axios.post<FireBaseRegisterResponse>(
       `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE}`,
       bodyRequest
     );
+
+    dispatch(registerFireBaseSuccess());
+  } catch (error) {
+    dispatch(
+      registerFireBaseFailure(
+        error?.response?.data?.error?.message ?? 'Something went wrong'
+      )
+    );
+  }
+};
+
+export const storeUserInfo = ({
+  email,
+  preferredName,
+  phone,
+  address,
+}: RegisterFormValues): AppThunk => async (dispatch) => {
+  asyncDispatchWrapper(postNewUser, dispatch, storeUserFailure);
+
+  async function postNewUser() {
+    dispatch(storeUserRequest());
 
     const newUser: DatabaseUser = {
       email,
@@ -163,13 +209,7 @@ export const registerUser = ({
     };
 
     await firebaseApi.post('/users.json', newUser);
-    dispatch(registerSuccess(newUser));
-  } catch (error) {
-    dispatch(
-      registerFailure(
-        error?.response?.data?.error?.message ?? 'Something went wrong'
-      )
-    );
+    dispatch(storeUserSuccess(newUser));
   }
 };
 

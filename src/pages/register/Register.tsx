@@ -1,31 +1,45 @@
 import React, { ReactElement } from 'react';
 import styled, { ThemeProvider, DefaultTheme } from 'styled-components/macro';
-import { BaseForm } from '../../components/ui/form/BaseForm';
 import { useForm } from 'react-hook-form';
-import { TextField } from '../../components/ui/form/TextField';
-import { BaseButton } from '../../components/ui/BaseButton';
-import { useDispatch } from 'react-redux';
-import { registerUser } from '../../features/userSlice';
-import { useTitle, useScrollToTop } from '../../hook';
+
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  registerFireBase,
+  userSelector,
+  storeUserInfo,
+} from '../../features/userSlice';
+import { useTitle, useScrollToTop, useFormStep } from '../../hook';
+import { RegisterForm1, RegisterFormValues1 } from './components/RegisterForm1';
+import { RegisterForm2, RegisterFormValues2 } from './components/RegisterForm2';
+import { useFormState } from '../../hook/useFormState';
+import { StyledLink } from '../../components/navigation/StyledLink';
+import { BaseLogo } from '../../components/ui/BaseLogo';
+import { Redirect } from 'react-router-dom';
 
 type Props = {
   className?: string;
   defaultValues?: Partial<RegisterFormValues>;
 };
 
-export type RegisterFormValues = {
-  email: string;
-  password: string;
-  confirmPassword: string;
-  preferredName: string;
-  address: string;
-  phone: string;
-};
+export type RegisterFormValues = RegisterFormValues1 & RegisterFormValues2;
 
-function Register({ className, defaultValues }: Props): ReactElement {
-  const dispatch = useDispatch();
+// TODO extract the style between register and login
+function Register({ defaultValues }: Props): ReactElement {
   useTitle('Sign up');
   useScrollToTop();
+
+  const dispatch = useDispatch();
+  const { error, firebaseIsRegistered, isLoading, userIsStored } = useSelector(
+    userSelector
+  );
+  const [formValues, handleChange] = useFormState<RegisterFormValues>({
+    email: '',
+    password: '',
+    confirmPassword: '',
+    preferredName: '',
+    address: '',
+    phone: '',
+  });
 
   const { register, handleSubmit, errors, getValues, formState } = useForm<
     RegisterFormValues
@@ -37,99 +51,154 @@ function Register({ className, defaultValues }: Props): ReactElement {
     },
   });
 
-  const onSubmit = handleSubmit((data) => {
-    dispatch(registerUser(data));
+  const onSubmitForm1 = handleSubmit((data) => {
+    dispatch(registerFireBase(data));
   });
+
+  const onSubmitForm2 = handleSubmit(() => {
+    dispatch(storeUserInfo(formValues));
+  });
+
+  const { currentStep, nextStep, prevStep } = useFormStep(2);
+
+  let currentForm: ReactElement;
+  switch (currentStep) {
+    case 1:
+      currentForm = (
+        <RegisterForm1
+          onSubmit={onSubmitForm1}
+          errors={errors}
+          register={register}
+          isSubmittable={formState.isValid}
+          getValues={getValues}
+          onNextButtonClicked={nextStep}
+          handleChange={handleChange}
+          enableNextStep={!!firebaseIsRegistered}
+          formValues={formValues}
+          isSubmitting={isLoading}
+        />
+      );
+      break;
+
+    case 2:
+      currentForm = (
+        <RegisterForm2
+          onSubmit={onSubmitForm2}
+          errors={errors}
+          handleChange={handleChange}
+          register={register}
+          onPrevButtonClicked={prevStep}
+          isSubmittable={formState.isValid}
+          formValues={formValues}
+          isSubmitting={isLoading}
+        />
+      );
+      break;
+
+    default:
+      throw new Error('Form step is out of range');
+  }
 
   return (
     <ThemeProvider
       theme={(theme): DefaultTheme => ({ ...theme, primary: theme.formTheme })}
     >
-      <BaseForm onSubmit={onSubmit} noValidate className={className}>
-        <TextField
-          required
-          id="register-email"
-          name="email"
-          label="Email"
-          type="email"
-          errors={errors}
-          register={register({
-            required: 'Email is required',
-            pattern: {
-              value: /.*@.*\..+/,
-              message: 'Not a valid email',
-            },
-          })}
-        />
-
-        <TextField
-          required
-          id="register-password"
-          type="password"
-          name="password"
-          label="Password"
-          errors={errors}
-          register={register({ required: 'Password is required' })}
-        />
-
-        <TextField
-          required
-          id="register-confirmPassword"
-          type="password"
-          name="confirmPassword"
-          label="Confirm Password"
-          errors={errors}
-          register={register({
-            validate: (value: string) =>
-              value === getValues().password || 'Password does not match',
-          })}
-        />
-
-        <TextField
-          required
-          id="register-preferredName"
-          name="preferredName"
-          label="Preferred Name"
-          type="text"
-          errors={errors}
-          register={register({ required: 'Preferred name is required' })}
-        />
-
-        <TextField
-          required
-          id="register-address"
-          type="text"
-          name="address"
-          label="Address"
-          errors={errors}
-          register={register({ required: 'Address is required' })}
-        />
-
-        <TextField
-          id="register-phone"
-          type="tel"
-          name="phone"
-          label="Phone"
-          errors={errors}
-          register={register({
-            pattern: {
-              value: /(\d[- ]?){9}\d$/,
-              message: 'Not a valid Canadian number',
-            },
-          })}
-        />
-
-        <SubmitButton disabled={!formState.isValid} type="submit">
-          Sign up
-        </SubmitButton>
-      </BaseForm>
+      {userIsStored && <Redirect to="/me" />}
+      <Container>
+        <HeaderContainer>
+          <Logo />
+          <Header>Welcome Back</Header>
+          <Subheader>Sign in to get the best experience</Subheader>
+        </HeaderContainer>
+        <FormContainer>
+          {currentForm}
+          {(firebaseIsRegistered === false || userIsStored === false) &&
+            error && <SubmitError>{error}</SubmitError>}
+        </FormContainer>
+        <HelperText>
+          Already have an account? <Link to="/login">Sign in</Link>
+        </HelperText>
+      </Container>
     </ThemeProvider>
   );
 }
 
-type SubmitButtonProps = {};
-const SubmitButton = styled(BaseButton).attrs({ outlined: true })<
-  SubmitButtonProps
->``;
+const Container = styled.section`
+  display: grid;
+  row-gap: 2rem;
+  padding: 3vw 2vw;
+  box-shadow: ${(p) => p.theme.shadow.button};
+  width: 90%;
+  margin: 10vh auto 0 auto;
 
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
+    row-gap: initial;
+    grid-template-columns: 1fr 2fr;
+    column-gap: 2rem;
+    position: relative;
+  }
+`;
+
+type HeaderContainerProps = {};
+const HeaderContainer = styled.aside<HeaderContainerProps>`
+  display: grid;
+  row-gap: 0.5rem;
+  justify-content: center;
+  justify-items: center;
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
+    align-content: center;
+    background: ${(p) => p.theme.primary};
+
+    color: ${(p) => p.theme.white};
+
+    margin-left: -2vw;
+    width: calc(100% + 2vw);
+    margin-top: -3vw;
+    height: calc(100% + 6vw);
+    grid-row: 1/3;
+  }
+`;
+
+type LogoProps = {};
+const Logo = styled(BaseLogo)<LogoProps>`
+  width: 7rem;
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
+    width: auto;
+    height: 3rem;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+  }
+`;
+
+type HeaderProps = {};
+const Header = styled.h2<HeaderProps>``;
+
+type SubheaderProps = {};
+const Subheader = styled.h4<SubheaderProps>`
+  font-weight: 400;
+`;
+
+const FormContainer = styled.article``;
+const SubmitError = styled.p`
+  font-size: inherit;
+  color: ${(p) => p.theme.error};
+
+  margin-top: 2rem;
+`;
+
+const Link = styled(StyledLink)`
+  && {
+    color: ${(p) => p.theme.primary};
+  }
+`;
+
+const HelperText = styled.span`
+  grid-column: -2/-1;
+  display: block;
+  width: max-content;
+  margin: 2rem auto 0 auto;
+`;
 export default Register;

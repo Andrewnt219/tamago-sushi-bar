@@ -1,12 +1,16 @@
 import { useState, useCallback } from 'react';
 
+type Return = {
+  currentStep: number;
+  nextStep(): void;
+  prevStep(): void;
+  jumpToStep(step: number): void;
+};
 /**
  * @description return the currentStep and step controllers
  * @param numberOfSteps the total number of steps, counting from 1
  */
-export const useFormStep = (
-  numberOfSteps: number
-): [number, () => void, () => void, (step: number) => void] => {
+export const useFormStep = (numberOfSteps: number): Return => {
   const [currentStep, setCurrentStep] = useState(1);
 
   const nextStep = useCallback(() => {
@@ -32,5 +36,5 @@ export const useFormStep = (
     [numberOfSteps]
   );
 
-  return [currentStep, nextStep, prevStep, jumpToStep];
+  return { currentStep, nextStep, prevStep, jumpToStep };
 };
