@@ -21,6 +21,9 @@ const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
+    initOrder: (state) => {
+      state.orderIsCreated = null;
+    },
     /* fetchOrders */
     fetchOrdersRequest: (state) => {
       state.isLoading = true;
@@ -60,6 +63,8 @@ const orderSlice = createSlice({
     generateOrderSuccess: (state) => {
       state.isLoading = false;
       state.orderIsCreated = true;
+
+      localStorage.removeItem('cartId');
     },
     generateOrderFailure: (state, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
@@ -73,7 +78,7 @@ export default orderSlice.reducer;
 export const ordersSelector = (state: RootState) => state.orders;
 export const displayedOrderSelector = (state: RootState) =>
   state.orders.displayedOrder;
-
+export const { initOrder } = orderSlice.actions;
 const {
   generateOrderFailure,
   generateOrderRequest,

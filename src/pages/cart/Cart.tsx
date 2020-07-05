@@ -9,6 +9,7 @@ import { Checkout } from './components/Checkout';
 import { useScrollToTop, useTitle } from '../../hook';
 import { StyledLink } from '../../components/navigation/StyledLink';
 import { CheckoutModal } from './components/CheckoutModal';
+import { initOrder } from '../../features/orderSlice';
 
 type Props = {};
 
@@ -35,7 +36,14 @@ function Cart(): ReactElement {
 
   return (
     <Container>
-      {showModal && <CheckoutModal onClick={() => setShowModal(false)} />}
+      {showModal && (
+        <CheckoutModal
+          onClick={() => {
+            dispatch(initOrder());
+            setShowModal(false);
+          }}
+        />
+      )}
       <Header>Your Tray</Header>
       <Summary>
         <SummaryHeader>Order Summary</SummaryHeader>

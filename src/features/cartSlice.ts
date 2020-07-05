@@ -465,6 +465,7 @@ export const clearCart = ({ cartId }: { cartId: string }): AppThunk => async (
     dispatch(clearCartRequest());
 
     await firebaseApi.delete(`/cart/${cartId}.json`);
+    dispatch(initCart());
     dispatch(clearCartSuccess());
   }
 };
