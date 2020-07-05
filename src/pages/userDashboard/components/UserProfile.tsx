@@ -1,33 +1,46 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components/macro';
+import faker from 'faker';
 
-type Props = {};
+type Props = {
+  totalOrders: number;
+  fullName: string;
+  email: string | null;
+  totalTip: number;
+  loyaltyYear: number;
+};
 
-function UserProfile(props: Props): ReactElement {
+function UserProfile({
+  totalOrders,
+  totalTip,
+  fullName,
+  email,
+  loyaltyYear,
+}: Props): ReactElement {
   return (
     <Container>
       <PrimaryInfo>
-        <Avatar />
-        <Heading>FirstName LastName</Heading>
-        <SubHeading>firstName.lastName@gmail.ca</SubHeading>
+        <Avatar src={faker.image.avatar()} />
+        <Heading>{fullName}</Heading>
+        <SubHeading>{email ? email : ''}</SubHeading>
       </PrimaryInfo>
 
       <SubInfo>
         <Info>
-          <Value>03</Value>
+          <Value>{totalOrders < 10 ? '0' + totalOrders : totalOrders}</Value>
           <Field>Orders</Field>
         </Info>
 
         <Info>
           <Value>
-            22.15 <ValueUnit>CAD</ValueUnit>
+            {totalTip} <ValueUnit>CAD</ValueUnit>
           </Value>
           <Field>Tipping</Field>
         </Info>
 
         <Info>
           <Value>
-            05 <ValueUnit>years</ValueUnit>
+            {loyaltyYear} <ValueUnit>years</ValueUnit>
           </Value>
           <Field>Loyalty</Field>
         </Info>
@@ -45,7 +58,7 @@ const Container = styled.div<ContainerProps>`
   padding: 2vw 0 5vw 0;
 
   display: grid;
-  align-content: flex-start;
+  align-content: space-around;
   row-gap: 2rem;
 
   font-size: 1.2rem;
@@ -75,16 +88,16 @@ const PrimaryInfo = styled.div<PrimaryInfoProps>`
 
 type AvatarProps = {};
 const Avatar = styled.img<AvatarProps>`
-  width: 15%;
-  padding-top: 15%;
+  width: 3.5em;
+  height: 3.5em;
   background: white;
   object-fit: cover;
   object-position: center;
   border-radius: 50%;
 
   @media screen and (min-width: ${(p) => p.theme.breakpoints.sm}) {
-    width: 10rem;
-    padding-top: 10rem;
+    width: 4em;
+    height: 4em;
   }
 `;
 
