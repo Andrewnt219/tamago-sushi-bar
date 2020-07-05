@@ -1,11 +1,6 @@
 import React, { ReactElement } from 'react';
 import styled, { ThemeProvider, DefaultTheme } from 'styled-components/macro';
-import {
-  useLocation,
-  RouteComponentProps,
-  useHistory,
-  Redirect,
-} from 'react-router-dom';
+import { useLocation, RouteComponentProps, Redirect } from 'react-router-dom';
 import { TextField } from '../../components/ui/form/TextField';
 import { BaseForm } from '../../components/ui/form/BaseForm';
 import { useForm } from 'react-hook-form';
@@ -15,6 +10,7 @@ import { authUser, userSelector } from '../../features/userSlice';
 import { useTitle, useScrollToTop } from '../../hook';
 import { BaseLogo } from '../../components/ui/BaseLogo';
 import { StyledLink } from '../../components/navigation/StyledLink';
+import Spinner from '../../components/ui/LoadingScreen/Spinner/Spinner';
 
 type Props = {};
 
@@ -31,8 +27,7 @@ function Login(props: Props): ReactElement {
   const { state } = useLocation<
     { from?: RouteComponentProps['location'] } | undefined
   >();
-  const history = useHistory();
-  let pathname = state?.from?.pathname ?? '/';
+  let pathname = state?.from?.pathname ?? '/me';
   const { register, errors, handleSubmit, formState } = useForm<
     LoginFormValues
   >({
@@ -41,16 +36,17 @@ function Login(props: Props): ReactElement {
   });
 
   const dispatch = useDispatch();
-  const { email } = useSelector(userSelector);
+  const { email, isLoading, error } = useSelector(userSelector);
 
   const onSubmit = handleSubmit((formData) => {
     dispatch(authUser(formData));
-    history.push(pathname);
   });
 
-  return email ? (
-    <Redirect to="/me" />
-  ) : (
+  if (email) {
+    return <Redirect to={pathname} />;
+  }
+
+  return (
     <ThemeProvider
       theme={(theme): DefaultTheme => ({ ...theme, primary: theme.formTheme })}
     >
@@ -87,8 +83,9 @@ function Login(props: Props): ReactElement {
           />
 
           <SubmitButton contained disabled={!formState.isValid} type="submit">
-            Login
+            {isLoading ? <Spinner color="#fff" size="1.2rem" /> : 'Login'}
           </SubmitButton>
+          {error && <ErrorText>{error}</ErrorText>}
           <StyledSpan>
             Don't have an account? <Link to="/register">Sign up</Link>
           </StyledSpan>
@@ -160,7 +157,9 @@ const Form = styled(BaseForm)<FormProps>``;
 
 type SubmitButtonProps = {};
 const SubmitButton = styled(BaseButton)<SubmitButtonProps>`
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 30%;
   padding: 1rem 0;
   border-radius: 4px;
@@ -176,6 +175,13 @@ const Link = styled(StyledLink)`
   && {
     color: ${(p) => p.theme.primary};
   }
+`;
+
+const ErrorText = styled.p`
+  margin-top: 2rem;
+  font-size: inherit;
+  color: ${(p) => p.theme.error};
+  text-align: center;
 `;
 
 const StyledSpan = styled.span`

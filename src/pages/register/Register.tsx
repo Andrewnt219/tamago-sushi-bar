@@ -107,8 +107,8 @@ function Register({ defaultValues }: Props): ReactElement {
       <Container>
         <HeaderContainer>
           <Logo />
-          <Header>Welcome Back</Header>
-          <Subheader>Sign in to get the best experience</Subheader>
+          <Header>Hello new friend</Header>
+          <Subheader>Sign up to get exclusive deals</Subheader>
         </HeaderContainer>
         <FormContainer>
           {currentForm}
