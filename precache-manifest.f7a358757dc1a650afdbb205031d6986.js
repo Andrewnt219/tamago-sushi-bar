@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "8d9d589abd70e3f5a8cf70c07d033b68",
+    "revision": "79a01427eb9327f86bba8aa5fa09ade7",
     "url": "/tamago-sushi-bar/index.html"
   },
   {
@@ -16,20 +16,20 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/tamago-sushi-bar/static/js/3.0aa64f17.chunk.js"
   },
   {
-    "revision": "1892494bfbef6c089146",
-    "url": "/tamago-sushi-bar/static/js/4.61293f96.chunk.js"
+    "revision": "cdc3ddafb4559a827e0f",
+    "url": "/tamago-sushi-bar/static/js/4.21c10ca3.chunk.js"
   },
   {
     "revision": "316259131b0edde4174e",
     "url": "/tamago-sushi-bar/static/js/5.04b6369e.chunk.js"
   },
   {
-    "revision": "5c64fcc96d927f00990e",
-    "url": "/tamago-sushi-bar/static/js/main.0b126380.chunk.js"
+    "revision": "6d58a11f766a2b8cdcdf",
+    "url": "/tamago-sushi-bar/static/js/main.c4016d2d.chunk.js"
   },
   {
-    "revision": "4a2cfc7b2f0f7988dd8b",
-    "url": "/tamago-sushi-bar/static/js/runtime-main.324498a3.js"
+    "revision": "cb92049e5105c3336af3",
+    "url": "/tamago-sushi-bar/static/js/runtime-main.b4ed21eb.js"
   },
   {
     "revision": "146e94df97ba4257973ff4e2fbbb63d5",

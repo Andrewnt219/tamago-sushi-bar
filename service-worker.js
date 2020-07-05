@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/tamago-sushi-bar/precache-manifest.02e178b3eb21670a0c43d6a135277343.js"
+  "/tamago-sushi-bar/precache-manifest.f7a358757dc1a650afdbb205031d6986.js"
 );
 
 self.addEventListener('message', (event) => {
