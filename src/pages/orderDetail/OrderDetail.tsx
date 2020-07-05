@@ -33,6 +33,7 @@ function OrderDetail(): ReactElement {
 
           <ItemDetails>
             <ItemDetailsHeader />
+
             {Object.values(order.items).map(({ name, quantity, price, id }) => (
               <ItemDetail
                 key={id}
@@ -41,7 +42,13 @@ function OrderDetail(): ReactElement {
                 price={price}
               />
             ))}
-            <ItemDetailsFooter />
+
+            <ItemDetailsFooter
+              total={order.total}
+              subtotal={order.subtotal}
+              shipping={order.shipping}
+              tip={order.tip}
+            />
           </ItemDetails>
         </>
       ) : (

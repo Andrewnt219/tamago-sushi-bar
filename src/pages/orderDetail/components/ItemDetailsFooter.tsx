@@ -1,9 +1,19 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components/macro';
 
-type Props = {};
+type Props = {
+  subtotal: number;
+  tip: number;
+  shipping: number;
+  total: number;
+};
 
-function ItemDetailsFooter(props: Props): ReactElement {
+function ItemDetailsFooter({
+  subtotal,
+  tip,
+  shipping,
+  total,
+}: Props): ReactElement {
   return (
     <React.Fragment>
       <div />
@@ -16,11 +26,11 @@ function ItemDetailsFooter(props: Props): ReactElement {
       </Footer>
 
       <Footer>
-        <Sub>$99.00</Sub>
-        <Sub>$9.99</Sub>
-        <Sub>$0.00</Sub>
+        <Sub>${subtotal.toFixed(2)}</Sub>
+        <Sub>${tip.toFixed(2)}</Sub>
+        <Sub>${shipping.toFixed(2)}</Sub>
 
-        <Primary>$100.00</Primary>
+        <Primary>${total.toFixed(2)}</Primary>
       </Footer>
     </React.Fragment>
   );

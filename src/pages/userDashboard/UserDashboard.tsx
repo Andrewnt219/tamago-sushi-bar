@@ -30,11 +30,15 @@ const UserDashboard: React.FC<UserDashboardProps> = () => {
     dispatch(initCart());
   };
 
+  const calcTotalTip = (orders: OrderObject[]) => {
+    return orders.reduce((acc, order) => acc + order.tip, 0);
+  };
+
   return (
     <Container>
       <UserProfile
         totalOrders={ordersArray.length}
-        totalTip={totalTip}
+        totalTip={calcTotalTip(ordersArray)}
         email={email}
         fullName={preferredName}
         loyaltyYear={parseInt(

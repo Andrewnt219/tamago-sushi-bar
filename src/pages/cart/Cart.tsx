@@ -76,7 +76,7 @@ function Cart(): ReactElement {
       </Summary>
       {cart.subtotal === 0 ? (
         <EmptyCartText>
-          Add delicious dish from <StyledLink to="/menu">Menu</StyledLink>
+          Find delicious dishes in <StyledLink to="/menu">Menu</StyledLink>
         </EmptyCartText>
       ) : (
         <CartItems cartItems={cart.items} />

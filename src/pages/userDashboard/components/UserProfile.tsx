@@ -33,7 +33,7 @@ function UserProfile({
 
         <Info>
           <Value>
-            {totalTip} <ValueUnit>CAD</ValueUnit>
+            {totalTip.toFixed(2)} <ValueUnit>CAD</ValueUnit>
           </Value>
           <Field>Tipping</Field>
         </Info>
