@@ -64,11 +64,15 @@ const LandingMenuItems = styled.div`
   @media screen and (min-width: ${(p) => p.theme.breakpoints.xxs}) {
     display: grid;
 
-    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    /* grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr)); */
     gap: 2rem 5rem;
 
     & > *:not(:last-child) {
       margin-bottom: unset;
     }
   }
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
+    grid-template-columns: 1fr 1fr;
+  
 `;

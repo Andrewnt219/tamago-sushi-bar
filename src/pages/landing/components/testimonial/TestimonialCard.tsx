@@ -49,6 +49,10 @@ const Container = styled.div<ContainerProps>`
   &:hover {
     background-color: ${(p) => rgba(p.theme.white, 1)};
   }
+
+  @media screen and (min-width: ${(p) => p.theme.breakpoints.md}) {
+    padding: 5%;
+  }
 `;
 
 interface ContentProps {}

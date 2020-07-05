@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { rgba } from 'polished';
 import { BaseButton } from '../../../../components/ui/BaseButton';
+import { StyledLink } from '../../../../components/navigation/StyledLink';
 
 interface HeroImageProps {
   onLoad: () => void;
@@ -31,7 +32,7 @@ export const HeroImage: React.FC<HeroImageProps> = ({ onLoad }) => {
           shadowed
           contained
         >
-          FIND OUT MORE
+          <StyledLink to="/menu">FIND OUT MORE</StyledLink>
         </BaseButton>
       </Content>
     </Backdrop>
