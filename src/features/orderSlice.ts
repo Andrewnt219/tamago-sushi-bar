@@ -15,6 +15,7 @@ const initialState: OrderState = {
   isLoading: false,
   orders: null,
   displayedOrder: null,
+  orderIsCreated: null,
 };
 const orderSlice = createSlice({
   name: 'order',
@@ -54,13 +55,16 @@ const orderSlice = createSlice({
     generateOrderRequest: (state) => {
       state.isLoading = false;
       state.error = null;
+      state.orderIsCreated = null;
     },
     generateOrderSuccess: (state) => {
       state.isLoading = false;
+      state.orderIsCreated = true;
     },
     generateOrderFailure: (state, { payload }: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = payload;
+      state.orderIsCreated = false;
     },
   },
 });

@@ -8,6 +8,7 @@ import Spinner from '../../components/ui/LoadingScreen/Spinner/Spinner';
 import { Checkout } from './components/Checkout';
 import { useScrollToTop, useTitle } from '../../hook';
 import { StyledLink } from '../../components/navigation/StyledLink';
+import { CheckoutModal } from './components/CheckoutModal';
 
 type Props = {};
 
@@ -17,7 +18,8 @@ function Cart(): ReactElement {
 
   const cart = useSelector(cartSelector);
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
-  debugger;
+  const [showModal, setShowModal] = useState(false);
+
   const [tip, setTip] = useState<string>('');
   const dispatch = useDispatch();
 
@@ -33,6 +35,7 @@ function Cart(): ReactElement {
 
   return (
     <Container>
+      {showModal && <CheckoutModal onClick={() => setShowModal(false)} />}
       <Header>Your Tray</Header>
       <Summary>
         <SummaryHeader>Order Summary</SummaryHeader>
@@ -71,7 +74,12 @@ function Cart(): ReactElement {
             {cart.subtotal === 0 ? 'YOUR CART IS EMPTY' : 'PROCEED TO SHIPPING'}
           </Button>
         ) : (
-          <Checkout onFormSubmitted={() => setShowCheckoutForm(false)} />
+          <Checkout
+            onOrderCreated={() => {
+              setShowModal(true);
+              setShowCheckoutForm(false);
+            }}
+          />
         )}
       </Summary>
       {cart.subtotal === 0 ? (

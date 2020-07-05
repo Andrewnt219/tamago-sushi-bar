@@ -10,7 +10,7 @@ import { generateOrder, ordersSelector } from '../../../features/orderSlice';
 import Spinner from '../../../components/ui/LoadingScreen/Spinner/Spinner';
 
 type Props = {
-  onFormSubmitted?: () => void;
+  onOrderCreated?: () => void;
 };
 
 export type CheckoutFormValues = {
@@ -18,9 +18,9 @@ export type CheckoutFormValues = {
   address: string;
 };
 
-function Checkout({ onFormSubmitted }: Props): ReactElement {
+function Checkout({ onOrderCreated }: Props): ReactElement {
   const { email, address } = useSelector(userSelector);
-  const { isLoading } = useSelector(ordersSelector);
+  const { isLoading, error, orderIsCreated } = useSelector(ordersSelector);
   const dispatch = useDispatch();
 
   const { handleSubmit, register, errors } = useForm<CheckoutFormValues>({
@@ -31,8 +31,11 @@ function Checkout({ onFormSubmitted }: Props): ReactElement {
 
   const onSubmit = handleSubmit((data) => {
     dispatch(generateOrder(data));
-    onFormSubmitted && onFormSubmitted();
   });
+
+  if (orderIsCreated && !error) {
+    onOrderCreated && onOrderCreated();
+  }
 
   return (
     <Form noValidate onSubmit={onSubmit}>
@@ -71,6 +74,7 @@ function Checkout({ onFormSubmitted }: Props): ReactElement {
           'ORDER'
         )}
       </SubmitButton>
+      {error && <ErrorText>{error}</ErrorText>}
     </Form>
   );
 }
@@ -86,4 +90,10 @@ const SubmitButton = styled(BaseButton).attrs({ contained: true })`
 `;
 
 const SpinnerWrapper = styled.span``;
+
+const ErrorText = styled.span`
+  display: inline-block;
+  margin-top: 2rem;
+  color: ${(p) => p.theme.error};
+`;
 export { Checkout };
