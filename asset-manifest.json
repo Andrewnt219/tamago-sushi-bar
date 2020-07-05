@@ -2,18 +2,18 @@
   "files": {
     "main.js": "/tamago-sushi-bar/static/js/main.0b126380.chunk.js",
     "main.js.map": "/tamago-sushi-bar/static/js/main.0b126380.chunk.js.map",
-    "runtime-main.js": "/tamago-sushi-bar/static/js/runtime-main.b78045eb.js",
-    "runtime-main.js.map": "/tamago-sushi-bar/static/js/runtime-main.b78045eb.js.map",
+    "runtime-main.js": "/tamago-sushi-bar/static/js/runtime-main.324498a3.js",
+    "runtime-main.js.map": "/tamago-sushi-bar/static/js/runtime-main.324498a3.js.map",
     "static/js/2.b42b88ba.chunk.js": "/tamago-sushi-bar/static/js/2.b42b88ba.chunk.js",
     "static/js/2.b42b88ba.chunk.js.map": "/tamago-sushi-bar/static/js/2.b42b88ba.chunk.js.map",
     "static/js/3.0aa64f17.chunk.js": "/tamago-sushi-bar/static/js/3.0aa64f17.chunk.js",
     "static/js/3.0aa64f17.chunk.js.map": "/tamago-sushi-bar/static/js/3.0aa64f17.chunk.js.map",
-    "static/js/4.81e1a1e5.chunk.js": "/tamago-sushi-bar/static/js/4.81e1a1e5.chunk.js",
-    "static/js/4.81e1a1e5.chunk.js.map": "/tamago-sushi-bar/static/js/4.81e1a1e5.chunk.js.map",
+    "static/js/4.61293f96.chunk.js": "/tamago-sushi-bar/static/js/4.61293f96.chunk.js",
+    "static/js/4.61293f96.chunk.js.map": "/tamago-sushi-bar/static/js/4.61293f96.chunk.js.map",
     "static/js/5.04b6369e.chunk.js": "/tamago-sushi-bar/static/js/5.04b6369e.chunk.js",
     "static/js/5.04b6369e.chunk.js.map": "/tamago-sushi-bar/static/js/5.04b6369e.chunk.js.map",
     "index.html": "/tamago-sushi-bar/index.html",
-    "precache-manifest.b045accc0c1929f3d8352709b2923eaf.js": "/tamago-sushi-bar/precache-manifest.b045accc0c1929f3d8352709b2923eaf.js",
+    "precache-manifest.02e178b3eb21670a0c43d6a135277343.js": "/tamago-sushi-bar/precache-manifest.02e178b3eb21670a0c43d6a135277343.js",
     "service-worker.js": "/tamago-sushi-bar/service-worker.js",
     "static/js/2.b42b88ba.chunk.js.LICENSE.txt": "/tamago-sushi-bar/static/js/2.b42b88ba.chunk.js.LICENSE.txt",
     "static/media/better.svg": "/tamago-sushi-bar/static/media/better.146e94df.svg",
@@ -25,7 +25,7 @@
     "static/media/tick.svg": "/tamago-sushi-bar/static/media/tick.21589d14.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.b78045eb.js",
+    "static/js/runtime-main.324498a3.js",
     "static/js/2.b42b88ba.chunk.js",
     "static/js/main.0b126380.chunk.js"
   ]
