@@ -76,6 +76,7 @@ function Cart(): ReactElement {
         ) : (
           <Checkout
             onOrderCreated={() => {
+              setTip('0');
               setShowModal(true);
               setShowCheckoutForm(false);
             }}
