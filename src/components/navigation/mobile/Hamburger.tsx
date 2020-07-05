@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components/macro';
 import { PopupMenu } from './PopupMenu';
 import { useToggle } from '../../../hook';
 import { BaseButton } from '../../ui/BaseButton';
+import HamburgerContext from '../../../context/HamburgerContext';
 
 interface HamburgerProps {}
 export const Hamburger: React.FC<HamburgerProps> = () => {
@@ -10,10 +11,12 @@ export const Hamburger: React.FC<HamburgerProps> = () => {
 
   return (
     <Container>
-      {menuIsOpen && <PopupMenu />}
-      <HamburgerIcon contained onClick={toggleMenu}>
-        <Line active={menuIsOpen} />
-      </HamburgerIcon>
+      <HamburgerContext.Provider value={{ toggleMenu }}>
+        {menuIsOpen && <PopupMenu />}
+        <HamburgerIcon contained onClick={toggleMenu}>
+          <Line active={menuIsOpen} />
+        </HamburgerIcon>
+      </HamburgerContext.Provider>
     </Container>
   );
 };
@@ -36,7 +39,7 @@ const HamburgerIcon = styled(BaseButton)<HamburgerIconProps>`
   height: 6rem;
   border-radius: 50%;
   padding: 0;
-  /* box-shadow: 0 2px 5px #000; */
+  box-shadow: ${(p) => p.theme.shadow.button};
   /* border: 0; */
 
   display: flex;

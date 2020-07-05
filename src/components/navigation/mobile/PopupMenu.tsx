@@ -19,4 +19,5 @@ const Container = styled.nav<ContainerProps>`
   display: block;
 
   background-color: #fff;
+  box-shadow: ${(p) => p.theme.shadow.button};
 `;
