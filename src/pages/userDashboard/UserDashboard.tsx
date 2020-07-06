@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import styled from 'styled-components/macro';
 import { Orders } from './components/Orders';
@@ -6,7 +6,7 @@ import { UserProfile } from './components/UserProfile';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, userSelector } from '../../features/userSlice';
 import { initCart } from '../../features/cartSlice';
-import { ordersSelector } from '../../features/orderSlice';
+import { ordersSelector, fetchOrders } from '../../features/orderSlice';
 import { Order as OrderObject } from '../../features/sliceTypes';
 import { useTitle, useScrollToTop } from '../../hook';
 import { formatDistanceToNowStrict } from 'date-fns';
@@ -20,10 +20,14 @@ const UserDashboard: React.FC<UserDashboardProps> = () => {
 
   const dispatch = useDispatch();
   const { orders } = useSelector(ordersSelector);
-  const { totalTip, email, preferredName, joinDate } = useSelector(
-    userSelector
-  );
+  const { email, preferredName, joinDate } = useSelector(userSelector);
   const ordersArray: OrderObject[] = orders ? Object.values(orders) : [];
+
+  useEffect(() => {
+    if (email) {
+      dispatch(fetchOrders({ userEmail: email }));
+    }
+  }, [dispatch, email]);
 
   const onLogoutButtonClicked = () => {
     dispatch(logout());
