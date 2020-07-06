@@ -74,7 +74,7 @@ function Checkout({ onOrderCreated }: Props): ReactElement {
           'ORDER'
         )}
       </SubmitButton>
-      {error && <ErrorText>{error}</ErrorText>}
+      {orderIsCreated === false && error && <ErrorText>{error}</ErrorText>}
     </Form>
   );
 }

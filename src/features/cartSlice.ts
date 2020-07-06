@@ -327,7 +327,9 @@ export const syncCart = (): AppThunk => async (dispatch, getState) => {
     const userEmail = getState().user.email;
 
     if (!userEmail || !stateCartId) {
-      throw new Error('userEmail or localCartId does not exist');
+      return dispatch(
+        syncCartFailure('userEmail or localCartId does not exist')
+      );
     } else {
       const { data } = await firebaseApi.get<Record<string, DatabaseCart> | {}>(
         `/cart.json`,
@@ -403,7 +405,7 @@ export const addItemToCart = (item: Omit<CartItem, 'id'>): AppThunk => async (
   if (cartId) {
     dispatch(addItemRequest());
     asyncDispatchWrapper(postNewItemToCart, dispatch, addItemFailure);
-  } else throw new Error('Cart ID not found!');
+  } else dispatch(addItemFailure('Cart ID not found!'));
 
   async function postNewItemToCart() {
     const { data } = await firebaseApi.post<{ name: string }>(
