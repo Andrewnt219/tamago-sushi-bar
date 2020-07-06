@@ -29,7 +29,7 @@ const Container = styled.footer<ContainerProps>`
   left: 0;
 
   height: ${(p) => p.height};
-  width: 100vw;
+  width: 100%;
   background: ${(p) => p.theme.blackBackground};
 
   padding: 10vh 5vw;
