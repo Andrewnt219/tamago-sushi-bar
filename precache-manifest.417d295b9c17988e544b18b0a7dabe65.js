@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "2fd164318ad701df13bd8a080767cc43",
+    "revision": "73569e80edf7a601f6adbec7983282df",
     "url": "/tamago-sushi-bar/index.html"
   },
   {
@@ -24,8 +24,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/tamago-sushi-bar/static/js/5.04b6369e.chunk.js"
   },
   {
-    "revision": "e156b103d0ded922cfd2",
-    "url": "/tamago-sushi-bar/static/js/main.7952e640.chunk.js"
+    "revision": "873a46c184b361ed8842",
+    "url": "/tamago-sushi-bar/static/js/main.7f2ad47b.chunk.js"
   },
   {
     "revision": "76ece718858d82b7d203",
