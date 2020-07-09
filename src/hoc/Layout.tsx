@@ -10,7 +10,7 @@ interface LayoutProps {}
 interface MainProps {}
 
 const APPBAR_HEIGHT = '8rem';
-const FOOTER_HEIGHT = '40vh';
+const FOOTER_HEIGHT = '20rem';
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <CssContext.Provider value={{ appbarHeight: APPBAR_HEIGHT }}>
