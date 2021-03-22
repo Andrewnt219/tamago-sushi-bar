@@ -1,84 +1,79 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components/macro';
 import { rgba } from 'polished';
-import { BaseButton } from '../../../../components/ui/BaseButton';
+import React from 'react';
+import styled from 'styled-components/macro';
 import { StyledLink } from '../../../../components/navigation/StyledLink';
+import { BaseButton } from '../../../../components/ui/BaseButton';
 
 interface HeroImageProps {
-  onLoad: () => void;
+	onLoad: () => void;
 }
 /**
  * @description the first section upon visiting the app, with fullscreen img
  * @param onLoad triggers a callback when background is loaded
  */
-export const HeroImage: React.FC<HeroImageProps> = ({ onLoad }) => {
-  useEffect(() => {
-    const img = new Image();
-    img.src = 'https://i.imgur.com/PrvW34t.jpg';
-    img.onload = function () {
-      onLoad();
-    };
-  }, [onLoad]);
-
-  return (
-    <Backdrop>
-      <Content>
-        <SubHeading>come and enjoy</SubHeading>
-        <Heading>
-          Tokyo&apos;s finest <span> sushi bar</span>
-        </Heading>
-        <BaseButton
-          style={{ marginTop: '4rem', fontSize: '2rem' }}
-          shadowed
-          contained
-        >
-          <StyledLink to="/menu">FIND OUT MORE</StyledLink>
-        </BaseButton>
-      </Content>
-    </Backdrop>
-  );
+export const HeroImage: React.FC<HeroImageProps> = () => {
+	return (
+		<Backdrop>
+			<Content>
+				<SubHeading>come and enjoy</SubHeading>
+				<Heading>
+					Tokyo&apos;s finest <span> sushi bar</span>
+				</Heading>
+				<BaseButton
+					style={{ marginTop: '4rem', fontSize: '2rem' }}
+					shadowed
+					contained
+				>
+					<StyledLink to="/menu">FIND OUT MORE</StyledLink>
+				</BaseButton>
+			</Content>
+		</Backdrop>
+	);
 };
 
 interface BackdropProps {}
 const Backdrop = styled.article<BackdropProps>`
-  height: 100vh;
-  max-width: 100vw;
-  background-image: linear-gradient(
-      ${(p) => rgba(p.theme.black, 0.6)},
-      ${(p) => rgba(p.theme.black, 0.6)}
-    ),
-    url('https://i.imgur.com/PrvW34t.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+	height: 100vh;
+	max-width: 100vw;
+	background-image: linear-gradient(
+			${(p) => rgba(p.theme.black, 0.6)},
+			${(p) => rgba(p.theme.black, 0.6)}
+		),
+		url('https://i.imgur.com/PrvW34t.jpg');
+	background-size: cover;
+	background-position: center;
+
+	@media screen and (min-width: ${(p) => p.theme.breakpoints.lg}) {
+		background-attachment: fixed;
+	}
 `;
 
 interface ContentProps {}
 const Content = styled.div<ContentProps>`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 
-  color: ${(p) => p.theme.text};
+	color: ${(p) => p.theme.text};
 
-  width: 100%;
-  height: 100%;
-  padding: 0 10%;
+	width: 100%;
+	height: 100%;
+	padding: 0 10%;
 `;
 
 interface HeadingProps {}
 const Heading = styled.h1<HeadingProps>`
-  text-align: center;
-  font-size: 5rem;
-  span {
-    display: inline-block;
-    color: ${(p) => p.theme.h1};
-  }
+	text-align: center;
+	font-size: 5rem;
+	span {
+		display: inline-block;
+		color: ${(p) => p.theme.h1};
+	}
 `;
 
 interface SubHeadingProps {}
 const SubHeading = styled.h2<SubHeadingProps>`
-  font-weight: 400;
-  font-size: 3.2rem;
+	font-weight: 400;
+	font-size: 3.2rem;
 `;
